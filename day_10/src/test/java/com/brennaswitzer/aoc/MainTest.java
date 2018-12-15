@@ -57,13 +57,8 @@ public class MainTest {
 
   @Test
   public void testSeeSky() {
-    two.setStar(0, 0, 1, 1);
-    two.setStar(1, 1, 1, 1);
 
-    for (int i = 0; i < 4; i++) {
-      two.draw(i);
-      System.out.println(two);
-    }
+      example.draw();
   }
 
 

@@ -9,89 +9,143 @@ import java.util.List;
 
 public class Sky {
 
-  List<Point> stars = new ArrayList<>();
-  int offset = 10;
-  int[][] sky;
-
-  int getOffsetX(int x) {
-    return x + offset;
-  }
-
-  int getOffsetY(int y) {
-    return y + offset;
-  }
+    List<Point> stars = new ArrayList<>();
+    int seconds = 0;
+    int X_MIN = Integer.MIN_VALUE;
+    int X_MAX = Integer.MAX_VALUE;
+    int Y_MIN = Integer.MIN_VALUE;
+    int Y_MAX = Integer.MAX_VALUE;
 
 
-  void setStar(int x, int y, int vx, int vy) {
-    Point star = new Point(x, y, vx, vy);
-    stars.add(star);
-  }
-
-  void draw(int s) {
-    // need our calculate function back to we can create a new arraylist for every second in the sky rather than mutation
-    // either that or every second needs to just be "one"
-    // the size of the grid needs the size of the stars we need to draw, so we need the parse the output of the data points
-    sky = new int[10][10];
-    for (int x = 0; x < sky.length; x++) {
-      for (int y = 0; y < sky.length; y++) {
-        sky[x][y] = 0;
-      }
+    void setStar(int x, int y, int vx, int vy) {
+        Point star = new Point(x, y, vx, vy);
+        stars.add(star);
     }
 
-    // set new state based on which second it is
-    for (Point p : stars) {
-      p.move();
-    }
+    void draw() {
+        int minX = Integer.MIN_VALUE, maxX = Integer.MAX_VALUE, minY = Integer.MIN_VALUE, maxY = Integer.MAX_VALUE;
+        int xDiff = Integer.MAX_VALUE, yDiff = Integer.MAX_VALUE;
+        boolean first = true;
 
-    // assign those values to the grid
-    for (Point p : stars) {
-      sky[p.getX()][p.getY()] = 1;
-    }
-  }
+        // To have the lights spell out something, points have to be close together. We warp time while both dimensions keep decreasing and stop when we
+        // detect an increase on either X or Y coordinate.
+        do {
+            if (first) {
+                first = false;
+            } else {
+                xDiff = maxX - minX;
+                yDiff = maxY - minY;
+            }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
+            minX = Integer.MAX_VALUE;
+            maxX = Integer.MIN_VALUE;
+            minY = Integer.MAX_VALUE;
+            maxY = Integer.MIN_VALUE;
 
-    for (int x = 0; x < sky.length; x++) {
-      for (int y = 0; y < sky.length; y++) {
-        if (sky[x][y] == 1) {
-          sb.append("#");
-        } else {
-          sb.append(".");
+            for (Point point : stars) {
+                point.move();
+
+                if (point.getX() < minX) {
+                    minX = point.getX();
+                }
+                if (point.getX() > maxX) {
+                    maxX = point.getX();
+                }
+
+                if (point.getY() < minY) {
+                    minY = point.getY();
+                }
+                if (point.getY() > maxY) {
+                    maxY = point.getY();
+                }
+            }
+            seconds++;
+        } while ((maxX - minX) < xDiff && (maxY - minY) < yDiff);
+
+        // Since we detected an increase on either X or Y axis, we're 1 step too far. So we back off 1 step to get the message.
+        minX = Integer.MAX_VALUE;
+        maxX = Integer.MIN_VALUE;
+        minY = Integer.MAX_VALUE;
+        maxY = Integer.MIN_VALUE;
+        for (Point point : stars) {
+            if (point.getX() < minX) {
+                minX = point.getX();
+            }
+            if (point.getX() > maxX) {
+                maxX = point.getX();
+            }
+
+            if (point.getY() < minY) {
+                minY = point.getY();
+            }
+            if (point.getY() > maxY) {
+                maxY = point.getY();
+            }
+
+            point.moveBack();
         }
-      }
-      sb.append("\n");
-    }
-    return sb.toString();
-  }
+        seconds--;
 
-  static public class Point {
-    int x;
-    int y;
-    int vx;
-    int vy;
+        for (int y = minY; y <= maxY; y++) {
+            for (int x = minX; x <= maxX; x++) {
+                boolean found = false;
+                for (Point point : stars) {
+                    if (point.hasStar(x, y)) {
+                        found = true;
+                        break;
+                    }
+                }
 
-    Point(int x, int y, int vx, int vy) {
-      this.x = x;
-      this.y = y;
-      this.vx = vx;
-      this.vy = vy;
-    }
+                if (found) {
+                    System.out.print("#");
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println("");
+        }
 
-    void move() {
-      this.x += this.vx;
-      this.y += this.vy;
-    }
-
-    int getX() {
-      return x;
     }
 
-    int getY() {
-      return y;
+    int getSeconds() {
+        return this.seconds;
     }
 
-  }
+    static public class Point {
+        int x;
+        int y;
+        int vx;
+        int vy;
+
+        Point(int x, int y, int vx, int vy) {
+            this.x = x;
+            this.y = y;
+            this.vx = vx;
+            this.vy = vy;
+        }
+
+        void move() {
+            this.x += this.vx;
+            this.y += this.vy;
+        }
+
+        void moveBack() {
+            this.x -= this.vx;
+            this.y -= this.vy;
+        }
+
+        int getX() {
+            return x;
+        }
+
+        int getY() {
+            return y;
+        }
+
+        boolean hasStar(int x, int y) {
+            return this.x == x && this.y == y;
+        }
+
+    }
 
 }
