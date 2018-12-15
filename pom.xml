@@ -23,6 +23,7 @@
         <module>day_06</module>
         <module>day_07</module>
         <module>day_08</module>
+        <module>day_09</module>
     </modules>
     <dependencies>
         <dependency>
