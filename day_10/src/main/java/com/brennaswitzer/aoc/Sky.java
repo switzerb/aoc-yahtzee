@@ -13,8 +13,6 @@ public class Sky {
   int offset = 10;
   int[][] sky;
 
-  Sky(int size) { }
-
   int getOffsetX(int x) {
     return x + offset;
   }
@@ -22,6 +20,7 @@ public class Sky {
   int getOffsetY(int y) {
     return y + offset;
   }
+
 
   void setStar(int x, int y, int vx, int vy) {
     Point star = new Point(x, y, vx, vy);
@@ -41,7 +40,7 @@ public class Sky {
 
     // set new state based on which second it is
     for (Point p : stars) {
-      p.setPoint(p.getXpos(), p.getYpos());
+      p.move();
     }
 
     // assign those values to the grid
@@ -80,12 +79,9 @@ public class Sky {
       this.vy = vy;
     }
 
-    int getXpos() {
-      return this.x + this.vx;
-    }
-
-    int getYpos() {
-      return this.y + this.vy;
+    void move() {
+      this.x += this.vx;
+      this.y += this.vy;
     }
 
     int getX() {
@@ -96,10 +92,6 @@ public class Sky {
       return y;
     }
 
-    void setPoint(int x, int y) {
-      this.x = x;
-      this.y = y;
-    }
   }
 
 }
