@@ -15,6 +15,7 @@
     </properties>
     <modules>
         <module>day_00</module>
+        <module>day_01</module>
     </modules>
     <dependencies>
         <dependency>
