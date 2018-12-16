@@ -34,7 +34,7 @@ public class Main {
             north.setStar(x, y, vx, vy);
         }
 
-        north.draw();
+        north.animate();
         System.out.println("Part Two Answer: " + north.getSeconds());
 
 
