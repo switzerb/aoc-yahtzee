@@ -20,6 +20,12 @@ public class FuelTest {
     }
 
     @Test
+    public void testGetHundreds2() {
+        Fuel fuel = new Fuel(8);
+        assertEquals(0, fuel.hundreds(12));
+    }
+
+    @Test
     public void testRackID() {
         Fuel fuel = new Fuel(8);
         assertEquals(13, fuel.getRackID(3));
@@ -49,6 +55,19 @@ public class FuelTest {
         assertEquals(4, fuel.getPowerLevel(101, 153));
     }
 
+    @Test
+    public void testLookAtGrid() {
+        Fuel fuel = new Fuel(18);
+        fuel.buildCells();
+//        System.out.println(fuel);
+    }
+
+    @Test
+    public void testGet3x3Total() {
+        Fuel fuel = new Fuel(18);
+        fuel.buildCells();
+        assertEquals(29, fuel.get3x3Total(33,45));
+    }
 
 
 }
