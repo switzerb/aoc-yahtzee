@@ -13,18 +13,16 @@ public class Main {
     InputStream in = cl.getResourceAsStream("input.txt");
     BufferedReader r = new BufferedReader(new InputStreamReader(in));
 
-    String line = r.readLine();
-    System.out.println(line);
-//    List<String> input = new ArrayList<>();
-//
-//    while (true) {
-//      String line = r.readLine();
-//      if (line == null) {
-//        break;
-//      }
-//      System.out.println(line);
-//      input.add(line);
-//    }
-//
+    List<String> input = new ArrayList<>();
+
+    while (true) {
+      String line = r.readLine();
+      if (line == null) {
+        break;
+      }
+      System.out.println(line);
+      input.add(line);
+    }
+
   }
 }
