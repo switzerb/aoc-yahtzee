@@ -7,6 +7,7 @@ public class Fuel {
 
     Fuel(int serial) {
         this.SERIAL = serial;
+        buildCells();
     }
 
     void buildCells() {
@@ -17,21 +18,22 @@ public class Fuel {
         }
     }
 
-    int largestCellPower() {
+    String largestCellPower() {
         int max = Integer.MIN_VALUE;
         int top = 0;
         int left = 0;
-        for (int x = 0; x < grid.length; x++) {
-            for (int y = 0; y < grid.length; y++) {
-                if( get3x3Total(x, y) > max){
+        for (int x = 0; x < grid.length - 3; x++) {
+            for (int y = 0; y < grid.length - 3; y++) {
+                int fuelMax = get3x3Total(x, y);
+                if( fuelMax > max){
+                    max = fuelMax;
                     top = x;
                     left = y;
                 }
             }
         }
-        System.out.println(top);
-        System.out.println(left);
-        return 0;
+        System.out.println(max);
+        return top + "," + left;
     }
 
     int get3x3Total(int top, int left) {

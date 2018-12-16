@@ -11,7 +11,6 @@ public class Main {
   public static void main(String[] args) throws IOException {
 
     Fuel fuel = new Fuel(9995);
-
     System.out.println(fuel.largestCellPower());
   }
 }
