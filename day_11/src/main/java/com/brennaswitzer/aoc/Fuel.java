@@ -18,6 +18,19 @@ public class Fuel {
     }
 
     int largestCellPower() {
+        int max = Integer.MIN_VALUE;
+        int top = 0;
+        int left = 0;
+        for (int x = 0; x < grid.length; x++) {
+            for (int y = 0; y < grid.length; y++) {
+                if( get3x3Total(x, y) > max){
+                    top = x;
+                    left = y;
+                }
+            }
+        }
+        System.out.println(top);
+        System.out.println(left);
         return 0;
     }
 
