@@ -69,5 +69,11 @@ public class FuelTest {
         assertEquals(29, fuel.get3x3Total(33,45));
     }
 
+    @Test
+    public void testGet3x3Total_ex2() {
+        Fuel fuel = new Fuel(42);
+        fuel.buildCells();
+        assertEquals(30, fuel.get3x3Total(21,61));
+    }
 
 }
