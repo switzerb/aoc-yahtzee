@@ -79,12 +79,37 @@ public class FuelTest {
     @Test
     public void testGetMostPower() {
         Fuel fuel = new Fuel(18);
-        assertEquals("33,45", fuel.largestCellPower());
+        assertEquals("33,45", fuel.largest3x3());
     }
 
     @Test
     public void testGetMostPower_ex2() {
         Fuel fuel = new Fuel(42);
-        assertEquals("21,61", fuel.largestCellPower());
+        assertEquals("21,61", fuel.largest3x3());
     }
+
+    @Test
+    public void testGetAllCells() {
+        Fuel fuel = new Fuel(18);
+        assertEquals(113, fuel.getAllTotals(90,269,16));
+    }
+
+    @Test
+    public void testGetAllCells_ex2() {
+        Fuel fuel = new Fuel(42);
+        assertEquals(119, fuel.getAllTotals(232,251,12));
+    }
+
+    @Test
+    public void testGetMostPower_p2() {
+        Fuel fuel = new Fuel(18);
+        assertEquals("90,269,16", fuel.largestAll());
+    }
+
+    @Test
+    public void testGetMostPower_p2_ex2() {
+        Fuel fuel = new Fuel(42);
+        assertEquals("232,251,12", fuel.largestAll());
+    }
+
 }

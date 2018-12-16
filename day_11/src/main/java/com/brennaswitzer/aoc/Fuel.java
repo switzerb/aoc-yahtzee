@@ -18,14 +18,14 @@ public class Fuel {
         }
     }
 
-    String largestCellPower() {
+    String largest3x3() {
         int max = Integer.MIN_VALUE;
         int top = 0;
         int left = 0;
         for (int x = 0; x < grid.length - 3; x++) {
             for (int y = 0; y < grid.length - 3; y++) {
                 int fuelMax = get3x3Total(x, y);
-                if( fuelMax > max){
+                if (fuelMax > max) {
                     max = fuelMax;
                     top = x;
                     left = y;
@@ -34,6 +34,37 @@ public class Fuel {
         }
         System.out.println(max);
         return top + "," + left;
+    }
+
+    String largestAll() {
+        int max = Integer.MIN_VALUE;
+        int top = 0;
+        int left = 0;
+        int s = 0;
+        for (int size = 1; size < 300; size++) {
+            for (int x = 0; x < grid.length - size; x++) {
+                for (int y = 0; y < grid.length - size; y++) {
+                    int fuelMax = getAllTotals(x, y, size);
+                    if (fuelMax > max) {
+                        max = fuelMax;
+                        top = x;
+                        left = y;
+                        s = size;
+                    }
+                }
+            }
+        }
+        return top + "," + left + "," + s;
+    }
+
+    int getAllTotals(int top, int left, int size) {
+        int sum = 0;
+        for (int x = top; x < top + size; x++) {
+            for (int y = left; y < left + size; y++) {
+                sum += grid[x][y];
+            }
+        }
+        return sum;
     }
 
     int get3x3Total(int top, int left) {
