@@ -50,8 +50,8 @@ public class MainTest {
     
     @Test
     public void testFirstGeneration() {
-        cave.nextGeneration("...#..#.#..##......###...###.............");
-        assertEquals("...#...#....#.....#..#..#..#...........", cave.getGeneration(1));
+        cave.evolution();
+        assertEquals("....#...#....#.....#..#..#..#...", cave.getGeneration(1));
     }
     
     @Test

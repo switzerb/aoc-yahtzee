@@ -7,9 +7,10 @@ public class Cavern {
     
     List<String> generations = new ArrayList<>();
     List<Rule> rules = new ArrayList<>();
+    int center = 0;
     
     Cavern(String initial) {
-        generations.add("..." + initial + "...........");
+        generations.add(initial);
     }
     
     void addRule(String rule) {
@@ -19,8 +20,8 @@ public class Cavern {
     }
     
     String willGrow(String pattern) {
-        for(Rule r : rules) {
-            if(pattern.equals(r.in)) {
+        for (Rule r : rules) {
+            if (pattern.equals(r.in)) {
                 return r.out;
             }
         }
@@ -29,26 +30,20 @@ public class Cavern {
     
     void evolution() {
         String prev = getGeneration(0);
-        String next = "";
-        for(int e = 0; e < 20; e++) {
-            next = nextGeneration(prev);
+
+        for (int e = 0; e < 20; e++) {
+            prev = "......" + prev + ".....";
+            String next = "";
+            center += 3;
+            
+            for (int i = 2; i < prev.length() - 2; i++) {
+                // need to send the pot, plus two previous and two after to willGrow function
+                String pattern = prev.substring(i - 2, i + 3);
+                next += willGrow(pattern);
+            }
+            generations.add(next);
             prev = next;
         }
-    }
-    
-    String nextGeneration(String prev) {
-        StringBuilder next = new StringBuilder();
-        char[] pots = prev.toCharArray();
-        
-        for(int i = 3; i < pots.length -2; i++) {
-            // need to send the pot, plus two previous and two after to willGrow function
-            char[] p = { pots[i-2], pots[i-1] ,pots[i], pots[i+1], pots[i+2]};
-            String pattern = new String(p);
-            String result = willGrow(pattern);
-            next.append(result);
-        }
-        generations.add("..." + next.toString());
-        return next.toString();
     }
     
     String getGeneration(int index) {
