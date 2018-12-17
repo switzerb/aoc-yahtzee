@@ -32,7 +32,7 @@ public class Cavern {
         String prev = getGeneration(0);
 
         for (int e = 0; e < 20; e++) {
-            prev = "......" + prev + ".....";
+            prev = "....." + prev + "...";
             String next = "";
             center += 3;
             
@@ -44,6 +44,17 @@ public class Cavern {
             generations.add(next);
             prev = next;
         }
+    }
+    
+    int getSumOfPots() {
+        int sum = 0;
+        String last = getGeneration(20);
+        for (int i = 0; i < last.length(); i++) {
+            if(last.charAt(i) == '#') {
+                sum += i - center;
+            }
+        }
+        return sum;
     }
     
     String getGeneration(int index) {

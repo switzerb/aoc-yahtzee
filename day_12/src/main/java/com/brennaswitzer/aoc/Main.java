@@ -14,15 +14,26 @@ public class Main {
     BufferedReader r = new BufferedReader(new InputStreamReader(in));
 
     List<String> input = new ArrayList<>();
-
+  
+    String initial = r.readLine().substring(15);
+    Cavern cave = new Cavern(initial);
+  
     while (true) {
       String line = r.readLine();
       if (line == null) {
         break;
       }
-      System.out.println(line);
       input.add(line);
     }
+  
+    for (String l : input) {
+      if (l.length() > 0) {
+        cave.addRule(l);
+      }
+    }
+    
+    cave.evolution();
+    System.out.println("Solution Part One: " + cave.getSumOfPots());
 
   }
 }

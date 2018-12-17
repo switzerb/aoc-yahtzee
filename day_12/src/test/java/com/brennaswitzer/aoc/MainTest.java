@@ -60,4 +60,10 @@ public class MainTest {
         System.out.println(cave);
     }
     
+    @Test
+    public void testSumOfPots() {
+        cave.evolution();
+        assertEquals(325, cave.getSumOfPots());
+    }
+    
 }
