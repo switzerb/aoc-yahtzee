@@ -13,20 +13,20 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 
 public class MainTest {
-
+    
     Cavern cave;
-
+    
     @Before
     public void setup() throws IOException {
         ClassLoader cl = Main.class.getClassLoader();
         InputStream in = cl.getResourceAsStream("test_input.txt");
         BufferedReader r = new BufferedReader(new InputStreamReader(in));
-
+        
         List<String> input = new ArrayList<>();
-
+        
         String initial = r.readLine().substring(15);
         cave = new Cavern(initial);
-
+        
         while (true) {
             String line = r.readLine();
             if (line == null) {
@@ -34,14 +34,30 @@ public class MainTest {
             }
             input.add(line);
         }
-
+        
+        for (String l : input) {
+            if (l.length() > 0) {
+                cave.addRule(l);
+            }
+        }
+        
     }
-
+    
     @Test
     public void testInitialGeneration() {
-        System.out.println(cave);
-        assertEquals(true, true);
+        assertEquals("...#..#.#..##......###...###", cave.getGeneration(0));
     }
-
-
+    
+    @Test
+    public void testFirstGeneration() {
+        cave.nextGeneration("...#..#.#..##......###...###.............");
+        assertEquals("...#...#....#.....#..#..#..#...........", cave.getGeneration(1));
+    }
+    
+    @Test
+    public void testEvolution() {
+        cave.evolution();
+        System.out.println(cave);
+    }
+    
 }
