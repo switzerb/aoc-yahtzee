@@ -28,14 +28,16 @@ public class Cavern {
         return ".";
     }
     
-    void evolution() {
+    int getSumOfPots(int gens) {
+        int sum = 0;
+        
         String prev = getGeneration(0);
-
-        for (int e = 0; e < 20; e++) {
+    
+        for (int e = 0; e < gens; e++) {
             prev = "....." + prev + "...";
             String next = "";
             center += 3;
-            
+        
             for (int i = 2; i < prev.length() - 2; i++) {
                 // need to send the pot, plus two previous and two after to willGrow function
                 String pattern = prev.substring(i - 2, i + 3);
@@ -44,17 +46,18 @@ public class Cavern {
             generations.add(next);
             prev = next;
         }
-    }
     
-    int getSumOfPots() {
-        int sum = 0;
-        String last = getGeneration(20);
+        String last = getGeneration(gens);
         for (int i = 0; i < last.length(); i++) {
             if(last.charAt(i) == '#') {
                 sum += i - center;
             }
         }
         return sum;
+    }
+    
+    int hugeEvolution() {
+        return getSumOfPots(20);
     }
     
     String getGeneration(int index) {

@@ -45,25 +45,23 @@ public class MainTest {
     
     @Test
     public void testInitialGeneration() {
-        assertEquals("...#..#.#..##......###...###", cave.getGeneration(0));
+        assertEquals("#..#.#..##......###...###", cave.getGeneration(0));
     }
     
     @Test
     public void testFirstGeneration() {
-        cave.evolution();
-        assertEquals("....#...#....#.....#..#..#..#...", cave.getGeneration(1));
+        cave.getSumOfPots(20);
+        assertEquals("...#...#....#.....#..#..#..#.", cave.getGeneration(1));
     }
     
     @Test
     public void testEvolution() {
-        cave.evolution();
         System.out.println(cave);
     }
     
     @Test
     public void testSumOfPots() {
-        cave.evolution();
-        assertEquals(325, cave.getSumOfPots());
+        assertEquals(325, cave.getSumOfPots(20));
     }
     
 }
