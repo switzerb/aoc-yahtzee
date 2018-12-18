@@ -59,14 +59,14 @@ public class Cavern {
     }
     
     long getHugeEvolution() {
-//        long sum = 0L;
+        long sum = 0L;
 //        long third = getSumOfPots(300);
 //        long fourth = getSumOfPots(400);
 //
 //        long growth = fourth - third;
 //
 //        sum += (50_000_000_000L - 400) * growth;
-//        return sum;
+        return sum;
     }
     
     public static class Rule {
