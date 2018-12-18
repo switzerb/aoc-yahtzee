@@ -32,7 +32,8 @@ public class Main {
       }
     }
     
-    System.out.println("Solution Part One: " + cave.getSumOfPots(20));
+//    System.out.println("Solution Part One: " + cave.getSumOfPots(20));
+    System.out.println("Solution Part Two: " + cave.getHugeEvolution());
 
   }
 }

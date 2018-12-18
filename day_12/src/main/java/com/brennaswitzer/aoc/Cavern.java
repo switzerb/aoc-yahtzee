@@ -5,12 +5,11 @@ import java.util.List;
 
 public class Cavern {
     
-    List<String> generations = new ArrayList<>();
+    String initial;
     List<Rule> rules = new ArrayList<>();
-    int center = 0;
     
     Cavern(String initial) {
-        generations.add(initial);
+        this.initial = initial;
     }
     
     void addRule(String rule) {
@@ -30,8 +29,10 @@ public class Cavern {
     
     int getSumOfPots(int gens) {
         int sum = 0;
+        int center = 0;
         
-        String prev = getGeneration(0);
+        String prev = initial;
+        String last = "";
     
         for (int e = 0; e < gens; e++) {
             prev = "....." + prev + "...";
@@ -43,11 +44,12 @@ public class Cavern {
                 String pattern = prev.substring(i - 2, i + 3);
                 next += willGrow(pattern);
             }
-            generations.add(next);
             prev = next;
+            if(e == gens -1){
+                last = next;
+            }
         }
     
-        String last = getGeneration(gens);
         for (int i = 0; i < last.length(); i++) {
             if(last.charAt(i) == '#') {
                 sum += i - center;
@@ -56,22 +58,15 @@ public class Cavern {
         return sum;
     }
     
-    int hugeEvolution() {
-        return getSumOfPots(20);
-    }
-    
-    String getGeneration(int index) {
-        return generations.get(index);
-    }
-    
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (String generation : generations) {
-            sb.append(generation);
-            sb.append("\n");
-        }
-        return sb.toString();
+    long getHugeEvolution() {
+//        long sum = 0L;
+//        long third = getSumOfPots(300);
+//        long fourth = getSumOfPots(400);
+//
+//        long growth = fourth - third;
+//
+//        sum += (50_000_000_000L - 400) * growth;
+//        return sum;
     }
     
     public static class Rule {

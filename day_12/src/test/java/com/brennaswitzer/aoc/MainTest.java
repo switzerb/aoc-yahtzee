@@ -44,19 +44,9 @@ public class MainTest {
     }
     
     @Test
-    public void testInitialGeneration() {
-        assertEquals("#..#.#..##......###...###", cave.getGeneration(0));
-    }
-    
-    @Test
-    public void testFirstGeneration() {
-        cave.getSumOfPots(20);
-        assertEquals("...#...#....#.....#..#..#..#.", cave.getGeneration(1));
-    }
-    
-    @Test
     public void testEvolution() {
-        System.out.println(cave);
+        long sum = cave.getHugeEvolution();
+        assertEquals(1374, sum);
     }
     
     @Test
