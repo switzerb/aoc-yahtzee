@@ -60,12 +60,9 @@ public class Cavern {
     
     long getHugeEvolution() {
         long sum = 0L;
-//        long third = getSumOfPots(300);
-//        long fourth = getSumOfPots(400);
-//
-//        long growth = fourth - third;
-//
-//        sum += (50_000_000_000L - 400) * growth;
+        sum += getSumOfPots(400);
+
+        sum += (50_000_000_000L - 400) * 6300;
         return sum;
     }
     
