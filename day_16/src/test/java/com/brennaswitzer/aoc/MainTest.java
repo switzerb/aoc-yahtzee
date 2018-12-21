@@ -46,8 +46,9 @@ public class MainTest {
     }
     
     @Test
-    public void testCountPotentials() {
+    public void testCountThrees() {
         r.buildPotentials();
+        assertEquals(1, r.countThrees());
     }
     
 }

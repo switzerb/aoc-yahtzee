@@ -5,6 +5,7 @@ import java.util.*;
 public class Register {
     
     List<Opcode> instructions = new ArrayList<>();
+    Histogram h = new Histogram();
     
     /**
      * create an array of potential opcodes to run through, List<Opcodes> codes
@@ -17,8 +18,18 @@ public class Register {
         instructions.add(o);
     }
     
+    int countThrees() {
+        Set<Integer> keys = h.keySet();
+        int count = 0;
+        for(Integer k : keys) {
+            if(h.get(k).size() >= 3) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
     void buildPotentials() {
-        Histogram h = new Histogram();
         EnumSet<Operation> op = EnumSet.allOf(Operation.class);
         
         for (Opcode i : instructions) {
