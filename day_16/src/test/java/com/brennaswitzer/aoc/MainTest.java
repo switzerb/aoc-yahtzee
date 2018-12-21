@@ -20,35 +20,52 @@ public class MainTest {
     }
     
     @Test
-    public void testMulr() {
-        int[] before = {3, 2, 1, 1};
-        int[] after = {3, 2, 2, 1};
-        int opcode = 9;
-        int A = 2;
-        int B = 1;
-        int C = 2;
-        Register.Opcode i = new Register.Opcode(9,2,1,2, before, after);
-        int[] result = r.mulr(i);
-        assertTrue(Arrays.equals(result, after));
-    }
-    
-    @Test
     public void testAddi() {
-        int[] before = {3, 2, 1, 1};
-        int[] after = {3, 2, 2, 1};
-        int opcode = 9;
-        int A = 2;
-        int B = 1;
-        int C = 2;
-        Register.Opcode i = new Register.Opcode(9,2,1,2, before, after);
-        int[] result = r.addi(i);
-        assertTrue(Arrays.equals(result, after));
+        Register.Opcode o = r.getInstruction(0);
+        int[] expected = {3, 2, 2, 1};
+        assertTrue(Arrays.equals(r.addi(o), expected));
     }
     
     @Test
-    public void testCountThrees() {
+    public void testAddr() {
+        Register.Opcode o = r.getInstruction(0);
+        int[] expected = {3, 2, 3, 1};
+        // 1 + 2
+        assertTrue(Arrays.equals(r.addr(o), expected));
+    }
+
+    @Test
+    public void testMuli() {
+        Register.Opcode o = r.getInstruction(0);
+        int[] expected = {3,2,1,1};
+        assertTrue(Arrays.equals(r.muli(o), expected));
+    }
+    
+    @Test
+    public void testMulr() {
+        Register.Opcode o = r.getInstruction(0);
+        int[] expected = {3, 2, 2, 1};
+        assertTrue(Arrays.equals(r.mulr(o), expected));
+    }
+    
+    @Test
+    public void testBanr() {
+        Register.Opcode o = r.getInstruction(0);
+        int[] expected = {3,2,0,1};
+        assertTrue(Arrays.equals(r.banr(o), expected));
+    }
+    
+    @Test
+    public void testBani() {
+        Register.Opcode o = r.getInstruction(0);
+        int[] expected = {3, 2, 2, 1};
+        assertTrue(Arrays.equals(r.bani(o), expected));
+    }
+
+    @Test
+    public void testCountInstructions() {
         r.countInstructions();
-        assertEquals(1, r.countThrees());
+        assertEquals(1, r.countInstructions());
     }
     
 }

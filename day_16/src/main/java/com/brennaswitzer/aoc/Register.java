@@ -88,6 +88,10 @@ public class Register {
         }
     }
     
+    Opcode getInstruction(int index) {
+        return instructions.get(index);
+    }
+    
     /**
      * addr (add register) stores into register C the result of adding register A and register B.
      * @param i Opcode
@@ -161,7 +165,7 @@ public class Register {
      */
     public int[] borr(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        result[i.C] = i.before[i.A] ^ i.before[i.B];
+        result[i.C] = i.before[i.A] | i.before[i.B];
         return result;
     }
     
@@ -172,7 +176,7 @@ public class Register {
      */
     public int[] bori(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        result[i.C] = i.before[i.A] ^ i.B;
+        result[i.C] = i.before[i.A] | i.B;
         return result;
     }
     
