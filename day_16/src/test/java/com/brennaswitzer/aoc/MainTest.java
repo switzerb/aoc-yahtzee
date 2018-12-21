@@ -47,7 +47,7 @@ public class MainTest {
     
     @Test
     public void testCountThrees() {
-        r.buildPotentials();
+        r.countInstructions();
         assertEquals(1, r.countThrees());
     }
     

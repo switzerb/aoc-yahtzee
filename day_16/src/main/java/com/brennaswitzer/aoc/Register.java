@@ -6,6 +6,7 @@ public class Register {
     
     List<Opcode> instructions = new ArrayList<>();
     Histogram h = new Histogram();
+    int count = 0;
     
     /**
      * create an array of potential opcodes to run through, List<Opcodes> codes
@@ -29,24 +30,23 @@ public class Register {
         return count;
     }
     
-    void buildPotentials() {
+    public int countInstructions() {
         EnumSet<Operation> op = EnumSet.allOf(Operation.class);
+        int total = 0;
         
         for (Opcode i : instructions) {
+            this.count = 0;
             op.forEach(operation -> {
                 int[] result = getOperation(operation, i);
                 if (Arrays.equals(result, i.after)) {
-                    if(h.containsKey(i.id)) {
-                        Set<Operation> o = h.get(i.id);
-                        o.add(operation);
-                    } else {
-                        Set<Operation> o = new HashSet<>();
-                        o.add(operation);
-                        h.put(i.id, o);
-                    }
+                    this.count++;
                 }
             });
+            if(count >= 3) {
+                total++;
+            }
         }
+        return total;
     }
     
     int[] getOperation(Operation operation, Opcode i) {

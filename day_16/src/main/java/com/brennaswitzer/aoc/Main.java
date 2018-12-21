@@ -55,8 +55,7 @@ public class Main {
             }
         }
         
-        instructions.buildPotentials();
-        System.out.println(instructions.countThrees());
+        System.out.println(instructions.countInstructions());
         
     }
     
