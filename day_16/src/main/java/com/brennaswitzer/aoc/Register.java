@@ -1,9 +1,6 @@
 package com.brennaswitzer.aoc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 public class Register {
     
@@ -20,16 +17,22 @@ public class Register {
         instructions.add(o);
     }
     
-    void countOpcodePotentials() {
+    void buildPotentials() {
         Histogram h = new Histogram();
         EnumSet<Operation> op = EnumSet.allOf(Operation.class);
         
         for (Opcode i : instructions) {
             op.forEach(operation -> {
-                System.out.println(operation);
                 int[] result = getOperation(operation, i);
                 if (Arrays.equals(result, i.after)) {
-                    System.out.println("it equals!");
+                    if(h.containsKey(i.id)) {
+                        Set<Operation> o = h.get(i.id);
+                        o.add(operation);
+                    } else {
+                        Set<Operation> o = new HashSet<>();
+                        o.add(operation);
+                        h.put(i.id, o);
+                    }
                 }
             });
         }

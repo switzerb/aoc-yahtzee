@@ -47,7 +47,7 @@ public class MainTest {
     
     @Test
     public void testCountPotentials() {
-        r.countOpcodePotentials();
+        r.buildPotentials();
     }
     
 }
