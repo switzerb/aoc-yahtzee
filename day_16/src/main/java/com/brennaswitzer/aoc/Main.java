@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -54,8 +55,12 @@ public class Main {
                 instructions.addOpcode(id, A, B, C, before, after);
             }
         }
+    
+        Map<Integer, Register.Operation> map =  instructions.codeMapper();
+        System.out.println(map);
         
-        System.out.println(instructions.countInstructions());
+        System.out.println("Solution Part One:" + instructions.countInstructions());
+        System.out.println("Solution Part Two:");
         
     }
     

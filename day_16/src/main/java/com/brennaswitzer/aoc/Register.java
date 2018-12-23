@@ -5,7 +5,8 @@ import java.util.*;
 public class Register {
     
     List<Opcode> instructions = new ArrayList<>();
-    Histogram h = new Histogram();
+    Map<Integer, Operation> codes = new HashMap<>();
+    Set<Operation> operations = EnumSet.allOf(Operation.class);
     int count = 0;
     
     /**
@@ -19,15 +20,46 @@ public class Register {
         instructions.add(o);
     }
     
-    int countThrees() {
-        Set<Integer> keys = h.keySet();
-        int count = 0;
-        for(Integer k : keys) {
-            if(h.get(k).size() >= 3) {
-                count++;
+    Histogram buildPotentials(Set<Operation> operations) {
+        Histogram h = new Histogram();
+        
+        for (Opcode i : instructions) {
+            operations.forEach(operation -> {
+                int[] result = getOperation(operation, i);
+                if (Arrays.equals(result, i.after)) {
+                    if (h.containsKey(i.id)) {
+                        Set<Operation> o = h.get(i.id);
+                        o.add(operation);
+                    } else {
+                        Set<Operation> o = new HashSet<>();
+                        o.add(operation);
+                        h.put(i.id, o);
+                    }
+                }
+            });
+        }
+        return h;
+    }
+    
+    
+    Map<Integer, Operation> codeMapper() {
+        int remaining = Integer.MAX_VALUE;
+        while(remaining > 0) {
+            Histogram h = buildPotentials(operations);
+            remaining = h.size();
+            
+            Set<Integer> keys = h.keySet();
+            for (int k : keys) {
+                if (h.get(k).size() == 1) {
+                    Set<Operation> o = h.get(k);
+                    List<Operation> list = new ArrayList<>(o);
+                    codes.put(k, list.get(0));
+                    operations.remove(list.get(0));
+                }
             }
         }
-        return count;
+        
+        return codes;
     }
     
     public int countInstructions() {
@@ -42,7 +74,7 @@ public class Register {
                     this.count++;
                 }
             });
-            if(count >= 3) {
+            if (count >= 3) {
                 total++;
             }
         }
@@ -94,6 +126,7 @@ public class Register {
     
     /**
      * addr (add register) stores into register C the result of adding register A and register B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -105,6 +138,7 @@ public class Register {
     
     /**
      * addi (add immediate) stores into register C the result of adding register A and value B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -116,6 +150,7 @@ public class Register {
     
     /**
      * mulr (multiply register) stores into register C the result of multiplying register A and register B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -127,6 +162,7 @@ public class Register {
     
     /**
      * muli (multiply register) stores into register C the result of multiplying register A and value B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -138,6 +174,7 @@ public class Register {
     
     /**
      * banr (bitwise AND register) stores into register C the result of the bitwise AND of register A and register B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -149,6 +186,7 @@ public class Register {
     
     /**
      * bani (bitwise AND immediate) stores into register C the result of the bitwise AND of register A and value B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -160,6 +198,7 @@ public class Register {
     
     /**
      * borr (bitwise OR register) stores into register C the result of the bitwise OR of register A and register B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -171,6 +210,7 @@ public class Register {
     
     /**
      * bori (bitwise OR immediate) stores into register C the result of the bitwise OR of register A and value B.
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -182,6 +222,7 @@ public class Register {
     
     /**
      * setr (set register) copies the contents of register A into register C. (Input B is ignored.)
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -193,6 +234,7 @@ public class Register {
     
     /**
      * seti (set immediate) stores value A into register C. (Input B is ignored.)
+     *
      * @param i Opcode
      * @return int[] register
      */
@@ -204,12 +246,13 @@ public class Register {
     
     /**
      * gtir (greater-than immediate/register) sets register C to 1 if value A is greater than register B. Otherwise, register C is set to 0.
+     *
      * @param i Opcode
      * @return int[] register
      */
     public int[] gtir(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        if(i.A > i.before[i.B]) {
+        if (i.A > i.before[i.B]) {
             result[i.C] = 1;
         } else {
             result[i.C] = 0;
@@ -219,79 +262,84 @@ public class Register {
     
     /**
      * gtri (greater-than register/immediate) sets register C to 1 if register A is greater than value B. Otherwise, register C is set to 0.
+     *
      * @param i Opcode
      * @return int[] register
      */
     public int[] gtri(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        if(i.before[i.A] > i.B) {
+        if (i.before[i.A] > i.B) {
             result[i.C] = 1;
         } else {
             result[i.C] = 0;
         }
         return result;
     }
-
+    
     /**
      * gtrr (greater-than register/register) sets register C to 1 if register A is greater than register B. Otherwise, register C is set to 0.
+     *
      * @param i Opcode
      * @return int[] register
      */
     public int[] gtrr(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        if(i.before[i.A] > i.before[i.B]) {
+        if (i.before[i.A] > i.before[i.B]) {
             result[i.C] = 1;
         } else {
             result[i.C] = 0;
         }
         return result;
     }
-
+    
     /**
      * eqir (equal immediate/register) sets register C to 1 if value A is equal to register B. Otherwise, register C is set to 0.
+     *
      * @param i Opcode
      * @return int[] register
      */
     public int[] eqir(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        if(i.A == i.before[i.B]) {
+        if (i.A == i.before[i.B]) {
             result[i.C] = 1;
         } else {
             result[i.C] = 0;
         }
         return result;
     }
-
+    
     /**
      * eqri (equal register/immediate) sets register C to 1 if register A is equal to value B. Otherwise, register C is set to 0.
+     *
      * @param i Opcode
      * @return int[] register
      */
     public int[] eqri(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        if(i.before[i.A] == i.B) {
+        if (i.before[i.A] == i.B) {
             result[i.C] = 1;
         } else {
             result[i.C] = 0;
         }
         return result;
     }
-
+    
     /**
      * eqrr (equal register/register) sets register C to 1 if register A is equal to register B. Otherwise, register C is set to 0.
+     *
      * @param i Opcode
      * @return int[] register
      */
     public int[] eqrr(Opcode i) {
         int[] result = Arrays.copyOf(i.before, i.before.length);
-        if(i.before[i.A] == i.before[i.B]) {
+        if (i.before[i.A] == i.before[i.B]) {
             result[i.C] = 1;
         } else {
             result[i.C] = 0;
         }
         return result;
     }
-
+    
     
     public static class Opcode {
         int id;
