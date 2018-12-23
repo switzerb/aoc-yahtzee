@@ -12,10 +12,14 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ClassLoader cl = Main.class.getClassLoader();
         InputStream in = cl.getResourceAsStream("input.txt");
+        InputStream in2 = cl.getResourceAsStream("program.txt");
         BufferedReader r = new BufferedReader(new InputStreamReader(in));
+        BufferedReader r2 = new BufferedReader(new InputStreamReader(in2));
         
         List<String> input = new ArrayList<>();
         Register instructions = new Register();
+        
+        List<Register.Opcode> program = new ArrayList<>();
         
         while (true) {
             String line = r.readLine();
@@ -26,6 +30,21 @@ public class Main {
                 input.add(line);
             }
         }
+        
+        while (true) {
+            String line = r2.readLine();
+            if(line == null) {
+                break;
+            }
+            String[] split = line.split(" ");
+            int id = Integer.parseInt(split[0]);
+            int A = Integer.parseInt(split[1]);
+            int B = Integer.parseInt(split[2]);
+            int C = Integer.parseInt(split[3]);
+            Register.Opcode instruction = new Register.Opcode(id, A, B, C);
+            program.add(instruction);
+        }
+        
         
         int count = 0;
         int id = 0;
@@ -57,10 +76,9 @@ public class Main {
         }
     
         Map<Integer, Register.Operation> map =  instructions.codeMapper();
-        System.out.println(map);
         
         System.out.println("Solution Part One:" + instructions.countInstructions());
-        System.out.println("Solution Part Two:");
+        System.out.println("Solution Part Two:" + instructions.runProgram(program));
         
     }
     

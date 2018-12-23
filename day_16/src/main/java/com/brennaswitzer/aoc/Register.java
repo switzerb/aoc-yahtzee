@@ -81,6 +81,19 @@ public class Register {
         return total;
     }
     
+    public int runProgram(List<Opcode> instructions) {
+    
+        Map<Integer, Operation> codes = codeMapper();
+        int[] registers = {0,0,0,0};
+        
+        for (Opcode instruction : instructions) {
+            Operation o = codes.get(instruction.id);
+            instruction.setBefore(registers);
+            registers = getOperation(o, instruction);
+        }
+        return registers[0];
+    }
+    
     int[] getOperation(Operation operation, Opcode i) {
         switch (operation) {
             case ADDI:
@@ -349,6 +362,13 @@ public class Register {
         int[] before;
         int[] after;
         
+        Opcode(int id, int A, int B, int C) {
+            this.id = id;
+            this.A = A;
+            this.B = B;
+            this.C = C;
+        }
+        
         Opcode(int id, int A, int B, int C, int[] before, int[] after) {
             this.id = id;
             this.A = A;
@@ -356,6 +376,10 @@ public class Register {
             this.C = C;
             this.before = before;
             this.after = after;
+        }
+        
+        void setBefore(int[] register) {
+            this.before = Arrays.copyOf(register, register.length);
         }
         
         @Override
