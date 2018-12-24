@@ -70,14 +70,13 @@ public class NorthPole {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        Set<Point> keys = facility.keySet();
-        List<Point> sortedKeys = keys.stream().collect(Collectors.toList());
+        List<Point> sortedKeys = new ArrayList<>(facility.keySet());
         Collections.sort(sortedKeys);
         
         Point upperLeft = sortedKeys.get(0);
         Point lowerRight = sortedKeys.get(sortedKeys.size() - 1);
         
-        for (int r = upperLeft.getRow() -1 ; r <= lowerRight.getRow() + 1; r++) {
+        for (int r = upperLeft.getRow() - 1 ; r <= lowerRight.getRow() + 1; r++) {
             sb.append("\n");
             for (int c = upperLeft.getCol() - 1; c <= lowerRight.getCol() + 1; c++) {
                 Point p = new Point(r, c);
@@ -89,9 +88,6 @@ public class NorthPole {
             }
         }
 
-//        for (Map.Entry<Point, Character> point : entries) {
-//            sb.append(point.getValue());
-//        }
         return sb.toString();
     }
     
