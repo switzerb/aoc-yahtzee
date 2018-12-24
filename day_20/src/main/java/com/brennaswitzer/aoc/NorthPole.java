@@ -1,13 +1,12 @@
 package com.brennaswitzer.aoc;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class NorthPole {
     
     HashMap<Point, Character> facility = new HashMap<>();
-    Point current = new Point(0,0);
+    Point current = new Point(0, 0);
     
     NorthPole() {
         start();
@@ -22,7 +21,6 @@ public class NorthPole {
     void mapRoute(String route) {
         String[] dirs = route.split("");
         for (String d : dirs) {
-            System.out.println(current);
             if (d.equals("W")) {
                 mapWest();
             }
@@ -36,37 +34,61 @@ public class NorthPole {
     }
     
     void mapWest() {
+        Point door = new Point( current.getRow(), current.getCol() - 1);
+        Point room = new Point( current.getRow(), current.getCol() - 2);
+        facility.put(door, '|');
+        facility.put(room, '.');
+        current.setLocation(room);
     }
     
     void mapEast() {
+        Point door = new Point( current.getRow(), current.getCol() + 1);
+        Point room = new Point( current.getRow(), current.getCol() + 2);
+        facility.put(door, '|');
+        facility.put(room, '.');
+        current.setLocation(room);
     }
     
     void mapNorth() {
+        Point door = new Point( current.getRow() - 1, current.getCol());
+        Point room = new Point( current.getRow() - 2, current.getCol());
+        facility.put(door, '-');
+        facility.put(room, '.');
+        current.setLocation(room);
     }
     
     void mapSouth() {
-    
+        Point door = new Point( current.getRow() + 1, current.getCol());
+        Point room = new Point( current.getRow() + 2, current.getCol());
+        facility.put(door, '-');
+        facility.put(room, '.');
+        current.setLocation(room);
     }
+    
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Set<Map.Entry<Point, Character>> entries = facility.entrySet();
 
-//        for (int i = -10; i < 10; i++) {
-//            sb.append("\n");
-//            for (int j = -10; j < 10; j++) {
-//                Point p = new Point(i, j);
-//                if (facility.containsKey(p)) {
-//                    System.out.println(facility.get(p));
-////                    sb.append(facility.get(p));
-//                } else {
-////                    sb.append("?");
-//                }
-//            }
-//        }
+        Set<Point> keys = facility.keySet();
+        List<Point> sortedKeys = keys.stream().collect(Collectors.toList());
+        Collections.sort(sortedKeys);
+        
+        Point upperLeft = sortedKeys.get(0);
+        Point lowerRight = sortedKeys.get(sortedKeys.size() - 1);
+        
+        for (int r = upperLeft.getRow() -1 ; r <= lowerRight.getRow() + 1; r++) {
+            sb.append("\n");
+            for (int c = upperLeft.getCol() - 1; c <= lowerRight.getCol() + 1; c++) {
+                Point p = new Point(r, c);
+                if (facility.containsKey(p)) {
+                    sb.append(facility.get(p));
+                } else {
+                    sb.append("#");
+                }
+            }
+        }
 
-//
 //        for (Map.Entry<Point, Character> point : entries) {
 //            sb.append(point.getValue());
 //        }
@@ -119,7 +141,7 @@ public class NorthPole {
             if (c != 0) return c;
             return p.x - o.p.x;
         }
-    
+        
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder();
