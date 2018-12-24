@@ -78,7 +78,6 @@ public class NorthPole {
         current.setLocation(room);
     }
     
-    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
