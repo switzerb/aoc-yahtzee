@@ -9,19 +9,22 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) throws IOException {
-    ClassLoader cl = Main.class.getClassLoader();
-    InputStream in = cl.getResourceAsStream("input.txt");
-    BufferedReader r = new BufferedReader(new InputStreamReader(in));
+//    ClassLoader cl = Main.class.getClassLoader();
+//    InputStream in = cl.getResourceAsStream("input.txt");
+//    BufferedReader r = new BufferedReader(new InputStreamReader(in));
+//
+//    List<String> input = new ArrayList<>();
+//
+//    while (true) {
+//      String line = r.readLine();
+//      if (line == null) {
+//        break;
+//      }
+//      input.add(line);
+//    }
 
-    List<String> input = new ArrayList<>();
-
-    while (true) {
-      String line = r.readLine();
-      if (line == null) {
-        break;
-      }
-      input.add(line);
-    }
-
+    NorthPole facility = new NorthPole();
+    facility.mapRoute("WNE");
+    System.out.println(facility);
   }
 }
