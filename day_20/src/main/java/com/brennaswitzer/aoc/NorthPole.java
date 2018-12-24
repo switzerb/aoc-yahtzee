@@ -7,15 +7,21 @@ public class NorthPole {
     
     HashMap<Point, Character> facility = new HashMap<>();
     Point current = new Point(0, 0);
+    Point tail = new Point(0,0);
     
     NorthPole() {
         start();
     }
     
     void start() {
-        Point start = new Point(0, 0);
-        current.setLocation(start);
-        facility.put(start, 'X');
+        facility.put(new Point(current), 'X');
+    }
+    
+    void markCorners(Point p) {
+        facility.put(new Point(p.getRow() + 1, p.getCol() + 1), '#');
+        facility.put(new Point(p.getRow() - 1, p.getCol() - 1), '#');
+        facility.put(new Point(p.getRow() - 1, p.getCol() + 1), '#');
+        facility.put(new Point(p.getRow() + 1, p.getCol() - 1), '#');
     }
     
     void mapRoute(String route) {
@@ -30,6 +36,9 @@ public class NorthPole {
             if (d.equals("N")) {
                 mapNorth();
             }
+            if (d.equals("S")) {
+                mapSouth();
+            }
         }
     }
     
@@ -38,6 +47,7 @@ public class NorthPole {
         Point room = new Point( current.getRow(), current.getCol() - 2);
         facility.put(door, '|');
         facility.put(room, '.');
+        markCorners(room);
         current.setLocation(room);
     }
     
@@ -46,6 +56,7 @@ public class NorthPole {
         Point room = new Point( current.getRow(), current.getCol() + 2);
         facility.put(door, '|');
         facility.put(room, '.');
+        markCorners(room);
         current.setLocation(room);
     }
     
@@ -54,6 +65,7 @@ public class NorthPole {
         Point room = new Point( current.getRow() - 2, current.getCol());
         facility.put(door, '-');
         facility.put(room, '.');
+        markCorners(room);
         current.setLocation(room);
     }
     
@@ -62,6 +74,7 @@ public class NorthPole {
         Point room = new Point( current.getRow() + 2, current.getCol());
         facility.put(door, '-');
         facility.put(room, '.');
+        markCorners(room);
         current.setLocation(room);
     }
     
@@ -76,14 +89,14 @@ public class NorthPole {
         Point upperLeft = sortedKeys.get(0);
         Point lowerRight = sortedKeys.get(sortedKeys.size() - 1);
         
-        for (int r = upperLeft.getRow() - 1 ; r <= lowerRight.getRow() + 1; r++) {
+        for (int r = upperLeft.getRow() ; r <= lowerRight.getRow(); r++) {
             sb.append("\n");
-            for (int c = upperLeft.getCol() - 1; c <= lowerRight.getCol() + 1; c++) {
+            for (int c = upperLeft.getCol(); c <= lowerRight.getCol(); c++) {
                 Point p = new Point(r, c);
                 if (facility.containsKey(p)) {
                     sb.append(facility.get(p));
                 } else {
-                    sb.append("#");
+                    sb.append("?");
                 }
             }
         }
@@ -94,6 +107,10 @@ public class NorthPole {
     public class Point implements Comparable<Point> {
         
         private final java.awt.Point p;
+        
+        public Point(Point n) {
+            p = new java.awt.Point(n.getCol(), n.getRow());
+        }
         
         public Point(int row, int col) {
             p = new java.awt.Point(col, row);

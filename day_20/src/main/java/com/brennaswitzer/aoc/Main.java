@@ -24,7 +24,9 @@ public class Main {
 //    }
 
     NorthPole facility = new NorthPole();
-    facility.mapRoute("WNE");
+//    facility.mapRoute("WNE");
+    facility.mapRoute("ENWWW");
+    facility.mapRoute("NEEE");
     System.out.println(facility);
   }
 }
