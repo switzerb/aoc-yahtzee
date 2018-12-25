@@ -62,7 +62,7 @@ public class Cavern {
         long sum = 0L;
         sum += getSumOfPots(400);
 
-        sum += (50_000_000_000L - 400) * 6300;
+        sum += (50_000_000_000L - 400) * 63;
         return sum;
     }
     
