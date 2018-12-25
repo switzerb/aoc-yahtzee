@@ -1,17 +1,16 @@
 package com.brennaswitzer.aoc;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 public class NorthPole {
     
     HashMap<Point, Character> facility = new HashMap<>();
-    Point start = new Point(0,0);
+    Point start = new Point(0, 0);
     
     NorthPole() {
-        facility.put(start,'X');
+        facility.put(start, 'X');
     }
     
     void markCorners(Point p) {
@@ -30,7 +29,7 @@ public class NorthPole {
             this.row_delta = r;
             this.col_delta = c;
         }
-    
+        
         public static Direction parse(char dir) {
             if (dir == 'W') {
                 return Direction.West;
@@ -46,7 +45,7 @@ public class NorthPole {
             }
             throw new IllegalArgumentException("Unrecognized direction.");
         }
-    
+        
         Point move(int distance, Point p) {
             return new Point(p.getRow() + row_delta * distance, p.getCol() + col_delta * distance);
         }
@@ -56,7 +55,7 @@ public class NorthPole {
     Point mapDirection(Direction direction, Point X) {
         Point door = direction.move(1, X);
         Point room = direction.move(2, X);
-
+        
         facility.put(door, '|');
         facility.put(room, '.');
         markCorners(room);
@@ -67,13 +66,13 @@ public class NorthPole {
         
         Point current = new Point(start);
         
-        for(char c : directions.toCharArray()) {
+        for (char c : directions.toCharArray()) {
             Direction direction = Direction.parse(c);
             current = mapDirection(direction, current);
         }
 //        int open = directions.indexOf("(");
 //        System.out.println(open);
-        
+
 //        if(open > -1) {
 //            traverseMap(directions.substring(open + 1));
 //        } else {
@@ -81,7 +80,6 @@ public class NorthPole {
 //
 //        }
     }
-    
     
     @Override
     public String toString() {
@@ -92,7 +90,7 @@ public class NorthPole {
         int min_row = Integer.MAX_VALUE;
         int min_col = Integer.MAX_VALUE;
         
-        for(Point p : keys ) {
+        for (Point p : keys) {
             max_row = Math.max(max_row, p.getRow());
             min_row = Math.min(min_row, p.getRow());
             max_col = Math.max(max_col, p.getCol());
@@ -100,13 +98,15 @@ public class NorthPole {
         }
         
         for (int r = min_row; r <= max_row; r++) {
-            sb.append("\n");
+            if (r != min_row) {
+                sb.append("\n");
+            }
             for (int c = min_col; c <= max_col; c++) {
                 Point p = new Point(r, c);
                 if (facility.containsKey(p)) {
                     sb.append(facility.get(p));
                 } else {
-                    sb.append("?");
+                    sb.append("#");
                 }
             }
         }

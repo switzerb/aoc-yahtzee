@@ -12,10 +12,11 @@ public class MainTest {
     public void test_p1_ex1() {
         String test = "#####\n" +
                       "#.|.#\n" +
-                      "#-###\n" +
+                      "#|###\n" +
                       "#.|X#\n" +
                       "#####";
         pole.traverseMap("WNE");
+        System.out.println(pole);
         assertEquals(test, pole.toString());
     }
 
