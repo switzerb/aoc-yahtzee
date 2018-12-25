@@ -109,7 +109,7 @@ public class InstructionTest {
 
     @Test
     public void testFindTime() {
-        i.timeToAssemble();
+        i.timeToComplete();
     }
 
     @Test

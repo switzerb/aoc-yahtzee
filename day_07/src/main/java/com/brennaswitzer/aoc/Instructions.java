@@ -38,6 +38,41 @@ public class Instructions {
         }
         return String.join("", done);
     }
+    
+    int timeToComplete() {
+        // for each step that is available
+        // assign
+
+        int max = getMaxTimeValue();
+        int seconds = 0;
+    
+        while(seconds < 10) {
+            // if there are workers available && next step is available
+            System.out.println(seconds);
+        
+            seconds++;
+        }
+        
+        
+//        String step = findFirstInstruction();
+//
+//        // loop through all the seconds up to the max amount of time it might take
+//        for (int t = 60; t < max; t++) {
+//            String parent = findFirstInstruction();
+//
+//            if(t >= timeToFinish(parent)) {
+//                done.add(parent);
+//            }
+//
+//            // if we have an available worker and an available step, start the clock
+//            if (getWorkerIndex() != -1) {
+//                workers[getWorkerIndex()] = timeToFinish(step);
+//            }
+//
+//        }
+        return seconds;
+    }
+    
 
     List<String> getAvailable() {
 
@@ -123,32 +158,7 @@ public class Instructions {
         }
         return false;
     }
-
-    void timeToAssemble() {
-
-        // for each step that is available
-        // assign
-
-//        int max = getMaxTimeValue();
-//        String step = findFirstInstruction();
-//
-//        // loop through all the seconds up to the max amount of time it might take
-//        for (int t = 60; t < max; t++) {
-//            String parent = findFirstInstruction();
-//
-//            if(t >= timeToFinish(parent)) {
-//                done.add(parent);
-//            }
-//
-//            // if we have an available worker and an available step, start the clock
-//            if (getWorkerIndex() != -1) {
-//                workers[getWorkerIndex()] = timeToFinish(step);
-//            }
-//
-//        }
-
-    }
-
+    
     int getWorkerIndex() {
         for (int i = 0; i < workers.length; i++) {
             if (workers[i] == 0) {
