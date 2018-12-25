@@ -16,18 +16,22 @@ public class MainTest {
                       "#.|X#\n" +
                       "#####";
         pole.traverseMap("WNE");
-        System.out.println(pole);
         assertEquals(test, pole.toString());
     }
 
     @Test
     public void test_p1_ex2() {
-        String example = "#?#?#?#?#\n" +
-                         "?.|.|.|.?\n" +
-                         "#?#?#?#-#\n" +
-                         "    ?X|.?\n" +
-                         "    #?#?#\n";
-        pole.traverseMap("ENWWW");
+        String example = "#########\n" +
+                          "#.|.|.|.#\n" +
+                          "#|#######\n" +
+                          "#.|.|.|.#\n" +
+                          "#|#####|#\n" +
+                          "#.#.#X|.#\n" +
+                          "#|#|#####\n" +
+                          "#.|.|.|.#\n" +
+                          "#########";
+        pole.traverseMap("ENWWW(NEEE|SSE(EE|N))");
+        System.out.println(pole);
         assertEquals(example, pole.toString());
     }
 

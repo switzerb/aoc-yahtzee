@@ -25,13 +25,7 @@ public class Main {
 
     
     NorthPole facility = new NorthPole();
-//    facility.traverseMap("ENWWW(NEEE|SSE(EE|N))");
-
     facility.traverseMap("WNE");
-
-//    facility.mapRoute("ENWWW");
-//    facility.mapRoute("NEEE");
-    
     System.out.println(facility);
   }
 }
