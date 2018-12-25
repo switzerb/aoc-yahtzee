@@ -60,6 +60,7 @@ public class Cavern {
     
     long getHugeEvolution() {
         long sum = 0L;
+        // need to put in here dynamic calculation of the "63" difference
         sum += getSumOfPots(400);
 
         sum += (50_000_000_000L - 400) * 63;
