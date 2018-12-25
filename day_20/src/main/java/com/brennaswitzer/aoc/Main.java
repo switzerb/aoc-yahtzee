@@ -23,15 +23,15 @@ public class Main {
 //      input.add(line);
 //    }
 
-    Node d = new Node();
-    d = d.buildDirections("ENWWW(NEEE|SSE(EE|N))");
-    System.out.println(d);
     
     NorthPole facility = new NorthPole();
-//    facility.mapRoute("WNE");
+//    facility.traverseMap("ENWWW(NEEE|SSE(EE|N))");
+
+    facility.traverseMap("WNE");
+
 //    facility.mapRoute("ENWWW");
 //    facility.mapRoute("NEEE");
     
-//    System.out.println(facility);
+    System.out.println(facility);
   }
 }

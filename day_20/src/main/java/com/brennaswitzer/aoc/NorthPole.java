@@ -1,20 +1,17 @@
 package com.brennaswitzer.aoc;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class NorthPole {
     
     HashMap<Point, Character> facility = new HashMap<>();
-    Point current = new Point(0, 0);
-    Point tail = new Point(0,0);
+    Point start = new Point(0,0);
     
     NorthPole() {
-        start();
-    }
-    
-    void start() {
-        facility.put(new Point(current), 'X');
+        facility.put(start,'X');
     }
     
     void markCorners(Point p) {
@@ -24,73 +21,87 @@ public class NorthPole {
         facility.put(new Point(p.getRow() + 1, p.getCol() - 1), '#');
     }
     
-    void mapRoute(String route) {
-        String[] dirs = route.split("");
-        for (String d : dirs) {
-            if (d.equals("W")) {
-                mapWest();
-            }
-            if (d.equals("E")) {
-                mapEast();
-            }
-            if (d.equals("N")) {
-                mapNorth();
-            }
-            if (d.equals("S")) {
-                mapSouth();
-            }
+    public enum Direction {
+        North(-1, 0), South(1, 0), East(0, 1), West(0, -1);
+        
+        int row_delta, col_delta;
+        
+        Direction(int r, int c) {
+            this.row_delta = r;
+            this.col_delta = c;
         }
+    
+        public static Direction parse(char dir) {
+            if (dir == 'W') {
+                return Direction.West;
+            }
+            if (dir == 'E') {
+                return Direction.East;
+            }
+            if (dir == 'N') {
+                return Direction.North;
+            }
+            if (dir == 'S') {
+                return Direction.South;
+            }
+            throw new IllegalArgumentException("Unrecognized direction.");
+        }
+    
+        Point move(int distance, Point p) {
+            return new Point(p.getRow() + row_delta * distance, p.getCol() + col_delta * distance);
+        }
+        
     }
     
-    void mapWest() {
-        Point door = new Point( current.getRow(), current.getCol() - 1);
-        Point room = new Point( current.getRow(), current.getCol() - 2);
+    Point mapDirection(Direction direction, Point X) {
+        Point door = direction.move(1, X);
+        Point room = direction.move(2, X);
+
         facility.put(door, '|');
         facility.put(room, '.');
         markCorners(room);
-        current.setLocation(room);
+        return room;
     }
     
-    void mapEast() {
-        Point door = new Point( current.getRow(), current.getCol() + 1);
-        Point room = new Point( current.getRow(), current.getCol() + 2);
-        facility.put(door, '|');
-        facility.put(room, '.');
-        markCorners(room);
-        current.setLocation(room);
+    void traverseMap(String directions) {
+        
+        Point current = new Point(start);
+        
+        for(char c : directions.toCharArray()) {
+            Direction direction = Direction.parse(c);
+            current = mapDirection(direction, current);
+        }
+//        int open = directions.indexOf("(");
+//        System.out.println(open);
+        
+//        if(open > -1) {
+//            traverseMap(directions.substring(open + 1));
+//        } else {
+////            path = directions.substring(0, open);
+//
+//        }
     }
     
-    void mapNorth() {
-        Point door = new Point( current.getRow() - 1, current.getCol());
-        Point room = new Point( current.getRow() - 2, current.getCol());
-        facility.put(door, '-');
-        facility.put(room, '.');
-        markCorners(room);
-        current.setLocation(room);
-    }
-    
-    void mapSouth() {
-        Point door = new Point( current.getRow() + 1, current.getCol());
-        Point room = new Point( current.getRow() + 2, current.getCol());
-        facility.put(door, '-');
-        facility.put(room, '.');
-        markCorners(room);
-        current.setLocation(room);
-    }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
-        List<Point> sortedKeys = new ArrayList<>(facility.keySet());
-        Collections.sort(sortedKeys);
+        List<Point> keys = new ArrayList<>(facility.keySet());
+        int max_row = Integer.MIN_VALUE;
+        int max_col = Integer.MIN_VALUE;
+        int min_row = Integer.MAX_VALUE;
+        int min_col = Integer.MAX_VALUE;
         
-        Point upperLeft = sortedKeys.get(0);
-        Point lowerRight = sortedKeys.get(sortedKeys.size() - 1);
+        for(Point p : keys ) {
+            max_row = Math.max(max_row, p.getRow());
+            min_row = Math.min(min_row, p.getRow());
+            max_col = Math.max(max_col, p.getCol());
+            min_col = Math.min(min_col, p.getCol());
+        }
         
-        for (int r = upperLeft.getRow() ; r <= lowerRight.getRow(); r++) {
+        for (int r = min_row; r <= max_row; r++) {
             sb.append("\n");
-            for (int c = upperLeft.getCol(); c <= lowerRight.getCol(); c++) {
+            for (int c = min_col; c <= max_col; c++) {
                 Point p = new Point(r, c);
                 if (facility.containsKey(p)) {
                     sb.append(facility.get(p));
@@ -99,66 +110,8 @@ public class NorthPole {
                 }
             }
         }
-
+        
         return sb.toString();
     }
     
-    public class Point implements Comparable<Point> {
-        
-        private final java.awt.Point p;
-        
-        public Point(Point n) {
-            p = new java.awt.Point(n.getCol(), n.getRow());
-        }
-        
-        public Point(int row, int col) {
-            p = new java.awt.Point(col, row);
-        }
-        
-        public int getRow() {
-            return p.y;
-        }
-        
-        public int getCol() {
-            return p.x;
-        }
-        
-        public void setLocation(int row, int col) {
-            this.p.y = row;
-            this.p.x = col;
-        }
-        
-        public void setLocation(Point point) {
-            this.p.y = point.p.y;
-            this.p.x = point.p.x;
-        }
-        
-        
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Point)) return false;
-            Point point = (Point) o;
-            return p.equals(point.p);
-        }
-        
-        @Override
-        public int hashCode() {
-            return p.hashCode();
-        }
-        
-        @Override
-        public int compareTo(Point o) {
-            int c = p.y - o.p.y;
-            if (c != 0) return c;
-            return p.x - o.p.x;
-        }
-        
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("[" + p.y + "," + p.x + "]");
-            return sb.toString();
-        }
-    }
 }
