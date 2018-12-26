@@ -15,7 +15,7 @@ public class MainTest {
                       "#|###\n" +
                       "#.|X#\n" +
                       "#####";
-        pole.traverseMap("WNE");
+        pole.traverseMap("WNE", new Point(0,0));
         assertEquals(test, pole.toString());
     }
 
@@ -30,7 +30,7 @@ public class MainTest {
                           "#|#|#####\n" +
                           "#.|.|.|.#\n" +
                           "#########";
-        pole.traverseMap("ENWWW(NEEE|SSE(EE|N))");
+        pole.traverseMap("ENWWW(NEEE|SSE(EE|N))", new Point(0,0));
         System.out.println(pole);
         assertEquals(example, pole.toString());
     }

@@ -57,4 +57,8 @@ public class Point implements Comparable<Point> {
         sb.append("[" + p.y + "," + p.x + "]");
         return sb.toString();
     }
+    
+    public Point go(NorthPole.Direction dir) {
+        return dir.move(1, this);
+    }
 }

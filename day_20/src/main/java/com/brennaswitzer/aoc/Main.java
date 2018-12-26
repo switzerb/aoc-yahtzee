@@ -1,14 +1,9 @@
 package com.brennaswitzer.aoc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
-  public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 //    ClassLoader cl = Main.class.getClassLoader();
 //    InputStream in = cl.getResourceAsStream("input.txt");
 //    BufferedReader r = new BufferedReader(new InputStreamReader(in));
@@ -22,10 +17,11 @@ public class Main {
 //      }
 //      input.add(line);
 //    }
-
-    
-    NorthPole facility = new NorthPole();
-    facility.traverseMap("WNE");
-    System.out.println(facility);
-  }
+        
+        
+        NorthPole facility = new NorthPole();
+        Point start = new Point(0, 0);
+        facility.traverseMap("WNE", start);
+        System.out.println(facility);
+    }
 }

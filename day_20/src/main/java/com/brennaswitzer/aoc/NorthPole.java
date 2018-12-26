@@ -14,10 +14,10 @@ public class NorthPole {
     }
     
     void markCorners(Point p) {
-        facility.put(new Point(p.getRow() + 1, p.getCol() + 1), '#');
-        facility.put(new Point(p.getRow() - 1, p.getCol() - 1), '#');
-        facility.put(new Point(p.getRow() - 1, p.getCol() + 1), '#');
-        facility.put(new Point(p.getRow() + 1, p.getCol() - 1), '#');
+        facility.put(p.go(Direction.North).go(Direction.West), '#');
+        facility.put(p.go(Direction.North).go(Direction.East), '#');
+        facility.put(p.go(Direction.South).go(Direction.West), '#');
+        facility.put(p.go(Direction.South).go(Direction.East), '#');
     }
     
     public enum Direction {
@@ -62,23 +62,28 @@ public class NorthPole {
         return room;
     }
     
-    void traverseMap(String directions) {
-        
-        Point current = new Point(start);
+    void traverseMap(String directions, Point start) {
+        Point current = start;
         
         for (char c : directions.toCharArray()) {
-            Direction direction = Direction.parse(c);
-            current = mapDirection(direction, current);
+            if (c == '(') {
+                // open parens is start of a branch
+                int open_p = directions.indexOf("(");
+                traverseMap(directions.substring(open_p + 1), start);
+                
+            } else if (c == ')') {
+                // end parens is end of an expression
+                
+                
+            } else if (c == '|') {
+            
+            
+            } else {
+                Direction direction = Direction.parse(c);
+                current = mapDirection(direction, current);
+            }
+            
         }
-//        int open = directions.indexOf("(");
-//        System.out.println(open);
-
-//        if(open > -1) {
-//            traverseMap(directions.substring(open + 1));
-//        } else {
-////            path = directions.substring(0, open);
-//
-//        }
     }
     
     @Override
