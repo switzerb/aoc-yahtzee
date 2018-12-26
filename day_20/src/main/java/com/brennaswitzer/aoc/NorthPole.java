@@ -3,14 +3,16 @@ package com.brennaswitzer.aoc;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NorthPole {
     
     HashMap<Point, Character> facility = new HashMap<>();
-    Point start = new Point(0, 0);
+    AtomicInteger ref = new AtomicInteger();
+    
     
     NorthPole() {
-        facility.put(start, 'X');
+        facility.put(new Point(0, 0), 'X');
     }
     
     void markCorners(Point p) {
@@ -49,7 +51,6 @@ public class NorthPole {
         Point move(int distance, Point p) {
             return new Point(p.getRow() + row_delta * distance, p.getCol() + col_delta * distance);
         }
-        
     }
     
     Point mapDirection(Direction direction, Point X) {
@@ -62,28 +63,24 @@ public class NorthPole {
         return room;
     }
     
-    void traverseMap(String directions, Point start) {
-        Point current = start;
+    void traverseMap(char[] directions, Point current) {
         
-        for (char c : directions.toCharArray()) {
-            if (c == '(') {
-                // open parens is start of a branch
-                int open_p = directions.indexOf("(");
-                traverseMap(directions.substring(open_p + 1), start);
-                
+        for (int i = 0; i < directions.length; i++) {
+            
+            char c = directions[ref.getAndIncrement()];
+            
+            if ( c == '(') {
+                traverseMap(directions, current);
             } else if (c == ')') {
-                // end parens is end of an expression
-                
-                
+                return;
             } else if (c == '|') {
-            
-            
+                traverseMap(directions, current);
             } else {
                 Direction direction = Direction.parse(c);
                 current = mapDirection(direction, current);
             }
-            
         }
+        
     }
     
     @Override
