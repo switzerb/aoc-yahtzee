@@ -18,5 +18,6 @@ public class Main {
         facility.traverseMap(input.toCharArray(), start);
         System.out.println(facility);
         System.out.println("Solution Part One: " + facility.getFurthestRoom());
+        System.out.println("Solution Part Two: " + facility.countThreshold(1000));
     }
 }

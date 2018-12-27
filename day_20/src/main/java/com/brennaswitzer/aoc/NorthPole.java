@@ -114,8 +114,18 @@ public class NorthPole {
         for (Integer i : marks.values()) {
             furthest = Math.max(i, furthest);
         }
-        
         return furthest;
+    }
+    
+    int countThreshold(int doors) {
+        int count = 0;
+        BFS(new Point(0, 0));
+        for (Integer i : marks.values()){
+            if(i >= doors){
+                count++;
+            }
+        }
+        return count;
     }
     
     @Override
