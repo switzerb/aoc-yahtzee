@@ -1,15 +1,13 @@
 package com.brennaswitzer.aoc;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class NorthPole {
     
     HashMap<Point, Character> facility = new HashMap<>();
     AtomicInteger ref = new AtomicInteger();
-    
+    HashMap<Point, Integer> marks = new HashMap<>();
     
     NorthPole() {
         facility.put(new Point(0, 0), 'X');
@@ -67,9 +65,9 @@ public class NorthPole {
         
         for (int i = 0; i < directions.length; i++) {
             
-            if(ref.intValue() < directions.length) {
+            if (ref.intValue() < directions.length) {
                 char c = directions[ref.getAndIncrement()];
-    
+                
                 if (c == '(') {
                     traverseMap(directions, current);
                 } else if (c == ')') {
@@ -86,14 +84,42 @@ public class NorthPole {
         }
     }
     
-    int getFurthestRoom() {
-        int doors = 0;
-        for (char c : facility.values()) {
-            if(c == '|') {
-                doors++;
+    void BFS(Point p) {
+        EnumSet<Direction> directions = EnumSet.allOf(Direction.class);
+        LinkedList<Point> queue = new LinkedList<>();
+        marks.put(p, 0);
+        queue.add(p);
+        
+        while (queue.size() != 0) {
+            p = queue.poll();
+            
+            // Get all adjacent vertices of the dequeued vertex s
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it
+            
+            for (Direction d : directions) {
+                Point room = p.go(d, 2);
+                
+                if (facility.get(p.go(d)) != null) {
+                    if (facility.get(p.go(d)) == '|' && !marks.containsKey(room)) {
+                        int distance = marks.get(p) + 1;
+                        System.out.println(room + "-" + distance);
+                        marks.put(room, distance);
+                        queue.add(room);
+                    }
+                }
             }
         }
-        return doors;
+    }
+    
+    int getFurthestRoom() {
+        int furthest = 0;
+        BFS(new Point(0, 0));
+        for (Integer i : marks.values()) {
+            furthest = Math.max(i, furthest);
+        }
+        
+        return furthest;
     }
     
     @Override

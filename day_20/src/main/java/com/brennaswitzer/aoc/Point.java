@@ -30,6 +30,13 @@ public class Point implements Comparable<Point> {
         this.p.x = point.p.x;
     }
     
+    public Point go(NorthPole.Direction dir) {
+        return dir.move(1, this);
+    }
+    
+    public Point go(NorthPole.Direction dir, int distance) {
+        return dir.move(distance, this);
+    }
     
     @Override
     public boolean equals(Object o) {
@@ -58,7 +65,4 @@ public class Point implements Comparable<Point> {
         return sb.toString();
     }
     
-    public Point go(NorthPole.Direction dir) {
-        return dir.move(1, this);
-    }
 }

@@ -70,13 +70,6 @@ public class MainTest {
     }
     
     @Test
-    public void test_p1_ex6() {
-        String directions = "ENWWW(NEEE|SSE(EE|N))";
-        pole.traverseMap(directions.toCharArray(), new Point(0,0));
-        assertEquals(10, pole.getFurthestRoom());
-    }
-    
-    @Test
     public void test_p1_ex7() {
         String directions = "ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN";
         pole.traverseMap(directions.toCharArray(), new Point(0,0));
@@ -109,4 +102,27 @@ public class MainTest {
         pole.traverseMap(directions.toCharArray(), new Point(0,0));
         assertEquals(23, pole.getFurthestRoom());
     }
+    
+    @Test
+    public void test_p1_ex10() {
+        String test = "#######\n" +
+                              "#.|.###\n" +
+                              "###|###\n" +
+                              "#.|.|.#\n" +
+                              "#|#####\n" +
+                              "#.|X###\n" +
+                              "#######";
+        String input = "WNE(E|NW)";
+        pole.traverseMap(input.toCharArray(), new Point(0, 0));
+        System.out.println(pole);
+        assertEquals(test, pole.toString());
+    }
+    
+    @Test
+    public void test_p1_ex11() {
+        String directions = "WNE(E|NW)";
+        pole.traverseMap(directions.toCharArray(), new Point(0, 0));
+        assertEquals(5, pole.getFurthestRoom());
+    }
+    
 }
