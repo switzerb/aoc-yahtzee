@@ -84,7 +84,16 @@ public class NorthPole {
                 }
             }
         }
-        
+    }
+    
+    int getFurthestRoom() {
+        int doors = 0;
+        for (char c : facility.values()) {
+            if(c == '|') {
+                doors++;
+            }
+        }
+        return doors;
     }
     
     @Override
