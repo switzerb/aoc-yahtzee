@@ -71,10 +71,8 @@ public class NorthPole {
             
             if ( c == '(') {
                 traverseMap(directions, current);
-            } else if (c == ')') {
+            } else if (c == ')' || c == '|') {
                 return;
-            } else if (c == '|') {
-                traverseMap(directions, current);
             } else {
                 Direction direction = Direction.parse(c);
                 current = mapDirection(direction, current);
