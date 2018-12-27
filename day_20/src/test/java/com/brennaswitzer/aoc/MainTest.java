@@ -37,5 +37,24 @@ public class MainTest {
         System.out.println(pole);
         assertEquals(example, pole.toString());
     }
+    
+    @Test
+    public void test_p1_ex3() {
+        String example = "###########\n" +
+                         "#.|.#.|.#.#\n" +
+                         "#|###|#|#|#\n" +
+                         "#.|.|.#.#.#\n" +
+                         "#|#####|#|#\n" +
+                         "#.#.#X|.#.#\n" +
+                         "#|#|#####|#\n" +
+                         "#.#.|.|.|.#\n" +
+                         "#|###|###|#\n" +
+                         "#.|.|.#.|.#\n" +
+                         "###########";
+        String directions = "ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN";
+        pole.traverseMap(directions.toCharArray(), new Point(0,0));
+        System.out.println(pole);
+        assertEquals(example, pole.toString());
+    }
 
 }

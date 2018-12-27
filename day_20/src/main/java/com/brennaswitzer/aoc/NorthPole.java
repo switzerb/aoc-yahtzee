@@ -67,15 +67,21 @@ public class NorthPole {
         
         for (int i = 0; i < directions.length; i++) {
             
-            char c = directions[ref.getAndIncrement()];
-            
-            if ( c == '(') {
-                traverseMap(directions, current);
-            } else if (c == ')' || c == '|') {
-                return;
-            } else {
-                Direction direction = Direction.parse(c);
-                current = mapDirection(direction, current);
+            if(ref.intValue() < directions.length) {
+                char c = directions[ref.getAndIncrement()];
+    
+                if (c == '(') {
+                    traverseMap(directions, current);
+                } else if (c == ')') {
+                    if (directions[ref.intValue() - 2] != '|') {
+                        return;
+                    }
+                } else if (c == '|') {
+                    return;
+                } else {
+                    Direction direction = Direction.parse(c);
+                    current = mapDirection(direction, current);
+                }
             }
         }
         
