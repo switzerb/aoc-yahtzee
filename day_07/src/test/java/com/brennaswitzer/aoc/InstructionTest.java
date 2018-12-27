@@ -75,12 +75,12 @@ public class InstructionTest {
 
     @Test
     public void testGetFirstInstruction(){
-        assertEquals("C", i.findFirstInstruction());
+        assertEquals("C", i.start());
     }
 
     @Test
     public void testDoIt(){
-        assertEquals("CABDFE", i.getInstructionOrder());
+        assertEquals("CABDFE", i.getStepOrder());
     }
 
     @Test
@@ -90,8 +90,8 @@ public class InstructionTest {
 
     @Test
     public void testKeyInDone() {
-        i.findFirstInstruction();
-        i.getInstructionOrder();
+        i.start();
+        i.getStepOrder();
         assertTrue(i.keyInDone("C"));
     }
 
@@ -104,7 +104,7 @@ public class InstructionTest {
 
     @Test
     public void testGetMaxValue() {
-        assertEquals(1825, i.getMaxTimeValue());
+        assertEquals(1828, i.getMaxTimeValue());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class InstructionTest {
 
     @Test
     public void testPartOne() {
-        assertEquals("FMOXCDGJRAUIHKNYZTESWLPBQV", all.getInstructionOrder());
+        assertEquals("FMOXCDGJRAUIHKNYZTESWLPBQV", all.getStepOrder());
     }
 
 }
