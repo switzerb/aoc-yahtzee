@@ -20,16 +20,6 @@ public class Point implements Comparable<Point> {
         return p.x;
     }
     
-    public void setLocation(int row, int col) {
-        this.p.y = row;
-        this.p.x = col;
-    }
-    
-    public void setLocation(Point point) {
-        this.p.y = point.p.y;
-        this.p.x = point.p.x;
-    }
-    
     public Point go(NorthPole.Direction dir) {
         return dir.move(1, this);
     }

@@ -61,24 +61,22 @@ public class NorthPole {
         return room;
     }
     
-    void traverseMap(char[] directions, Point current) {
-    
-        Point branch = new Point(current);
+    void traverseMap(char[] directions, Point start) {
         
-        for (int i = 0; i < directions.length; i++) {
-            if (ref.intValue() < directions.length) {
-                char c = directions[ref.getAndIncrement()];
-                
-                if (c == '(') {
-                    traverseMap(directions, current);
-                } else if (c == ')') {
-                    return;
-                } else if (c == '|') {
-                    current.setLocation(branch);
-                } else {
-                    Direction direction = Direction.parse(c);
-                    current = mapDirection(direction, current);
-                }
+        Point current = new Point(start);
+        
+        for (int i = 0; ref.intValue() < directions.length; i++) {
+            char c = directions[ref.getAndIncrement()];
+            
+            if (c == '(') {
+                traverseMap(directions, current);
+            } else if (c == ')') {
+                return;
+            } else if (c == '|') {
+                current = new Point(start);
+            } else {
+                Direction direction = Direction.parse(c);
+                current = mapDirection(direction, current);
             }
         }
     }
