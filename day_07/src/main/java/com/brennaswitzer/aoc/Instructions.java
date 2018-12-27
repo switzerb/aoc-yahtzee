@@ -95,7 +95,7 @@ public class Instructions {
 
     }
     
-    String start() {
+    private String start() {
         List<String> nodependency = new ArrayList<>();
         // the only key that doesn't have a dependency, meaning the key is not present as a value for anything in the map
         for (String step : steps.keySet()) {
@@ -113,7 +113,7 @@ public class Instructions {
     }
     
     
-    boolean hasAllDone(String i) {
+    private boolean hasAllDone(String i) {
         // check to see that all of the keys that have this string in their list are in the done list
         for (Graph.Entry<String, List<String>> entry : steps.entrySet()) {
             for (String s : entry.getValue()) {
