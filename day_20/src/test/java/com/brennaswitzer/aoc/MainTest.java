@@ -125,4 +125,10 @@ public class MainTest {
         assertEquals(5, pole.getFurthestRoom());
     }
     
+    @Test
+    public void test_p1_ex12() {
+        String directions = "WSSEESWWWNW(S|NENNEEEENN(ESSSSW(NWSW|SSEN)|WSWWN(E|WWS(E|SS))))";
+        pole.traverseMap(directions.toCharArray(), new Point(0, 0));
+        assertEquals(31, pole.getFurthestRoom());
+    }
 }

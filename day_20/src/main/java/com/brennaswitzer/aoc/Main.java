@@ -17,6 +17,6 @@ public class Main {
         NorthPole facility = new NorthPole();
         Point start = new Point(0, 0);
         facility.traverseMap(input.toCharArray(), start);
-        System.out.println(facility);
+        System.out.println("Solution Part One: " + facility.getFurthestRoom());
     }
 }
