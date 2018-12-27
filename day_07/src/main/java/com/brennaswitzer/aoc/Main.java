@@ -40,8 +40,7 @@ public class Main {
         }
 
         Instructions i = new Instructions(instructions, 5);
-
-        System.out.println("Part One Answer: " + i.getStepOrder());
+        System.out.println("Part One Answer: " + i.printSteps());
     }
 
 }

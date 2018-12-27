@@ -16,6 +16,7 @@ public class Instructions {
         this.steps = steps;
         this.workers = new int[workers];
         sortSteps(this.steps);
+        getStepOrder();
     }
 
     private void sortSteps(Graph graph) {
@@ -23,8 +24,12 @@ public class Instructions {
             java.util.Collections.sort(v);
         }
     }
+    
+    String printSteps() {
+        return String.join("", done);
+    }
 
-    String getStepOrder() {
+    void getStepOrder() {
         String parent = start();
         done.add(parent);
 
@@ -36,7 +41,6 @@ public class Instructions {
                 break;
             }
         }
-        return String.join("", done);
     }
     
     int timeToComplete() {
