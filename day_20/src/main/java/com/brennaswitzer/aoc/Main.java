@@ -12,11 +12,11 @@ public class Main {
         BufferedReader r = new BufferedReader(new InputStreamReader(in));
         
         String input = r.readLine().trim();
-        input = input.substring(1,input.length() - 1);
         
         NorthPole facility = new NorthPole();
         Point start = new Point(0, 0);
         facility.traverseMap(input.toCharArray(), start);
+        System.out.println(facility);
         System.out.println("Solution Part One: " + facility.getFurthestRoom());
     }
 }

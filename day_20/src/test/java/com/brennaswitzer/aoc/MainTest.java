@@ -34,6 +34,7 @@ public class MainTest {
         
         String directions = "ENWWW(NEEE|SSE(EE|N))";
         pole.traverseMap(directions.toCharArray(), new Point(0, 0));
+        System.out.println(pole);
         assertEquals(example, pole.toString());
     }
     

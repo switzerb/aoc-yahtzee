@@ -62,20 +62,19 @@ public class NorthPole {
     }
     
     void traverseMap(char[] directions, Point current) {
+    
+        Point branch = new Point(current);
         
         for (int i = 0; i < directions.length; i++) {
-            
             if (ref.intValue() < directions.length) {
                 char c = directions[ref.getAndIncrement()];
                 
                 if (c == '(') {
                     traverseMap(directions, current);
                 } else if (c == ')') {
-                    if (directions[ref.intValue() - 2] != '|') {
-                        return;
-                    }
-                } else if (c == '|') {
                     return;
+                } else if (c == '|') {
+                    current.setLocation(branch);
                 } else {
                     Direction direction = Direction.parse(c);
                     current = mapDirection(direction, current);
@@ -103,7 +102,6 @@ public class NorthPole {
                 if (facility.get(p.go(d)) != null) {
                     if (facility.get(p.go(d)) == '|' && !marks.containsKey(room)) {
                         int distance = marks.get(p) + 1;
-                        System.out.println(room + "-" + distance);
                         marks.put(room, distance);
                         queue.add(room);
                     }
