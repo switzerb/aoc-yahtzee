@@ -1,9 +1,6 @@
 package com.brennaswitzer.aoc;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Instructions {
 
@@ -47,28 +44,17 @@ public class Instructions {
 
         int max = getMaxTimeValue();
         int seconds = 0;
-    
-        while(seconds < 10) {
-            System.out.println(done);
-    
-            /**
-             * Step is available if
-             * all the parents are done or there are no parents
-             * there is an available worker to do it
-             * the seconds have elapsed that require that step to be done
-             */
-    
-            System.out.println(seconds);
-
-            //            if(t >= timeToFinish(parent)) {
-//                done.add(parent);
-//            }
-//
-//            // if we have an available worker and an available step, start the clock
-//            if (getWorkerIndex() != -1) {
-//                workers[getWorkerIndex()] = timeToFinish(step);
-//            }
-    
+        Iterator<String> steps = done.iterator();
+        String step;
+        
+        while(steps.hasNext()) {
+            tick();
+            step = steps.next();
+            System.out.println(step);
+            // if there is an available worker && all parents are done
+            if (getWorkerIndex() != -1) {
+                workers[getWorkerIndex()] = timeToFinish(step);
+            }
             seconds++;
         }
         
@@ -148,9 +134,17 @@ public class Instructions {
         }
         return -1;
     }
+    
+    void tick() {
+        for (int i = 0; i < workers.length; i++) {
+            if (workers[i] != 0) {
+                workers[i] = workers[i] - 1;
+            }
+        }
+    }
 
     int timeToFinish(String letter) {
-        return letter.charAt(0) - 4;
+        return letter.charAt(0) - 64;
     }
 
     int getMaxTimeValue() {

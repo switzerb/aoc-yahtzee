@@ -102,7 +102,7 @@ public class InstructionTest {
 
     @Test
     public void testFindTime() {
-        i.timeToComplete();
+        assertEquals(15, i.timeToComplete());
     }
 
     @Test
