@@ -144,7 +144,7 @@ public class Instructions {
     }
 
     int timeToFinish(String letter) {
-        return letter.charAt(0) - 64;
+        return letter.charAt(0) - 4;
     }
 
     int getMaxTimeValue() {
