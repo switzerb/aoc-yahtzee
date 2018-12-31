@@ -4,11 +4,14 @@ public class Main {
 
   public static void main(String[] args) {
 
-    MarbleGame game = new MarbleGame(416, 71617);
-    MarbleGame gameTwo = new MarbleGame(416, 7161700);
+    final int MARBLES = 71617;
+    final int PLAYERS = 416;
 
-    System.out.println("Answer for Part One: " + game.playGame());
-    System.out.println("Answer for Part Two: " + gameTwo.playGame());
+    MarbleGame game = new MarbleGame(PLAYERS, MARBLES);
+    MarbleGame gameTwo = new MarbleGame(PLAYERS, MARBLES * 100);
+
+    System.out.println("Solution Part One: " + game.playGame());
+    System.out.println("Solution Part Two: " + gameTwo.playGame());
   }
 
 }
