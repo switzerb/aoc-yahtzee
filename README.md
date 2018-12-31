@@ -27,7 +27,7 @@ To compile the project and install solvers locally, check the repo out of github
 ### Run Solvers
 For each day that you want to run, you need to replace the current input.txt (or in some cases, add input directly into the Main class file) and then run the solver. Run solver by pasting input into **<project-root>/<aoc_day>/src/main/resources/input.txt** and then execute command:
 
-    $ ./run.sh
+    $ ./<day_num>/run.sh
 
 If you have cut and paste the input into the approriate place for each day, you can run all the solvers at the same time using from the root of the project:
 
