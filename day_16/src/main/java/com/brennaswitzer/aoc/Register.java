@@ -91,7 +91,7 @@ public class Register {
             instruction.setBefore(registers);
             registers = getOperation(o, instruction);
         }
-        return registers[0];
+        return registers[1];
     }
     
     int[] getOperation(Operation operation, Opcode i) {
