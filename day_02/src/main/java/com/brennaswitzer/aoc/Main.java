@@ -25,8 +25,8 @@ public class Main {
     }
 
     Warehouse warehouse = new Warehouse(boxIDs);
-    System.out.println("Part One: " + warehouse.getChecksum());
-    System.out.println("Part Two: " + warehouse.getCommonLetters());
+    System.out.println("Solution Part One: " + warehouse.getChecksum());
+    System.out.println("Solution Part Two: " + warehouse.getCommonLetters());
   }
 
 }

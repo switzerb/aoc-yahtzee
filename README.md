@@ -7,6 +7,7 @@ are written in Java (see details of requirements below).
 
 [Java 1.8.0 build 191](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 Java JDK 1.8.0
+Maven Apache Maven 3.5.4
 
 ## General Notes
 The solvers are segmented into one module per puzzle day.
@@ -16,4 +17,21 @@ To run your input, you will need to replace the puzzle input that is currently i
 
 In general, the input is located in day_XX/src/main/resources/input.txt. To get specific instructions for each day, look in the README.md for each individual day.
 
-### Day One
+### Run AOC solvers 
+
+To compile the project and install local binaries:
+
+    $ mvn clean
+    $ mvn install
+    
+Run solver by pasting input into **<project-root>/<aoc_day>/src/main/resources/input.txt** and then execute command:
+
+    $ ./run.sh
+    
+In some cases, the input must be put directly into the Main class file instead of read in from a resource file. 
+
+### Run All Days
+
+If it's more convenient, you can run all the solvers at once (with your input files in the correct location) by running at the root of the project.
+
+    $ ./run_all.sh

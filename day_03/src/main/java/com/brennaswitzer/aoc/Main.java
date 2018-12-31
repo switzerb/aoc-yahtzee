@@ -28,8 +28,8 @@ public class Main {
     Fabric fabric = new Fabric(1000, 1000, claims);
     fabric.claimRunner();
 
-    System.out.println("Part One Solution: " + fabric.getOverlappingClaims());
-    System.out.println("Part Two Solution: " + fabric.getNoOverlap());
+    System.out.println("Solution Part One: " + fabric.getOverlappingClaims());
+    System.out.println("Solution Part Two: " + fabric.getNoOverlap());
 
   }
 

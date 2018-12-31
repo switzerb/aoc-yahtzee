@@ -13,8 +13,6 @@ public class Main {
 
   public static void main(String[] args) throws IOException {
 
-    Loader.getInput(Main.class);
-
     ClassLoader cl = Main.class.getClassLoader();
     InputStream in = cl.getResourceAsStream("input.txt");
     BufferedReader r = new BufferedReader(new InputStreamReader(in));
@@ -29,11 +27,9 @@ public class Main {
       frequencies.add(Integer.parseInt(line.trim()));
     }
 
-    System.out.println(Main.partOneSolver(frequencies));
-    System.out.println(Main.partTwoSolver(frequencies));
+    System.out.println("Solution Part One: " + Main.partOneSolver(frequencies));
+    System.out.println("Solution Part Two: " + Main.partTwoSolver(frequencies));
 
-    // TODO: Make script to spin up new AOC day
-    // TODO: read in utility for reading input
   }
 
   public static int partOneSolver(List<Integer> frequencies) {
