@@ -50,5 +50,5 @@ Below is a manifest of the days that are available for solving and where to past
 | Day Eleven | day_11/src/main/Main Line 8 (SERIAL) |
 | Day Twelve | day_12/src/main/resources/input.txt |
 | Day Fourteen | day_14/src/main/Main Line 13 (TARGET) |
-| Day Sixteen | day_16/src/main/resources/input.txt AND program.txt <br> input.txt contains the first puzzle input (samples) and program.txt contains the sample program to run |
+| Day Sixteen | day_16/src/main/resources/input.txt |
 | Day Twenty | day_20/src/main/resources/input.txt |
