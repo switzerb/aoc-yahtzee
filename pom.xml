@@ -32,6 +32,7 @@
         <module>day_16</module>
         <module>day_20</module>
         <module>day_25</module>
+        <module>utils</module>
     </modules>
     <dependencies>
         <dependency>

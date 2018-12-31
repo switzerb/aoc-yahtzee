@@ -42,13 +42,7 @@ public class MainTest {
         }
         
     }
-    
-    @Test
-    public void testEvolution() {
-        long sum = cave.getHugeEvolution();
-        assertEquals(1374, sum);
-    }
-    
+
     @Test
     public void testSumOfPots() {
         assertEquals(325, cave.getSumOfPots(20));

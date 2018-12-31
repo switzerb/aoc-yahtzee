@@ -12,6 +12,9 @@ import java.util.Set;
 public class Main {
 
   public static void main(String[] args) throws IOException {
+
+    Loader.getInput(Main.class);
+
     ClassLoader cl = Main.class.getClassLoader();
     InputStream in = cl.getResourceAsStream("input.txt");
     BufferedReader r = new BufferedReader(new InputStreamReader(in));

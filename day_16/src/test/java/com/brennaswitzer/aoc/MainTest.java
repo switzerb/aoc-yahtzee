@@ -58,7 +58,7 @@ public class MainTest {
     @Test
     public void testBani() {
         Register.Opcode o = r.getInstruction(0);
-        int[] expected = {3, 2, 2, 1};
+        int[] expected = {3, 2, 1, 1};
         assertTrue(Arrays.equals(r.bani(o), expected));
     }
 
