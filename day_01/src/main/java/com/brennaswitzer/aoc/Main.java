@@ -1,9 +1,6 @@
 package com.brennaswitzer.aoc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,49 +8,41 @@ import java.util.Set;
 
 public class Main {
 
-  public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
 
-    ClassLoader cl = Main.class.getClassLoader();
-    InputStream in = cl.getResourceAsStream("input.txt");
-    BufferedReader r = new BufferedReader(new InputStreamReader(in));
+        List<String> lines = Loader.getInput(Main.class, "input.txt");
+        List<Integer> frequencies = new ArrayList<>();
 
-    List<Integer> frequencies = new ArrayList<>();
-
-    while (true) {
-      String line = r.readLine();
-      if (line == null) {
-        break;
-      }
-      frequencies.add(Integer.parseInt(line.trim()));
-    }
-
-    System.out.println("Solution Part One: " + Main.partOneSolver(frequencies));
-    System.out.println("Solution Part Two: " + Main.partTwoSolver(frequencies));
-
-  }
-
-  public static int partOneSolver(List<Integer> frequencies) {
-    int sum = 0;
-    for( Integer i : frequencies ) {
-      sum += i;
-    }
-    return sum;
-  }
-
-  public static int partTwoSolver(List<Integer> frequencies) {
-    int sum = 0;
-    Set<Integer> sums = new HashSet<>();
-    sums.add(0);
-
-    while(true) {
-      for (Integer frequency : frequencies) {
-        sum += frequency;
-        if (sums.contains(sum)) {
-          return sum;
+        for (String line : lines) {
+            frequencies.add(Integer.parseInt(line.trim()));
         }
-        sums.add(sum);
-      }
+
+        System.out.println("Solution Part One: " + Main.partOneSolver(frequencies));
+        System.out.println("Solution Part Two: " + Main.partTwoSolver(frequencies));
     }
-  }
+
+    public static int partOneSolver(List<Integer> frequencies) {
+        int sum = 0;
+        for (Integer i : frequencies) {
+            sum += i;
+        }
+        return sum;
+    }
+
+    public static int partTwoSolver(List<Integer> frequencies) {
+        int sum = 0;
+        Set<Integer> sums = new HashSet<>();
+        sums.add(0);
+
+        while (true) {
+            for (Integer frequency : frequencies) {
+                sum += frequency;
+                if (sums.contains(sum)) {
+                    return sum;
+                }
+                sums.add(sum);
+            }
+        }
+    }
 
 }
