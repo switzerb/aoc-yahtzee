@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) throws IOException {
+
+    Loader.getInput("input.txt");
     ClassLoader cl = Main.class.getClassLoader();
     InputStream in = cl.getResourceAsStream("input.txt");
     BufferedReader r = new BufferedReader(new InputStreamReader(in));
