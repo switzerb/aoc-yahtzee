@@ -85,7 +85,7 @@ public class MainTest {
   @Test
   public void test_counts_ex1() {
     char[] test = {'b', 'a', 'b', 'a', 'b', 'c'};
-    Histogram h = t1_wh.buildHistogram(test);
+    Histogram<Character> h = t1_wh.buildHistogram(test);
     int value = h.get('b');
     assertEquals(3, value);
   }
@@ -93,7 +93,7 @@ public class MainTest {
   @Test
   public void test_counts_ex2() {
     char[] test = {'b', 'a', 'b', 'a', 'b', 'c'};
-    Histogram h = t1_wh.buildHistogram(test);
+    Histogram<Character> h = t1_wh.buildHistogram(test);
     int value = h.get('a');
     assertEquals(2, value);
   }
