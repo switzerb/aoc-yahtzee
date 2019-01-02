@@ -32,7 +32,9 @@ public class Cart {
         return position;
     }
 
-    void move() {
+    void move(char next) {
+
+        //if '-' then move forward one
 
         // if intersection, then nextTurn.turn();
         // it moves according to the track that is right in "front" of it, which will depend on direction facing
