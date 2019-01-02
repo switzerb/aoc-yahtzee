@@ -46,4 +46,9 @@ public class MainTest {
     @Test
     public void test_placeCarts() {
     }
+
+    @Test
+    public void test_tick() {
+        track.tick(1);
+    }
 }
