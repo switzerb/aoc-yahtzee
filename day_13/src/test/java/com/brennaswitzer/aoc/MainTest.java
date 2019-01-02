@@ -30,4 +30,20 @@ public class MainTest {
         assertEquals(snapshot, track.toString());
     }
 
+    @Test
+    public void test_p1_ex2() {
+        String snapshot = "/-->\\        \n" +
+                "|   |  /----\\\n" +
+                "| /-+--+-\\  |\n" +
+                "| | |  | |  |\n" +
+                "\\-+-/  \\->--/\n" +
+                "  \\------/   ";
+        System.out.println(track);
+        track.tick(1);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_placeCarts() {
+    }
 }

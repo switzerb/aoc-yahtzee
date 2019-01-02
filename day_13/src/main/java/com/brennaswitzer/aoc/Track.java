@@ -1,11 +1,13 @@
 package com.brennaswitzer.aoc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Track {
 
     private char[][] track;
+    private List<Cart> carts = new ArrayList<>();
     private int width;
     private int height;
 
@@ -29,10 +31,32 @@ public class Track {
             }
             Y++;
         }
+
+        // initialize starting places of the carts
+        placeCarts();
     }
 
-    int getHeight() {
-        return height;
+    void placeCarts() {
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+
+                if (track[row][col] == '>') {
+                    carts.add(new Cart(col, row, '>'));
+                }
+
+                if (track[row][col] == 'v') {
+                    carts.add(new Cart(col, row, 'v'));
+                }
+
+                if (track[row][col] == '<') {
+                    carts.add(new Cart(col, row, '<'));
+                }
+
+                if (track[row][col] == '^') {
+                    carts.add(new Cart(col, row, '^'));
+                }
+            }
+        }
     }
 
     int getWidth(List<String> lines) {
@@ -44,16 +68,46 @@ public class Track {
         return width;
     }
 
+    public void tick(int step) {
+
+        // find all the carts in the track
+        // carts have direction, and keep track of their state of the last turn they took (left, straight, right, left straight, right, etc.)
+        // for each cart in carts
+        // what is the direction it is facing?
+        // what are the possible moves?
+        // it is only at an intersection that the carts have a choice of which way to turn
+        // move carts in the direction that they are pointing one step
+
+        // if two carts have the same current location, they produce a collision X and an answer to the puzzle
+
+    }
+
+    public void move() {
+        // switch \ / + - | all imply a direction
+        // the intersection requires knowledge of what the cart has done previously
+    }
+
+    public enum Direction {
+        UP, DOWN, LEFT, RIGHT
+    }
+
+    public enum Turn {
+        STRAIGHT, RIGHT, LEFT
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
         for (int y = 0; y < height; y++) {
-            if( y > 0 ) { sb.append('\n');}
+            if (y > 0) {
+                sb.append('\n');
+            }
             for (int x = 0; x < width; x++) {
                 sb.append(track[y][x]);
             }
         }
         return sb.toString();
     }
+
 }
