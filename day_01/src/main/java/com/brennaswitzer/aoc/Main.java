@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        List<String> lines = Loader.getInput(Main.class, "input.txt");
+        List<String> lines = Loader.getInput("input.txt");
         List<Integer> frequencies = new ArrayList<>();
 
         for (String line : lines) {

@@ -5,10 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +33,7 @@ public class MainTest {
 
     @Before
     public void testPartOne() throws IOException {
-        List<String> lines = Loader.getInput(Main.class, "input.txt");
+        List<String> lines = Loader.getInput("input.txt");
         for (String line : lines) {
             frequencies.add(Integer.parseInt(line.trim()));
         }

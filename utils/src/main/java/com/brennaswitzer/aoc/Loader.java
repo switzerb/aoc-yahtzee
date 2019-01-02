@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Loader {
 
-    public static List<String> getInput(Class c, String path) throws IOException {
-        ClassLoader cl = c.getClassLoader();
+    public static List<String> getInput(String path) throws IOException {
+        ClassLoader cl = Loader.class.getClassLoader();
         InputStream in = cl.getResourceAsStream(path);
         BufferedReader r = new BufferedReader(new InputStreamReader(in));
 
