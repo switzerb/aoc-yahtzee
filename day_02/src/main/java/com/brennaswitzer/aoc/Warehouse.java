@@ -17,7 +17,7 @@ public class Warehouse {
 
     for (String boxID : this.boxes) {
       char[] letters = boxID.toCharArray();
-      Histogram h = this.buildHistogram(letters);
+      Histogram<Character> h = this.buildHistogram(letters);
       Set<Character> keys = h.keySet();
 
       boolean flag2 = false;
@@ -41,8 +41,8 @@ public class Warehouse {
     return countTwos * countThrees;
   }
 
-  public Histogram buildHistogram(char[] letters) {
-    Histogram h = new Histogram();
+  public Histogram<Character> buildHistogram(char[] letters) {
+    Histogram<Character> h = new Histogram<>();
     for (char letter : letters) {
       if (h.containsKey(letter)) {
         h.put(letter, h.get(letter) + 1);

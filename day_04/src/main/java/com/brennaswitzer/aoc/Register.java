@@ -45,7 +45,7 @@ public class Register {
   }
 
   int getSleepiestMinutePerGuard(int id) {
-    Frequency night = createFrequencyMapPerGuard(id);
+    Histogram<Integer> night = createFrequencyMapPerGuard(id);
     int max = 0;
     int minute = 0;
     for (Frequency.Entry<Integer, Integer> entry : night.entrySet()) {
