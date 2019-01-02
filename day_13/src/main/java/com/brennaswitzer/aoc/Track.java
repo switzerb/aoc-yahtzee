@@ -1,8 +1,7 @@
 package com.brennaswitzer.aoc;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 public class Track {
@@ -55,7 +54,7 @@ public class Track {
 
     }
 
-    int getWidth(List<String> lines) {
+    private int getWidth(List<String> lines) {
         int width = 0;
         for (String l : lines) {
             char[] row = l.toCharArray();
@@ -64,18 +63,19 @@ public class Track {
         return width;
     }
 
-    public void tick(int step) {
+    public void tick(int steps) {
 
-        for(Cart c : carts) {
-            Direction dir = c.getDirection();
-            System.out.println(dir);
+        for(int i = 0; i < steps; i++) {
+            for(Cart c : carts) {
+                Direction dir = c.getDirection();
 
-            if(dir == Direction.EAST) {
-                Point current = c.getCurrent();
-                char next = track[current.y][current.x - 1];
-                c.move(next);
+                if(dir == Direction.EAST) {
+                    Point current = c.getCurrent();
+                    char next = track[current.y][current.x + 1];
+                    c.move(next);
+                }
+                //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
             }
-            //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
         }
 
         // for each cart in carts
@@ -95,12 +95,24 @@ public class Track {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (int y = 0; y < height; y++) {
-            if (y > 0) {
+        Map<Point, Cart> positions = new HashMap<>();
+
+        for(Cart c : carts) {
+            positions.put(c.getCurrent(), c);
+        }
+
+        for (int row = 0; row < height; row++) {
+            if (row > 0) {
                 sb.append('\n');
             }
-            for (int x = 0; x < width; x++) {
-                sb.append(track[y][x]);
+            for (int col = 0; col < width; col++) {
+                Point location = new Point(col, row);
+                if(positions.containsKey(location)) {
+                    Cart cart = positions.get(location);
+                    sb.append(cart.toString());
+                } else {
+                    sb.append(track[row][col]);
+                }
             }
         }
         return sb.toString();
