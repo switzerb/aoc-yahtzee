@@ -1,5 +1,6 @@
 package com.brennaswitzer.aoc;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,47 +17,42 @@ public class Track {
         height = lines.size();
         track = new char[height][width];
 
-        int X, Y = 0;
+        int col, row = 0;
 
         // write our input to the array so we can iterate over the track
         for (String line : lines) {
-            track[Y] = new char[width];
-            Arrays.fill(track[Y], ' ');
+            track[row] = new char[width];
+            Arrays.fill(track[row], ' ');
             char[] chrs = line.toCharArray();
 
-            X = 0;
+            col = 0;
             for (char c : chrs) {
-                track[Y][X] = c;
-                X++;
-            }
-            Y++;
-        }
+                track[row][col] = c;
 
-        // initialize starting places of the carts
-        placeCarts();
-    }
-
-    void placeCarts() {
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-
-                if (track[row][col] == '>') {
+                if (c == '>') {
                     carts.add(new Cart(col, row, Direction.EAST));
+                    track[row][col] = '-';
                 }
 
-                if (track[row][col] == 'v') {
+                if (c == 'v') {
                     carts.add(new Cart(col, row, Direction.SOUTH));
+                    track[row][col] = '|';
                 }
 
-                if (track[row][col] == '<') {
+                if (c == '<') {
                     carts.add(new Cart(col, row, Direction.WEST));
+                    track[row][col] = '-';
                 }
 
-                if (track[row][col] == '^') {
+                if (c == '^') {
                     carts.add(new Cart(col, row, Direction.NORTH));
+                    track[row][col] = '|';
                 }
+                col++;
             }
+            row++;
         }
+
     }
 
     int getWidth(List<String> lines) {
@@ -73,6 +69,12 @@ public class Track {
         for(Cart c : carts) {
             Direction dir = c.getDirection();
             System.out.println(dir);
+
+            if(dir == Direction.EAST) {
+                Point current = c.getCurrent();
+                char next = track[current.y][current.x - 1];
+                c.move(next);
+            }
             //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
         }
 
