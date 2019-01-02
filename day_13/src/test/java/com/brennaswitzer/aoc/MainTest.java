@@ -20,7 +20,14 @@ public class MainTest {
 
     @Test
     public void test_p1_ex1() {
+        String snapshot = "/->-\\        \n" +
+                "|   |  /----\\\n" +
+                "| /-+--+-\\  |\n" +
+                "| | |  | v  |\n" +
+                "\\-+-/  \\-+--/\n" +
+                "  \\------/   ";
         System.out.println(track);
+        assertEquals(snapshot, track.toString());
     }
 
 }

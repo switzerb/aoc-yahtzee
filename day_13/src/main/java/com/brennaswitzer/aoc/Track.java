@@ -49,7 +49,7 @@ public class Track {
         StringBuilder sb = new StringBuilder();
 
         for (int y = 0; y < height; y++) {
-            sb.append('\n');
+            if( y > 0 ) { sb.append('\n');}
             for (int x = 0; x < width; x++) {
                 sb.append(track[y][x]);
             }
