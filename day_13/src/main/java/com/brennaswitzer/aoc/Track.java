@@ -70,29 +70,23 @@ public class Track {
 
     public void tick(int step) {
 
-        // find all the carts in the track
-        // carts have direction, and keep track of their state of the last turn they took (left, straight, right, left straight, right, etc.)
+        for(Cart c : carts) {
+            c.move();
+
+            //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
+        }
+
         // for each cart in carts
         // what is the direction it is facing?
         // what are the possible moves?
+        // switch \ / + - | all imply a direction
         // it is only at an intersection that the carts have a choice of which way to turn
+        // the intersection requires knowledge of what the cart has done previously
         // move carts in the direction that they are pointing one step
 
         // if two carts have the same current location, they produce a collision X and an answer to the puzzle
+        // while not collision, get points and see if there are any the same
 
-    }
-
-    public void move() {
-        // switch \ / + - | all imply a direction
-        // the intersection requires knowledge of what the cart has done previously
-    }
-
-    public enum Direction {
-        UP, DOWN, LEFT, RIGHT
-    }
-
-    public enum Turn {
-        STRAIGHT, RIGHT, LEFT
     }
 
     @Override
