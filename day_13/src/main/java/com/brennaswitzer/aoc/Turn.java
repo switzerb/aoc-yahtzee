@@ -1,5 +1,10 @@
 package com.brennaswitzer.aoc;
 
 public enum Turn {
-    STRAIGHT, RIGHT, LEFT
+    LEFT, STRAIGHT, RIGHT;
+
+    Turn turn() {
+        Turn[] turns = Turn.values();
+        return turns[ordinal() + 1 % values().length];
+    }
 }

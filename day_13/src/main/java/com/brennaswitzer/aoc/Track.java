@@ -41,19 +41,19 @@ public class Track {
             for (int col = 0; col < width; col++) {
 
                 if (track[row][col] == '>') {
-                    carts.add(new Cart(col, row, Direction.RIGHT));
+                    carts.add(new Cart(col, row, Direction.EAST));
                 }
 
                 if (track[row][col] == 'v') {
-                    carts.add(new Cart(col, row, Direction.DOWN));
+                    carts.add(new Cart(col, row, Direction.SOUTH));
                 }
 
                 if (track[row][col] == '<') {
-                    carts.add(new Cart(col, row, Direction.LEFT));
+                    carts.add(new Cart(col, row, Direction.WEST));
                 }
 
                 if (track[row][col] == '^') {
-                    carts.add(new Cart(col, row, Direction.UP));
+                    carts.add(new Cart(col, row, Direction.NORTH));
                 }
             }
         }
@@ -71,8 +71,8 @@ public class Track {
     public void tick(int step) {
 
         for(Cart c : carts) {
-            c.move();
-
+            Direction dir = c.getDirection();
+            System.out.println(dir);
             //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
         }
 
