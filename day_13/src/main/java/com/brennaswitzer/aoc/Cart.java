@@ -2,15 +2,16 @@ package com.brennaswitzer.aoc;
 
 import java.awt.*;
 
+
 public class Cart {
 
     // carts have direction, and keep track of their state of the last turn they took (left, straight, right, left straight, right, etc.)
 
     Point position;
-    char direction;
-    String rotation = "LEFT";
+    Direction direction;
+    Turn rotation = Turn.LEFT;
 
-    Cart(int x, int y, char dir) {
+    Cart(int x, int y, Direction dir) {
         position = new Point(x, y);
         direction = dir;
     }

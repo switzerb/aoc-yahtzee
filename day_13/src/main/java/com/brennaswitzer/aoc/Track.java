@@ -41,19 +41,19 @@ public class Track {
             for (int col = 0; col < width; col++) {
 
                 if (track[row][col] == '>') {
-                    carts.add(new Cart(col, row, '>'));
+                    carts.add(new Cart(col, row, Direction.RIGHT));
                 }
 
                 if (track[row][col] == 'v') {
-                    carts.add(new Cart(col, row, 'v'));
+                    carts.add(new Cart(col, row, Direction.DOWN));
                 }
 
                 if (track[row][col] == '<') {
-                    carts.add(new Cart(col, row, '<'));
+                    carts.add(new Cart(col, row, Direction.LEFT));
                 }
 
                 if (track[row][col] == '^') {
-                    carts.add(new Cart(col, row, '^'));
+                    carts.add(new Cart(col, row, Direction.UP));
                 }
             }
         }
