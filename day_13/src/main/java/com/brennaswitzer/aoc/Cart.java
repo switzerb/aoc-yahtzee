@@ -65,11 +65,6 @@ public class Cart {
         // it moves according to the track that is right in "front" of it, which will depend on direction facing
     }
 
-    void turn() {
-        // if WEST
-        // if direction = up, direction left, etc...
-    }
-
     @Override
     public String toString() {
         if(wrecked) {
