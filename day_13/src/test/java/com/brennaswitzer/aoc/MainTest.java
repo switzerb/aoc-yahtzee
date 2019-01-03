@@ -204,5 +204,23 @@ public class MainTest {
         assertEquals(snapshot, track2.toString());
     }
 
+    @Test
+    public void test_p2_ex2() {
+        String snapshot = "/---\\  \n" +
+                "|   |  \n" +
+                "| /-+-\\\n" +
+                "| | | |\n" +
+                "\\-+-/ ^\n" +
+                "  |   |\n" +
+                "  \\---/";
+        track2.tick2(3);
+        assertEquals(snapshot, track2.toString());
+    }
+
+    @Test
+    public void test_lastCart() {
+        assertEquals("6,4", track2.tick2());
+    }
+
 
 }
