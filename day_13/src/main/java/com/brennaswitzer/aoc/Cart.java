@@ -46,14 +46,16 @@ public class Cart {
                 break;
             case '\\':
                 position.setLocation(direction.corner(position));
-                direction = direction.turn(track);
+                direction = direction.newDirection(track);
                 break;
             case '/':
                 position.setLocation(direction.corner(position));
-                direction = direction.turn(track);
+                direction = direction.newDirection(track);
                 break;
             case '+':
-                // if intersection, then nextTurn.turn();
+                position.setLocation(direction.straight(position));
+                direction = direction.turn(nextTurn);
+                nextTurn = nextTurn.turn();
                 break;
             default:
                 throw new IllegalArgumentException("That is not a direction the cart recognizes.");

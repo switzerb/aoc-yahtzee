@@ -5,6 +5,6 @@ public enum Turn {
 
     Turn turn() {
         Turn[] turns = Turn.values();
-        return turns[ordinal() + 1 % values().length];
+        return turns[(ordinal() + 1) % values().length];
     }
 }
