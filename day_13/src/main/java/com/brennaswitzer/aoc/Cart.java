@@ -45,11 +45,11 @@ public class Cart {
                 break;
             case '\\':
                 position.setLocation(direction.corner(position));
-                direction = Direction.SOUTH;
+                direction = direction.turn(track);
                 break;
             case '/':
                 position.setLocation(direction.corner(position));
-                direction = Direction.WEST;
+                direction = direction.turn(track);
                 break;
             case '+':
                 // if intersection, then nextTurn.turn();
