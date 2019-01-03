@@ -24,20 +24,43 @@ public enum Direction {
         }
     }
 
-
-    public Direction turn(char track) {
+    public Direction newDirection(char track) {
         if (track == '\\') {
-            if( this == NORTH) return WEST;
-            if( this == SOUTH) return EAST;
-            if( this == EAST) return SOUTH;
-            if( this == WEST) return NORTH;
+            if (this == NORTH) return WEST;
+            if (this == SOUTH) return EAST;
+            if (this == EAST) return SOUTH;
+            if (this == WEST) return NORTH;
         }
         if (track == '/') {
-            if( this == NORTH ) return EAST;
-            if( this == WEST ) return SOUTH;
-            if( this == SOUTH ) return WEST;
-            if( this == EAST ) return NORTH;
+            if (this == NORTH) return EAST;
+            if (this == WEST) return SOUTH;
+            if (this == SOUTH) return WEST;
+            if (this == EAST) return NORTH;
         }
-        throw new RuntimeException("That is not a turn I recognize.");
+        throw new RuntimeException("That is not a curve I recognize.");
+    }
+
+    public Direction turn(Turn t) {
+        if (this == SOUTH) {
+            if (t == Turn.LEFT) return EAST;
+            if (t == Turn.STRAIGHT) return SOUTH;
+            if (t == Turn.RIGHT) return WEST;
+        }
+        if (this == NORTH) {
+            if (t == Turn.LEFT) return WEST;
+            if (t == Turn.STRAIGHT) return NORTH;
+            if (t == Turn.RIGHT) return EAST;
+        }
+        if (this == EAST) {
+            if (t == Turn.LEFT) return NORTH;
+            if (t == Turn.STRAIGHT) return EAST;
+            if (t == Turn.RIGHT) return SOUTH;
+        }
+        if (this == WEST) {
+            if (t == Turn.LEFT) return SOUTH;
+            if (t == Turn.STRAIGHT) return WEST;
+            if (t == Turn.RIGHT) return NORTH;
+        }
+        throw new RuntimeException("This cart is in space. Something is wrong.");
     }
 }

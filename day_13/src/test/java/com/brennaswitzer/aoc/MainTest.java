@@ -34,22 +34,87 @@ public class MainTest {
                 "| | |  | v  |\n" +
                 "\\-+-/  \\-+--/\n" +
                 "  \\------/   ";
-        System.out.println(track);
         assertEquals(snapshot, track.toString());
     }
 
-//    @Test
-//    public void test_p1_ex2() {
-//        String snapshot = "/-->\\        \n" +
-//                "|   |  /----\\\n" +
-//                "| /-+--+-\\  |\n" +
-//                "| | |  | |  |\n" +
-//                "\\-+-/  \\->--/\n" +
-//                "  \\------/   ";
-//        System.out.println(track);
-//        track.tick(1);
-//        assertEquals(snapshot, track.toString());
-//    }
+    @Test
+    public void test_p1_ex2() {
+        String snapshot = "/-->\\        \n" +
+                "|   |  /----\\\n" +
+                "| /-+--+-\\  |\n" +
+                "| | |  | |  |\n" +
+                "\\-+-/  \\->--/\n" +
+                "  \\------/   ";
+        track.tick(1);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_p1_ex3() {
+        String snapshot = "/---v        \n" +
+                "|   |  /----\\\n" +
+                "| /-+--+-\\  |\n" +
+                "| | |  | |  |\n" +
+                "\\-+-/  \\-+>-/\n" +
+                "  \\------/   ";
+        track.tick(2);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_p1_ex4() {
+        String snapshot = "/---\\        \n" +
+                "|   v  /----\\\n" +
+                "| /-+--+-\\  |\n" +
+                "| | |  | |  |\n" +
+                "\\-+-/  \\-+->/\n" +
+                "  \\------/   ";
+        track.tick(3);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_p1_ex5() {
+        String snapshot = "/---\\        \n" +
+                "|   |  /----\\\n" +
+                "| /->--+-\\  |\n" +
+                "| | |  | |  |\n" +
+                "\\-+-/  \\-+--^\n" +
+                "  \\------/   ";
+        track.tick(4);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_p1_ex6() {
+        String snapshot = "/---\\        \n" +
+                "|   |  /----\\\n" +
+                "| /-+--v-\\  |\n" +
+                "| | |  | |  |\n" +
+                "\\-+-/  ^-+--/\n" +
+                "  \\------/   ";
+        track.tick(13);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_p1_ex7() {
+        String snapshot = "/---\\        \n" +
+                "|   |  /----\\\n" +
+                "| /-+--+-\\  |\n" +
+                "| | |  X |  |\n" +
+                "\\-+-/  \\-+--/\n" +
+                "  \\------/   ";
+        track.tick(14);
+        assertEquals(snapshot, track.toString());
+    }
+
+    @Test
+    public void test_p1_ex8() {
+        track.tick(14);
+        assertEquals("7,3", track.firstCollision());
+    }
+
 
     @Test
     public void test_loop() {
@@ -58,7 +123,6 @@ public class MainTest {
                 "|   |\n" +
                 "|   |\n" +
                 "\\---/";
-        System.out.println(loop);
         assertEquals(snapshot, loop.toString());
     }
 
@@ -70,7 +134,6 @@ public class MainTest {
                 "|   |\n" +
                 "\\---/";
         loop.tick(1);
-        System.out.println(loop);
         assertEquals(snapshot, loop.toString());
     }
 
@@ -82,7 +145,6 @@ public class MainTest {
                 "|   |\n" +
                 "\\---/";
         loop.tick(2);
-        System.out.println(loop);
         assertEquals(snapshot, loop.toString());
     }
 
@@ -94,7 +156,6 @@ public class MainTest {
                 "|   |\n" +
                 "\\---/";
         loop.tick(14);
-        System.out.println(loop);
         assertEquals(snapshot, loop.toString());
     }
 
@@ -105,7 +166,6 @@ public class MainTest {
                 "|   |\n" +
                 "v   |\n" +
                 "\\---/";
-        System.out.println(collision);
         assertEquals(snapshot, collision.toString());
     }
 
@@ -124,11 +184,6 @@ public class MainTest {
     public void test_getCollisionPosition() {
         collision.tick(8);
         assertEquals("4,2", collision.firstCollision());
-    }
-
-    @Test
-    public void test_run() {
-        loop.tick(14);
     }
 
 }
