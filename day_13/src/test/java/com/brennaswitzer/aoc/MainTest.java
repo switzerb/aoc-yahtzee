@@ -96,7 +96,7 @@ public class MainTest {
 
     @Test
     public void test_run() {
-        loop.tick(18);
+        loop.tick(14);
     }
 
 }

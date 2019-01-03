@@ -27,11 +27,17 @@ public enum Direction {
 
     public Direction turn(char track) {
         if (track == '\\') {
-            return this == EAST ? SOUTH : NORTH;
+            if( this == NORTH) return WEST;
+            if( this == SOUTH) return EAST;
+            if( this == EAST) return SOUTH;
+            if( this == WEST) return NORTH;
         }
         if (track == '/') {
-            return this == NORTH ? EAST : WEST;
+            if( this == NORTH ) return EAST;
+            if( this == WEST ) return SOUTH;
+            if( this == SOUTH ) return WEST;
+            if( this == EAST ) return NORTH;
         }
-        throw new RuntimeException("That is not a track I recognize.");
+        throw new RuntimeException("That is not a turn I recognize.");
     }
 }
