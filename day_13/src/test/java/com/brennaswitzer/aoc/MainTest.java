@@ -13,6 +13,7 @@ public class MainTest {
     Track track;
     Track loop;
     Track collision;
+    Track track2;
 
     @Before
     public void setUp() throws IOException {
@@ -24,6 +25,10 @@ public class MainTest {
 
         List<String> coll = Loader.getInput("test_collision.txt");
         collision = new Track(coll);
+
+        List<String> lines2 = Loader.getInput("test_input2.txt");
+        track2 = new Track(lines2);
+
     }
 
     @Test
@@ -185,5 +190,19 @@ public class MainTest {
         collision.tick(8);
         assertEquals("4,2", collision.firstCollision());
     }
+
+    @Test
+    public void test_p2_ex1() {
+        String snapshot = "/---\\  \n" +
+                "|   |  \n" +
+                "| v-+-\\\n" +
+                "| | | |\n" +
+                "\\-+-/ |\n" +
+                "  |   |\n" +
+                "  ^---^";
+        track2.tick(1);
+        assertEquals(snapshot, track2.toString());
+    }
+
 
 }

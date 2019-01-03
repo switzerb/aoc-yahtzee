@@ -10,7 +10,7 @@ public class Track {
     private List<Cart> carts = new ArrayList<>();
     private int width;
     private int height;
-    private Point firstCollision = new Point();
+    private List<Point> collisions = new ArrayList<>();
 
     Track(List<String> lines) {
         width = getWidth(lines);
@@ -90,7 +90,7 @@ public class Track {
 
             if (hasCollision()) {
                 c.wreck();
-                firstCollision = c.getCurrent();
+                collisions.add(c.getCurrent());
                 return true;
             }
         }
@@ -115,7 +115,8 @@ public class Track {
     }
 
     public String firstCollision() {
-        return firstCollision.x + "," + firstCollision.y;
+        Point first = collisions.get(0);
+        return first.x + "," + first.y;
     }
 
     public boolean hasCollision() {
