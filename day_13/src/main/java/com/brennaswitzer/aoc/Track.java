@@ -1,8 +1,8 @@
 package com.brennaswitzer.aoc;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class Track {
 
@@ -10,7 +10,7 @@ public class Track {
     private List<Cart> carts = new ArrayList<>();
     private int width;
     private int height;
-    Point firstCollision = new Point();
+    private Point firstCollision = new Point();
 
     Track(List<String> lines) {
         width = getWidth(lines);
@@ -19,7 +19,6 @@ public class Track {
 
         int col, row = 0;
 
-        // write our input to the array so we can iterate over the track
         for (String line : lines) {
             track[row] = new char[width];
             Arrays.fill(track[row], ' ');
@@ -80,32 +79,39 @@ public class Track {
         throw new IllegalArgumentException("Cart unable to move that direction");
     }
 
+    private boolean step() {
+        // sort list of carts by row and column
+        for (Cart c : carts) {
+            Direction dir = c.getDirection();
+            Point current = c.getCurrent();
+
+            char next = getNext(dir, current);
+            c.move(next);
+
+            if (hasCollision()) {
+                c.wreck();
+                firstCollision = c.getCurrent();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void tick() {
+        boolean crash = false;
+        int seconds = 0;
+        while (!crash) {
+            crash = step();
+            seconds++;
+        }
+    }
+
     public void tick(int steps) {
         boolean stop = false;
-
         for (int i = 0; i < steps; i++) {
-            for (Cart c : carts) {
-                Direction dir = c.getDirection();
-                Point current = c.getCurrent();
-
-                char next = getNext(dir, current);
-                c.move(next);
-                //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
-                if(hasCollision()) {
-                    c.wreck();
-                    firstCollision = c.getCurrent();
-                    stop = true;
-                }
-            }
-            if(stop) break;
+            stop = step();
+            if (stop) break;
         }
-
-        // switch \ / + - | all imply a direction
-        // it is only at an intersection that the carts have a choice of which way to turn
-        // the intersection requires knowledge of what the cart has done previously
-
-        // if two carts have the same current location, they produce a collision X and an answer to the puzzle
-        // while not collision, get points and see if there are any the same
     }
 
     public String firstCollision() {
@@ -116,7 +122,7 @@ public class Track {
         Map<Point, Cart> positions = new HashMap<>();
 
         for (Cart c : carts) {
-            if(positions.containsKey(c.getCurrent())){
+            if (positions.containsKey(c.getCurrent())) {
                 return true;
             } else {
                 positions.put(c.getCurrent(), c);
