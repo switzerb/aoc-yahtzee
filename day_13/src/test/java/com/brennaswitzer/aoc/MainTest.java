@@ -200,7 +200,7 @@ public class MainTest {
                 "\\-+-/ |\n" +
                 "  |   |\n" +
                 "  ^---^";
-        track2.tick2(1);
+        track2.tick(1);
         assertEquals(snapshot, track2.toString());
     }
 
@@ -213,13 +213,13 @@ public class MainTest {
                 "\\-+-/ ^\n" +
                 "  |   |\n" +
                 "  \\---/";
-        track2.tick2(3);
+        track2.tick(3);
         assertEquals(snapshot, track2.toString());
     }
 
     @Test
     public void test_lastCart() {
-        assertEquals("6,4", track2.tick2());
+        assertEquals("6,4", track2.tick());
     }
 
 

@@ -10,7 +10,6 @@ public class Cart {
     Point position;
     Direction direction;
     Turn nextTurn = Turn.LEFT;
-    boolean wrecked;
 
     Cart(int x, int y, Direction dir) {
         position = new Point(x, y);
@@ -67,26 +66,18 @@ public class Cart {
 
     @Override
     public String toString() {
-        if(wrecked) {
-            return "X";
-        } else {
-            if (direction == Direction.EAST) {
-                return ">";
-            }
-            if (direction == Direction.WEST) {
-                return "<";
-            }
-            if (direction == Direction.NORTH) {
-                return "^";
-            }
-            if (direction == Direction.SOUTH) {
-                return "v";
-            }
-            return " ";
+        if (direction == Direction.EAST) {
+            return ">";
         }
-    }
-
-    public void wreck() {
-        wrecked = true;
+        if (direction == Direction.WEST) {
+            return "<";
+        }
+        if (direction == Direction.NORTH) {
+            return "^";
+        }
+        if (direction == Direction.SOUTH) {
+            return "v";
+        }
+        return " ";
     }
 }
