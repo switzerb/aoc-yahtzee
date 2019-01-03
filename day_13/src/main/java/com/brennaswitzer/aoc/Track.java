@@ -63,19 +63,35 @@ public class Track {
         return width;
     }
 
+    char getNext(Direction dir, Point current) {
+        if(dir == Direction.EAST) {
+            return track[current.y][current.x + 1];
+        }
+        if(dir == Direction.SOUTH) {
+            return track[current.y + 1][current.x];
+        }
+        if(dir == Direction.WEST) {
+            return track[current.y][current.x - 1];
+        }
+        if(dir == Direction.NORTH) {
+            return track[current.y - 1][current.x];
+        }
+        throw new IllegalArgumentException("Cart unable to move that direction");
+    }
+
     public void tick(int steps) {
 
         for(int i = 0; i < steps; i++) {
             for(Cart c : carts) {
                 Direction dir = c.getDirection();
+                Point current = c.getCurrent();
 
-                if(dir == Direction.EAST) {
-                    Point current = c.getCurrent();
-                    char next = track[current.y][current.x + 1];
-                    c.move(next);
-                }
+                char next = getNext(dir, current);
+                c.move(next);
                 //when the carts move, we need to sort the list of carts to make sure we are looping through by row, col correctly
             }
+            System.out.println(this);
+            System.out.println('\n');
         }
 
         // for each cart in carts

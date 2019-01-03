@@ -59,7 +59,7 @@ public class MainTest {
     }
 
     @Test
-    public void test_tick() {
+    public void test_tickOne() {
         String snapshot = "/-->\\\n" +
                 "|   |\n" +
                 "|   |\n" +
@@ -69,4 +69,22 @@ public class MainTest {
         System.out.println(loop);
         assertEquals(snapshot, loop.toString());
     }
+
+    @Test
+    public void test_tickTwo() {
+        String snapshot = "/---v\n" +
+                "|   |\n" +
+                "|   |\n" +
+                "|   |\n" +
+                "\\---/";
+        loop.tick(2);
+        System.out.println(loop);
+        assertEquals(snapshot, loop.toString());
+    }
+
+    @Test
+    public void test_run() {
+        loop.tick(8);
+    }
+
 }

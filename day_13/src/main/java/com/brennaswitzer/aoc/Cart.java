@@ -34,19 +34,31 @@ public class Cart {
         return position;
     }
 
-    void move(char next) {
+    void move(char track) {
 
-        // this doesn't work if we are facing the other direction!
-        if (next == '-') {
-            position.move(position.x + 1, position.y);
+        switch (track) {
+            case '-':
+                position.setLocation(direction.straight(position));
+                break;
+            case '|':
+                position.setLocation(direction.straight(position));
+                break;
+            case '\\':
+                position.setLocation(direction.corner(position));
+                direction = Direction.SOUTH;
+                break;
+            case '/':
+                position.setLocation(direction.corner(position));
+                direction = Direction.WEST;
+                break;
+            case '+':
+                // if intersection, then nextTurn.turn();
+                break;
+            default:
+                throw new IllegalArgumentException("That is not a direction the cart recognizes.");
         }
 
-        if (next == '\\') {
-            position.move(position.x + 1, position.y);
-            direction = Direction.SOUTH;
-        }
 
-        // if intersection, then nextTurn.turn();
         // it moves according to the track that is right in "front" of it, which will depend on direction facing
     }
 
@@ -57,16 +69,16 @@ public class Cart {
 
     @Override
     public String toString() {
-        if(direction == Direction.EAST) {
+        if (direction == Direction.EAST) {
             return ">";
         }
-        if(direction == Direction.WEST) {
+        if (direction == Direction.WEST) {
             return "<";
         }
-        if(direction == Direction.NORTH) {
+        if (direction == Direction.NORTH) {
             return "^";
         }
-        if(direction == Direction.SOUTH) {
+        if (direction == Direction.SOUTH) {
             return "v";
         }
         return " ";
