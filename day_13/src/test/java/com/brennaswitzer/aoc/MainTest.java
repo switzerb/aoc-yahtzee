@@ -116,8 +116,14 @@ public class MainTest {
                 "|   X\n" +
                 "|   |\n" +
                 "\\---/";
-        collision.tick(6);
+        collision.tick(7);
         assertEquals(snapshot, collision.toString());
+    }
+
+    @Test
+    public void test_getCollisionPosition() {
+        collision.tick(8);
+        assertEquals("4,2", collision.firstCollision());
     }
 
     @Test
