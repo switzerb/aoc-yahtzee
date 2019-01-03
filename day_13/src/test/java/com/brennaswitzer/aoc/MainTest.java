@@ -200,7 +200,7 @@ public class MainTest {
                 "\\-+-/ |\n" +
                 "  |   |\n" +
                 "  ^---^";
-        track2.tick(1);
+        track2.tick2(1);
         assertEquals(snapshot, track2.toString());
     }
 
