@@ -84,7 +84,7 @@ public class MainTest {
 
     @Test
     public void test_run() {
-        loop.tick(8);
+        loop.tick(18);
     }
 
 }

@@ -17,11 +17,21 @@ public enum Direction {
     }
 
     Point corner(Point p) {
-        if(this == EAST) {
+        if (this == EAST) {
             return new Point(p.x + col_delta, p.y + row_delta);
-//        } else {
-//            return new Point(p.x + col_delta, p.y + row_delta);
+        } else {
+            return new Point(p.x + col_delta, p.y + row_delta);
         }
-        throw new RuntimeException("Barney says fuck you.");
+    }
+
+
+    public Direction turn(char track) {
+        if (track == '\\') {
+            return this == EAST ? SOUTH : NORTH;
+        }
+        if (track == '/') {
+            return this == NORTH ? EAST : WEST;
+        }
+        throw new RuntimeException("That is not a track I recognize.");
     }
 }
