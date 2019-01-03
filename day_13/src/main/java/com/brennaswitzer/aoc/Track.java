@@ -114,6 +114,21 @@ public class Track {
         }
     }
 
+    public String tick2() {
+        while (carts.size() > 1) {
+            for (Cart c : carts) {
+                Direction dir = c.getDirection();
+                Point current = c.getCurrent();
+
+                char next = getNext(dir, current);
+                c.move(next);
+            }
+            carts = getRemaining(carts);
+        }
+        Point last = carts.get(0).getCurrent();
+        return last.x + "," + last.y;
+    }
+
     public void tick2(int steps) {
         for (int i = 0; i < steps; i++) {
             for (Cart c : carts) {
