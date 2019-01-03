@@ -54,6 +54,20 @@ public class Track {
 
     }
 
+    public static Comparator<Cart> SORT_BY_LOCATION = new Comparator<Cart>() {
+        @Override
+        public int compare(Cart c1, Cart c2) {
+            int x1 = c1.position.x;
+            int x2 = c2.position.x;
+            int y1 = c1.position.y;
+            int y2 = c2.position.y;
+
+            if (y1 < y2) return -1;
+            if (y1 > y2) return 1;
+            return Integer.compare(x1, x2);
+        }
+    };
+
     private int getWidth(List<String> lines) {
         int width = 0;
         for (String l : lines) {
@@ -79,8 +93,8 @@ public class Track {
         throw new IllegalArgumentException("Cart unable to move that direction");
     }
 
-    private boolean step() {
-
+    public void step() {
+        carts.sort(SORT_BY_LOCATION);
         for (Cart c : carts) {
             Direction dir = c.getDirection();
             Point current = c.getCurrent();
@@ -89,55 +103,23 @@ public class Track {
             c.move(next);
 
             if (hasCollision()) {
-                c.wreck();
-                collisions.add(c.getCurrent());
-                return true;
+                collisions.add(new Point(c.getCurrent()));
             }
         }
-        return false;
     }
 
-    public void tick() {
-        boolean crash = false;
-        int seconds = 0;
-        while (!crash) {
-            crash = step();
-            seconds++;
-        }
-    }
-
-    public void tick(int steps) {
-        boolean stop = false;
-        for (int i = 0; i < steps; i++) {
-            stop = step();
-            if (stop) break;
-        }
-    }
-
-    public String tick2() {
+    public String tick() {
         while (carts.size() > 1) {
-            for (Cart c : carts) {
-                Direction dir = c.getDirection();
-                Point current = c.getCurrent();
-
-                char next = getNext(dir, current);
-                c.move(next);
-            }
+            step();
             carts = getRemaining(carts);
         }
         Point last = carts.get(0).getCurrent();
         return last.x + "," + last.y;
     }
 
-    public void tick2(int steps) {
+    public void tick(int steps) {
         for (int i = 0; i < steps; i++) {
-            for (Cart c : carts) {
-                Direction dir = c.getDirection();
-                Point current = c.getCurrent();
-
-                char next = getNext(dir, current);
-                c.move(next);
-            }
+            step();
             carts = getRemaining(carts);
         }
     }
@@ -192,6 +174,7 @@ public class Track {
             }
             for (int col = 0; col < width; col++) {
                 Point location = new Point(col, row);
+
                 if (positions.containsKey(location)) {
                     Cart cart = positions.get(location);
                     sb.append(cart.toString());
