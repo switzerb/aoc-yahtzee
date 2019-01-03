@@ -83,6 +83,18 @@ public class MainTest {
     }
 
     @Test
+    public void test_tickThree() {
+        String snapshot = ">---\\\n" +
+                "|   |\n" +
+                "|   |\n" +
+                "|   |\n" +
+                "\\---/";
+        loop.tick(14);
+        System.out.println(loop);
+        assertEquals(snapshot, loop.toString());
+    }
+
+    @Test
     public void test_run() {
         loop.tick(18);
     }
