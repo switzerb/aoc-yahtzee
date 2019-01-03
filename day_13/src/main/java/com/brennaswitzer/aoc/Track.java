@@ -80,7 +80,7 @@ public class Track {
     }
 
     private boolean step() {
-        // sort list of carts by row and column
+
         for (Cart c : carts) {
             Direction dir = c.getDirection();
             Point current = c.getCurrent();
@@ -114,9 +114,38 @@ public class Track {
         }
     }
 
+    public void tick2(int steps) {
+        for (int i = 0; i < steps; i++) {
+            for (Cart c : carts) {
+                Direction dir = c.getDirection();
+                Point current = c.getCurrent();
+
+                char next = getNext(dir, current);
+                c.move(next);
+            }
+            carts = getRemaining(carts);
+        }
+    }
+
     public String firstCollision() {
         Point first = collisions.get(0);
         return first.x + "," + first.y;
+    }
+
+    public List<Cart> getRemaining(List<Cart> carts) {
+        List<Cart> remaining = new ArrayList<>();
+        Map<Point, Cart> positions = new HashMap<>();
+
+        for (Cart c : carts) {
+            if (positions.containsKey(c.getCurrent())) {
+                remaining.remove(positions.get(c.getCurrent()));
+                positions.remove(c.getCurrent());
+            } else {
+                remaining.add(c);
+                positions.put(c.getCurrent(), c);
+            }
+        }
+        return remaining;
     }
 
     public boolean hasCollision() {
