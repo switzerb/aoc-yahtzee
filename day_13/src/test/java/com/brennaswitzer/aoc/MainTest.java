@@ -12,6 +12,7 @@ public class MainTest {
 
     Track track;
     Track loop;
+    Track collision;
 
     @Before
     public void setUp() throws IOException {
@@ -20,6 +21,9 @@ public class MainTest {
 
         List<String> looper = Loader.getInput("test_loop.txt");
         loop = new Track(looper);
+
+        List<String> coll = Loader.getInput("test_collision.txt");
+        collision = new Track(coll);
     }
 
     @Test
@@ -92,6 +96,28 @@ public class MainTest {
         loop.tick(14);
         System.out.println(loop);
         assertEquals(snapshot, loop.toString());
+    }
+
+    @Test
+    public void test_tickCollisionStart() {
+        String snapshot = "/---\\\n" +
+                "^   |\n" +
+                "|   |\n" +
+                "v   |\n" +
+                "\\---/";
+        System.out.println(collision);
+        assertEquals(snapshot, collision.toString());
+    }
+
+    @Test
+    public void test_tickCollisionEnd() {
+        String snapshot = "/---\\\n" +
+                "|   |\n" +
+                "|   X\n" +
+                "|   |\n" +
+                "\\---/";
+        collision.tick(6);
+        assertEquals(snapshot, collision.toString());
     }
 
     @Test
