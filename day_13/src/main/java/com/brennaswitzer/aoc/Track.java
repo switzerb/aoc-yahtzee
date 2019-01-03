@@ -186,4 +186,33 @@ public class Track {
         return sb.toString();
     }
 
+    public String withCollisions() {
+        StringBuilder sb = new StringBuilder();
+
+        Map<Point, Cart> positions = new HashMap<>();
+
+        for (Cart c : carts) {
+            positions.put(c.getCurrent(), c);
+        }
+
+        for (int row = 0; row < height; row++) {
+            if (row > 0) {
+                sb.append('\n');
+            }
+            for (int col = 0; col < width; col++) {
+                Point location = new Point(col, row);
+
+                if (collisions.size() > 0 && collisions.get(0).equals(location)) {
+                    sb.append("X");
+                } else if (positions.containsKey(location)) {
+                    Cart cart = positions.get(location);
+                    sb.append(cart.toString());
+                } else {
+                    sb.append(track[row][col]);
+                }
+            }
+        }
+        return sb.toString();
+    }
+
 }

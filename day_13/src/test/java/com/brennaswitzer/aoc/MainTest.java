@@ -111,7 +111,7 @@ public class MainTest {
                 "\\-+-/  \\-+--/\n" +
                 "  \\------/   ";
         track.tick(14);
-        assertEquals(snapshot, track.toString());
+        assertEquals(snapshot, track.withCollisions());
     }
 
     @Test
@@ -182,7 +182,7 @@ public class MainTest {
                 "|   |\n" +
                 "\\---/";
         collision.tick(7);
-        assertEquals(snapshot, collision.toString());
+        assertEquals(snapshot, collision.withCollisions());
     }
 
     @Test
