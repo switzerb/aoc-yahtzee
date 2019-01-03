@@ -97,8 +97,6 @@ public class Track {
                     stop = true;
                 }
             }
-            System.out.println(this);
-            System.out.println('\n');
             if(stop) break;
         }
 
