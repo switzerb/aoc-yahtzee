@@ -105,9 +105,11 @@ public class Track {
             c.move(next);
 
             Cart cartHit = hasCollision(nextCarts);
+            assert c != cartHit : "The cart cannot hit itself";
             if (cartHit != null) {
-                nextCarts.remove(c);
                 nextCarts.remove(cartHit);
+                nextCarts.remove(c);
+                assert (nextCarts.size() % 2) != 0 : "We do not have an odd number of carts";
                 collisions.add(new Point(c.getCurrent()));
             }
         }
