@@ -50,7 +50,9 @@ public class MainTest {
                 "| | |  | |  |\n" +
                 "\\-+-/  \\->--/\n" +
                 "  \\------/   ";
-        track.tick(1);
+        for (int i = 0; i < 1; i++) {
+            track.step();
+        }
         assertEquals(snapshot, track.toString());
     }
 
@@ -62,7 +64,9 @@ public class MainTest {
                 "| | |  | |  |\n" +
                 "\\-+-/  \\-+>-/\n" +
                 "  \\------/   ";
-        track.tick(2);
+        for (int i = 0; i < 2; i++) {
+            track.step();
+        }
         assertEquals(snapshot, track.toString());
     }
 
@@ -74,7 +78,9 @@ public class MainTest {
                 "| | |  | |  |\n" +
                 "\\-+-/  \\-+->/\n" +
                 "  \\------/   ";
-        track.tick(3);
+        for (int i = 0; i < 3; i++) {
+            track.step();
+        }
         assertEquals(snapshot, track.toString());
     }
 
@@ -86,7 +92,9 @@ public class MainTest {
                 "| | |  | |  |\n" +
                 "\\-+-/  \\-+--^\n" +
                 "  \\------/   ";
-        track.tick(4);
+        for (int i = 0; i < 4; i++) {
+            track.step();
+        }
         assertEquals(snapshot, track.toString());
     }
 
@@ -98,7 +106,9 @@ public class MainTest {
                 "| | |  | |  |\n" +
                 "\\-+-/  ^-+--/\n" +
                 "  \\------/   ";
-        track.tick(13);
+        for (int i = 0; i < 13; i++) {
+            track.step();
+        }
         assertEquals(snapshot, track.toString());
     }
 
@@ -110,13 +120,17 @@ public class MainTest {
                 "| | |  X |  |\n" +
                 "\\-+-/  \\-+--/\n" +
                 "  \\------/   ";
-        track.tick(14);
+        for (int i = 0; i < 14; i++) {
+            track.step();
+        }
         assertEquals(snapshot, track.withCollisions());
     }
 
     @Test
     public void test_p1_ex8() {
-        track.tick(14);
+        while (track.collisionCount() == 0) {
+            track.step();
+        }
         assertEquals("7,3", track.firstCollision());
     }
 
@@ -138,7 +152,9 @@ public class MainTest {
                 "|   |\n" +
                 "|   |\n" +
                 "\\---/";
-        loop.tick(1);
+        for (int i = 0; i < 1; i++) {
+            loop.step();
+        }
         assertEquals(snapshot, loop.toString());
     }
 
@@ -149,7 +165,9 @@ public class MainTest {
                 "|   |\n" +
                 "|   |\n" +
                 "\\---/";
-        loop.tick(2);
+        for (int i = 0; i < 2; i++) {
+            loop.step();
+        }
         assertEquals(snapshot, loop.toString());
     }
 
@@ -160,7 +178,9 @@ public class MainTest {
                 "|   |\n" +
                 "|   |\n" +
                 "\\---/";
-        loop.tick(14);
+        for (int i = 0; i < 14; i++) {
+            loop.step();
+        }
         assertEquals(snapshot, loop.toString());
     }
 
@@ -181,13 +201,17 @@ public class MainTest {
                 "|   X\n" +
                 "|   |\n" +
                 "\\---/";
-        collision.tick(7);
+        for (int i = 0; i < 7; i++) {
+            collision.step();
+        }
         assertEquals(snapshot, collision.withCollisions());
     }
 
     @Test
     public void test_getCollisionPosition() {
-        collision.tick(8);
+        while (collision.collisionCount() == 0) {
+            collision.step();
+        }
         assertEquals("4,2", collision.firstCollision());
     }
 
@@ -200,7 +224,9 @@ public class MainTest {
                 "\\-+-/ |\n" +
                 "  |   |\n" +
                 "  ^---^";
-        track2.tick(1);
+        for (int i = 0; i < 1; i++) {
+            track2.step();
+        }
         assertEquals(snapshot, track2.toString());
     }
 
@@ -213,13 +239,18 @@ public class MainTest {
                 "\\-+-/ ^\n" +
                 "  |   |\n" +
                 "  \\---/";
-        track2.tick(3);
+        for (int i = 0; i < 3; i++) {
+            track2.step();
+        }
         assertEquals(snapshot, track2.toString());
     }
 
     @Test
     public void test_lastCart() {
-        assertEquals("6,4", track2.tick());
+        while (track2.getCarts() > 1) {
+            track2.step();
+        }
+        assertEquals("6,4", track2.getLastCart());
     }
 
 

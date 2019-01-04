@@ -9,9 +9,12 @@ public class Main {
     List<String> lines = Loader.getInput("input.txt");
     Track track = new Track(lines);
 
-    String last = track.tick();
+      while (track.getCarts() > 1) {
+          track.step();
+      }
+
     System.out.println("Solution Part One: " + track.firstCollision());
-    System.out.println("Solution Part Two: " + last);
+      System.out.println("Solution Part Two: " + track.getLastCart());
 
   }
 }

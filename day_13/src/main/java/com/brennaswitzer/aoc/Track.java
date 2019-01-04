@@ -95,6 +95,8 @@ public class Track {
 
     public void step() {
         carts.sort(SORT_BY_LOCATION);
+        List<Cart> nextCarts = new ArrayList<>(carts);
+
         for (Cart c : carts) {
             Direction dir = c.getDirection();
             Point current = c.getCurrent();
@@ -102,26 +104,14 @@ public class Track {
             char next = getNext(dir, current);
             c.move(next);
 
-            if (hasCollision()) {
+            Cart cartHit = hasCollision(nextCarts);
+            if (cartHit != null) {
+                nextCarts.remove(c);
+                nextCarts.remove(cartHit);
                 collisions.add(new Point(c.getCurrent()));
             }
         }
-    }
-
-    public String tick() {
-        while (carts.size() > 1) {
-            step();
-            carts = getRemaining(carts);
-        }
-        Point last = carts.get(0).getCurrent();
-        return last.x + "," + last.y;
-    }
-
-    public void tick(int steps) {
-        for (int i = 0; i < steps; i++) {
-            step();
-            carts = getRemaining(carts);
-        }
+        carts = nextCarts;
     }
 
     public String firstCollision() {
@@ -129,34 +119,32 @@ public class Track {
         return first.x + "," + first.y;
     }
 
-    public List<Cart> getRemaining(List<Cart> carts) {
-        List<Cart> remaining = new ArrayList<>();
+    public Cart hasCollision(List<Cart> remaining) {
         Map<Point, Cart> positions = new HashMap<>();
 
-        for (Cart c : carts) {
+        for (Cart c : remaining) {
             if (positions.containsKey(c.getCurrent())) {
-                remaining.remove(positions.get(c.getCurrent()));
-                positions.remove(c.getCurrent());
-            } else {
-                remaining.add(c);
-                positions.put(c.getCurrent(), c);
-            }
-        }
-        return remaining;
-    }
-
-    public boolean hasCollision() {
-        Map<Point, Cart> positions = new HashMap<>();
-
-        for (Cart c : carts) {
-            if (positions.containsKey(c.getCurrent())) {
-                return true;
+                return positions.get(c.getCurrent());
             } else {
                 positions.put(c.getCurrent(), c);
             }
         }
-        return false;
+        return null;
     }
+
+    public int collisionCount() {
+        return collisions.size();
+    }
+
+    public int getCarts() {
+        return carts.size();
+    }
+
+    public String getLastCart() {
+        Point last = carts.get(0).getCurrent();
+        return last.x + "," + last.y;
+    }
+
 
     @Override
     public String toString() {
@@ -214,5 +202,4 @@ public class Track {
         }
         return sb.toString();
     }
-
 }
