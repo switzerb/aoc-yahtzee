@@ -13,8 +13,6 @@ public class Main {
             track.step();
         }
 
-        System.out.println(track);
-
         System.out.println("Solution Part One: " + track.firstCollision());
         System.out.println("Solution Part Two: " + track.getLastCart());
 
