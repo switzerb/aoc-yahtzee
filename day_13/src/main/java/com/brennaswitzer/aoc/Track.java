@@ -11,6 +11,7 @@ public class Track {
     private int width;
     private int height;
     private List<Point> collisions = new ArrayList<>();
+    int seconds = 0;
 
     Track(List<String> lines) {
         width = getWidth(lines);
@@ -94,6 +95,7 @@ public class Track {
     }
 
     public void step() {
+        seconds++;
         carts.sort(SORT_BY_LOCATION);
         List<Cart> nextCarts = new ArrayList<>(carts);
 
@@ -104,12 +106,10 @@ public class Track {
             char next = getNext(dir, current);
             c.move(next);
 
-            Cart cartHit = hasCollision(nextCarts);
-            assert c != cartHit : "The cart cannot hit itself";
+            Crash cartHit = hasCollision(nextCarts);
             if (cartHit != null) {
-                nextCarts.remove(cartHit);
-                nextCarts.remove(c);
-                assert (nextCarts.size() % 2) != 0 : "We do not have an odd number of carts";
+                nextCarts.remove(cartHit.getA());
+                nextCarts.remove(cartHit.getB());
                 collisions.add(new Point(c.getCurrent()));
             }
         }
@@ -121,12 +121,12 @@ public class Track {
         return first.x + "," + first.y;
     }
 
-    public Cart hasCollision(List<Cart> remaining) {
+    public Crash hasCollision(List<Cart> remaining) {
         Map<Point, Cart> positions = new HashMap<>();
 
         for (Cart c : remaining) {
             if (positions.containsKey(c.getCurrent())) {
-                return positions.get(c.getCurrent());
+                return new Crash(c, positions.get(c.getCurrent()));
             } else {
                 positions.put(c.getCurrent(), c);
             }
