@@ -1,27 +1,22 @@
 package com.brennaswitzer.aoc;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ClassLoader cl = Main.class.getClassLoader();
-        InputStream in = cl.getResourceAsStream("input.txt");
-        BufferedReader r = new BufferedReader(new InputStreamReader(in));
 
-        List<String> input = new ArrayList<>();
+        /**
+         * Combat proceeds in rounds;
+         * the order in which units take their turns within a round is the reading order of their starting positions in that round
+         * in each round,
+         *      for each unit that is still alive
+         *
+         * no diagonal movement or attack
+         * ties are broken in reading order -- left to right, top to bottom
+         */
 
-        while (true) {
-            String line = r.readLine();
-            if (line == null) {
-                break;
-            }
-            input.add(line);
-        }
+        List<String> input = Loader.getInput("input.txt");
 
     }
 }
