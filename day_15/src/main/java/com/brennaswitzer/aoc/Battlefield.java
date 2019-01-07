@@ -1,8 +1,8 @@
 package com.brennaswitzer.aoc;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class Battlefield {
@@ -11,6 +11,7 @@ public class Battlefield {
     // govern the behavior and position of points
     // make sure we can get reading order for anything, like open squares and combatants
 
+    List<Unit> units;
     char[][] battlefield;
     int width;
     int height;
@@ -23,6 +24,35 @@ public class Battlefield {
             width = b.length;
             battlefield[i] = Arrays.copyOf(b, width);
         }
+        initUnits();
+        System.out.println("check");
+    }
+
+    private void initUnits() {
+        units = new ArrayList<>();
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+                if (battlefield[r][c] == 'E') {
+                    Unit elf = new Unit('E', new Position(r, c));
+                    units.add(elf);
+                }
+                if (battlefield[r][c] == 'G') {
+                    Unit goblin = new Unit('G', new Position(r, c));
+                    units.add(goblin);
+                }
+            }
+        }
+        units.sort(UNITS_IN_READING_ORDER);
+    }
+
+    /**
+     * Move a unit on the field to somewhere new and replace that position with a '.' instead
+     *
+     * @param unit
+     * @return new position of unit
+     */
+    Position updatePosition(Unit unit) {
+        return new Position();
     }
 
     int getWidth() {
@@ -31,6 +61,19 @@ public class Battlefield {
 
     int getHeight() {
         return height;
+    }
+
+    /**
+     * Runs a single round of play.
+     * Combat proceeds in rounds; in each round, each unit that is still alive takes a turn, resolving all of its actions before the next unit's turn begins.
+     * For instance, the order in which units take their turns within a round is the reading order of their starting positions in that round
+     */
+    void runRound() {
+
+        for (Unit unit : units) {
+            System.out.println(unit.getTeam());
+        }
+
     }
 
     List<Position> sortReadingOrder() {
@@ -71,29 +114,14 @@ public class Battlefield {
         return sb.toString();
     }
 
-    class Position {
+    public static Comparator<Unit> UNITS_IN_READING_ORDER = new Comparator<Unit>() {
+        @Override
+        public int compare(Unit u1, Unit u2) {
 
-        private final java.awt.Point p;
-
-        Position() {
-            p = new Point();
+            if (u1.getCurrent().getRow() < u2.getCurrent().getRow()) return -1;
+            if (u1.getCurrent().getRow() > u2.getCurrent().getRow()) return 1;
+            return Integer.compare(u1.getCurrent().getCol(), u2.getCurrent().getCol());
         }
+    };
 
-        public Position(Position n) {
-            p = new java.awt.Point(n.getCol(), n.getRow());
-        }
-
-        public Position(int row, int col) {
-            p = new java.awt.Point(col, row);
-        }
-
-        public int getRow() {
-            return p.y;
-        }
-
-        public int getCol() {
-            return p.x;
-        }
-
-    }
 }

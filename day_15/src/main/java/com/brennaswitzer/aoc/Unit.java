@@ -1,16 +1,25 @@
 package com.brennaswitzer.aoc;
 
-import java.awt.*;
-
 public class Unit {
 
     char team;
-    Point start;
-    Point current;
+    Position current;
     int hitpoints = 200;
     int power = 3;
     boolean done;
 
+    Unit(char team, Position current) {
+        this.team = team;
+        this.current = current;
+    }
+
+    Position getCurrent() {
+        return current;
+    }
+
+    char getTeam() {
+        return team;
+    }
 
     int getHitpoints() {
         return hitpoints;
