@@ -25,7 +25,6 @@ public class Battlefield {
             battlefield[i] = Arrays.copyOf(b, width);
         }
         initUnits();
-        System.out.println("check");
     }
 
     private void initUnits() {
@@ -70,8 +69,11 @@ public class Battlefield {
      */
     void runRound() {
 
+        // sort the units before a round to make sure they operate in reading order
+        units.sort(UNITS_IN_READING_ORDER);
+
         for (Unit unit : units) {
-            System.out.println(unit.getTeam());
+            System.out.println("Unit: " + unit.getTeam() + " , Position: " + unit.getCurrent());
         }
 
     }
@@ -106,7 +108,7 @@ public class Battlefield {
         StringBuilder sb = new StringBuilder();
 
         for (int r = 0; r < height; r++) {
-            sb.append('\n');
+            if (r > 0) sb.append('\n');
             for (int c = 0; c < width; c++) {
                 sb.append(battlefield[r][c]);
             }

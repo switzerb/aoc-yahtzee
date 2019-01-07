@@ -31,7 +31,17 @@ public class BattlefieldTest {
 
     @Test
     public void test_readField() {
-        System.out.println(battle);
+        String init = "#######\n" +
+                "#E..G.#\n" +
+                "#...#.#\n" +
+                "#.G.#G#\n" +
+                "#######";
+        assertEquals(init, battle.toString());
+    }
+
+    @Test
+    public void test_runRound() {
+        battle.runRound();
     }
 
 

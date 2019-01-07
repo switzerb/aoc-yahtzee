@@ -2,7 +2,7 @@ package com.brennaswitzer.aoc;
 
 import java.awt.*;
 
-class Position {
+class Position implements Comparable<Position> {
 
     private final java.awt.Point p;
 
@@ -26,4 +26,30 @@ class Position {
         return p.x;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position)) return false;
+        Position position = (Position) o;
+        return p.equals(position.p);
+    }
+
+    @Override
+    public int hashCode() {
+        return p.hashCode();
+    }
+
+    @Override
+    public int compareTo(Position o) {
+        int c = p.y - o.p.y;
+        if (c != 0) return c;
+        return p.x - o.p.x;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[" + p.y + "," + p.x + "]");
+        return sb.toString();
+    }
 }
