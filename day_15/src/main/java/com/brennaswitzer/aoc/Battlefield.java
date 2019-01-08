@@ -112,10 +112,6 @@ public class Battlefield {
 //        }
     }
 
-    List<Position> sortReadingOrder() {
-        return new ArrayList<>();
-    }
-
     /**
      * Return a unit by current position on the battlefield. If there is no unit at that position, return null
      *
