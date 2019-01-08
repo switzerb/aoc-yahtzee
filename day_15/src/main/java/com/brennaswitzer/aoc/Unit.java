@@ -81,12 +81,11 @@ public class Unit {
 
 
     /**
-     * Determines if a unit should take a turn
-     *
-     * @return
+     * Determines if a unit is dead
+     * @return boolean true if unit is dead and false if it is not
      */
-    boolean isAlive() {
-        return false;
+    boolean isDead() {
+        return hitpoints <= 0;
     }
 
     /**
@@ -151,6 +150,10 @@ public class Unit {
         }
         assert target != null;
         target.setHitpoints(target.getHitpoints() - this.power);
+
+        if (target.isDead()) {
+            // do dead things?
+        }
     }
 
     /**
