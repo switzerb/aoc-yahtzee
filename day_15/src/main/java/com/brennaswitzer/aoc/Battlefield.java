@@ -29,6 +29,19 @@ public class Battlefield {
         initUnits();
     }
 
+    Battlefield(String init) {
+        String[] split = init.split("\n");
+        List<String> input = Arrays.asList(split);
+        height = input.size();
+        battlefield = new char[height][];
+        for (int i = 0; i < height; i++) {
+            char[] b = input.get(i).toCharArray();
+            width = b.length;
+            battlefield[i] = Arrays.copyOf(b, width);
+        }
+        initUnits();
+    }
+
     private void initUnits() {
         units = new ArrayList<>();
         for (int r = 0; r < height; r++) {
@@ -155,5 +168,6 @@ public class Battlefield {
             return Integer.compare(u1.getCurrent().getCol(), u2.getCurrent().getCol());
         }
     };
+
 
 }

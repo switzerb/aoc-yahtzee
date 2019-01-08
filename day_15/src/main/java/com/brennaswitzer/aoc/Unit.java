@@ -116,22 +116,25 @@ public class Unit {
         Unit west = state.getUnitByPosition(current.lookWest());
 
         if (north != null) {
-            enemiesInRange.put('N', north);
+            enemiesInRange.put(current.lookNorth(), north);
         }
         if (south != null) {
-            enemiesInRange.put('S', south);
+            enemiesInRange.put(current.lookSouth(), south);
         }
         if (east != null) {
-            enemiesInRange.put('E', east);
+            enemiesInRange.put(current.lookEast(), east);
         }
         if (west != null) {
-            enemiesInRange.put('W', west);
+            enemiesInRange.put(current.lookWest(), west);
         }
         return enemiesInRange;
     }
 
     void attack(Adjacent enemies) {
+
         System.out.println(enemies);
+        // get lowest hitpoints
+        // if more than one lowest, select in reading order
 //             * Otherwise, the adjacent target with the fewest hit points is selected;
 //     * in a tie, the adjacent target with the fewest hit points which is first in reading order is selected.
 

@@ -1,6 +1,6 @@
 package com.brennaswitzer.aoc;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
-public class Adjacent extends HashMap<Character, Unit> {
+public class Adjacent extends TreeMap<Position, Unit> {
 }

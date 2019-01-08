@@ -26,9 +26,30 @@ public class UnitTest {
     public void test_enemiesInRangePos() {
         Adjacent near = new Adjacent();
         Unit goblin = battle.units.get(2);
-        near.put('E', goblin);
+        near.put(goblin.getCurrent(), goblin);
         Unit elf = battle.units.get(1);
         assertEquals(near, elf.canAttack(battle));
     }
 
+    @Test
+    public void test_attack_ex1() {
+        String s = "#######\n" +
+                "#.G.G.#\n" +
+                "#..GEG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(s);
+        Unit elf = battle.units.get(3);
+
+        Adjacent near = new Adjacent();
+        Unit goblin1 = battle.units.get(1);
+        Unit goblin2 = battle.units.get(2);
+        Unit goblin3 = battle.units.get(3);
+        near.put(goblin3.getCurrent(), goblin3);
+        near.put(goblin1.getCurrent(), goblin1);
+        near.put(goblin2.getCurrent(), goblin2);
+        elf.attack(near);
+    }
 }
