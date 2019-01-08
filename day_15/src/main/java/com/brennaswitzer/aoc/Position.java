@@ -26,6 +26,22 @@ class Position implements Comparable<Position> {
         return p.x;
     }
 
+    public Position lookNorth() {
+        return new Position(p.y - 1, p.x);
+    }
+
+    public Position lookSouth() {
+        return new Position(p.y + 1, p.x);
+    }
+
+    public Position lookWest() {
+        return new Position(p.y, p.x - 1);
+    }
+
+    public Position lookEast() {
+        return new Position(p.y, p.x + 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

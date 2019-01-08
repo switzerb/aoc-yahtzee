@@ -15,6 +15,8 @@ public class Battlefield {
     char[][] battlefield;
     int width;
     int height;
+    int rounds;
+    boolean done;
 
     Battlefield(List<String> input) {
         height = input.size();
@@ -44,6 +46,17 @@ public class Battlefield {
         units.sort(UNITS_IN_READING_ORDER);
     }
 
+    List<Unit> getUnitsByTeam(char team) {
+        List<Unit> byTeam = new ArrayList<>();
+        for (Unit u : units) {
+            if (u.getSelf() == team) {
+                byTeam.add(u);
+            }
+        }
+        byTeam.sort(UNITS_IN_READING_ORDER);
+        return byTeam;
+    }
+
     /**
      * Move a unit on the field to somewhere new and replace that position with a '.' instead
      *
@@ -62,20 +75,28 @@ public class Battlefield {
         return height;
     }
 
+    char getPosition(Position p) {
+        return battlefield[p.getCol()][p.getRow()];
+    }
+
     /**
      * Runs a single round of play.
      * Combat proceeds in rounds; in each round, each unit that is still alive takes a turn, resolving all of its actions before the next unit's turn begins.
      * For instance, the order in which units take their turns within a round is the reading order of their starting positions in that round
      */
     void runRound() {
-
         // sort the units before a round to make sure they operate in reading order
-        units.sort(UNITS_IN_READING_ORDER);
 
-        for (Unit unit : units) {
-            System.out.println("Unit: " + unit.getTeam() + " , Position: " + unit.getCurrent());
-        }
+        units.get(0).turn(this);
 
+//        units.sort(UNITS_IN_READING_ORDER);
+//        for (Unit unit : units) {
+//            done = unit.turn(this);
+//            if(done) {
+//                break;
+//            }
+//            rounds++;
+//        }
     }
 
     List<Position> sortReadingOrder() {
@@ -100,7 +121,11 @@ public class Battlefield {
      * @return
      */
     int outcome() {
-        return 0;
+        int sum = 0;
+        for (Unit u : units) {
+            sum += u.getHitpoints();
+        }
+        return sum * rounds;
     }
 
     @Override

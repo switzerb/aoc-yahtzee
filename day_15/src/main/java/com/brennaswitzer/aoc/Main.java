@@ -11,7 +11,6 @@ public class Main {
          * the order in which units take their turns within a round is the reading order of their starting positions in that round
          * in each round,
          *      for each unit that is still alive
-         *
          * no diagonal movement or attack
          * ties are broken in reading order -- left to right, top to bottom
          */
