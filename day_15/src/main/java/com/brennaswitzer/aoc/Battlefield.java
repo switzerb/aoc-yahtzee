@@ -104,13 +104,18 @@ public class Battlefield {
     }
 
     /**
-     * Get information about those spaces immediately adjacent to a Unit. It will always return a list of zero to four units.
+     * Return a unit by current position on the battlefield. If there is no unit at that position, return null
      *
-     * @param unit
-     * @return
+     * @param position
+     * @return Unit
      */
-    List<Unit> getAdjacent(Position unit) {
-        return new ArrayList<>();
+    Unit getUnitByPosition(Position position) {
+        for (Unit u : units) {
+            if (u.getCurrent() == position) {
+                return u;
+            }
+        }
+        return null;
     }
 
     /**

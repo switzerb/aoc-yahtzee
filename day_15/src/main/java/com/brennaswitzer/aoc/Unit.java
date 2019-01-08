@@ -1,5 +1,6 @@
 package com.brennaswitzer.aoc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Unit {
@@ -59,8 +60,9 @@ public class Unit {
         List<Unit> enemies = identifyTargets(state);
         if (enemies == null) return true;
 
-        if (enemiesInRange(state)) {
-            // attack()
+        List<Unit> enemiesNear = canAttack(state);
+        if (enemiesNear.size() > 0) {
+            attack(enemiesNear);
         } else {
             // are there are no open squares in range, then turn is over
             // else move
@@ -95,22 +97,6 @@ public class Unit {
     }
 
     /**
-     * Alternatively, the unit might already be in range of a target.
-     */
-    boolean enemiesInRange(Battlefield state) {
-        char north = state.getPosition(current.lookNorth());
-        char south = state.getPosition(current.lookSouth());
-        char east = state.getPosition(current.lookEast());
-        char west = state.getPosition(current.lookWest());
-
-        if (north == enemy) return true;
-        if (south == enemy) return true;
-        if (east == enemy) return true;
-        if (west == enemy) return true;
-        return false;
-    }
-
-    /**
      * Then, the unit identifies all of the open squares (.) that are in range of each target;
      * these are the squares which are adjacent (immediately up, down, left, or right)
      * to any target and which aren't already occupied by a wall or another unit.
@@ -121,9 +107,32 @@ public class Unit {
 
     /**
      * To attack, the unit first determines all of the targets that are in range of it by being immediately adjacent to it.
-     * If there are no such targets, the unit ends its turn. Otherwise, the adjacent target with the fewest hit points is selected; in a tie, the adjacent target with the fewest hit points which is first in reading order is selected.
      */
-    void attack() {
+    List<Unit> canAttack(Battlefield state) {
+        List<Unit> enemiesInRange = new ArrayList<>();
+        Unit north = state.getUnitByPosition(current.lookNorth());
+        Unit south = state.getUnitByPosition(current.lookSouth());
+        Unit east = state.getUnitByPosition(current.lookEast());
+        Unit west = state.getUnitByPosition(current.lookWest());
+
+        if (north != null) {
+            enemiesInRange.add(north);
+        }
+        if (south != null) {
+            enemiesInRange.add(south);
+        }
+        if (east != null) {
+            enemiesInRange.add(east);
+        }
+        if (west != null) {
+            enemiesInRange.add(west);
+        }
+        return enemiesInRange;
+    }
+
+    void attack(List<Unit> enemies) {
+//             * Otherwise, the adjacent target with the fewest hit points is selected;
+//     * in a tie, the adjacent target with the fewest hit points which is first in reading order is selected.
 
     }
 
