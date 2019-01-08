@@ -132,6 +132,18 @@ public class Battlefield {
     }
 
     /**
+     * Remove a unit from the battlefield when it's dead
+     *
+     * @param target unit that is being removed
+     */
+    public void removeUnit(Unit target) {
+        Position current = target.getCurrent();
+        battlefield[current.getCol()][current.getRow()] = '.';
+        units.remove(target);
+    }
+
+
+    /**
      * The outcome of the battle: the number of full rounds that were completed (not counting the round in which combat ends)
      * multiplied by the sum of the hit points of all remaining units at the moment combat ends.
      * (Combat only ends when a unit finds no targets during its turn.)
@@ -168,6 +180,5 @@ public class Battlefield {
             return Integer.compare(u1.getCurrent().getCol(), u2.getCurrent().getCol());
         }
     };
-
 
 }

@@ -51,8 +51,8 @@ public class UnitTest {
         near.put(goblin3.getCurrent(), goblin3);
         near.put(goblin1.getCurrent(), goblin1);
         near.put(goblin2.getCurrent(), goblin2);
-        elf.attack(near);
-        assertEquals(197, goblin1.getHitpoints());
+        Unit target = elf.attack(near);
+        assertEquals(197, target.getHitpoints());
     }
 
     @Test
@@ -78,9 +78,9 @@ public class UnitTest {
         near.put(goblin3.getCurrent(), goblin3);
         near.put(goblin1.getCurrent(), goblin1);
         near.put(goblin2.getCurrent(), goblin2);
-        elf.attack(near);
+        Unit target = elf.attack(near);
 
-        assertEquals(7, goblin2.getHitpoints());
+        assertEquals(7, target.getHitpoints());
     }
 
 }

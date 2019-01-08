@@ -65,7 +65,10 @@ public class Unit {
 
         Adjacent enemiesNear = inAttackRange(state);
         if (enemiesNear.size() > 0) {
-            attack(enemiesNear);
+            Unit target = attack(enemiesNear);
+            if (target.isDead()) {
+                state.removeUnit(target);
+            }
         } else {
             // are there are no open squares in range, then turn is over
             // else move
@@ -139,7 +142,7 @@ public class Unit {
      *
      * @param enemies Map of all enemies in attack range
      */
-    void attack(Adjacent enemies) {
+    Unit attack(Adjacent enemies) {
         int min = Integer.MAX_VALUE;
         Unit target = null;
         for (Unit u : enemies.values()) {
@@ -150,10 +153,7 @@ public class Unit {
         }
         assert target != null;
         target.setHitpoints(target.getHitpoints() - this.power);
-
-        if (target.isDead()) {
-            // do dead things?
-        }
+        return target;
     }
 
     /**
