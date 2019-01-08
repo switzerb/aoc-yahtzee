@@ -111,7 +111,7 @@ public class Battlefield {
      */
     Unit getUnitByPosition(Position position) {
         for (Unit u : units) {
-            if (u.getCurrent() == position) {
+            if (u.getCurrent().equals(position)) {
                 return u;
             }
         }

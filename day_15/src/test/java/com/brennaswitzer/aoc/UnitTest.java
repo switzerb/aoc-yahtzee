@@ -19,13 +19,16 @@ public class UnitTest {
     @Test
     public void test_enemiesInRangeNeg() {
         Unit goblin = battle.units.get(0);
-        assertEquals(false, goblin.enemiesInRange(battle));
+        assertEquals(null, goblin.canAttack(battle));
     }
 
     @Test
     public void test_enemiesInRangePos() {
+        Adjacent near = new Adjacent();
+        Unit goblin = battle.units.get(2);
+        near.put('E', goblin);
         Unit elf = battle.units.get(1);
-        assertEquals(true, elf.enemiesInRange(battle));
+        assertEquals(near, elf.canAttack(battle));
     }
 
 }

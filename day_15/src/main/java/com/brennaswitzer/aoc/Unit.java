@@ -1,6 +1,5 @@
 package com.brennaswitzer.aoc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Unit {
@@ -60,7 +59,7 @@ public class Unit {
         List<Unit> enemies = identifyTargets(state);
         if (enemies == null) return true;
 
-        List<Unit> enemiesNear = canAttack(state);
+        Adjacent enemiesNear = canAttack(state);
         if (enemiesNear.size() > 0) {
             attack(enemiesNear);
         } else {
@@ -108,29 +107,31 @@ public class Unit {
     /**
      * To attack, the unit first determines all of the targets that are in range of it by being immediately adjacent to it.
      */
-    List<Unit> canAttack(Battlefield state) {
-        List<Unit> enemiesInRange = new ArrayList<>();
+    Adjacent canAttack(Battlefield state) {
+        Adjacent enemiesInRange = new Adjacent();
+
         Unit north = state.getUnitByPosition(current.lookNorth());
         Unit south = state.getUnitByPosition(current.lookSouth());
         Unit east = state.getUnitByPosition(current.lookEast());
         Unit west = state.getUnitByPosition(current.lookWest());
 
         if (north != null) {
-            enemiesInRange.add(north);
+            enemiesInRange.put('N', north);
         }
         if (south != null) {
-            enemiesInRange.add(south);
+            enemiesInRange.put('S', south);
         }
         if (east != null) {
-            enemiesInRange.add(east);
+            enemiesInRange.put('E', east);
         }
         if (west != null) {
-            enemiesInRange.add(west);
+            enemiesInRange.put('W', west);
         }
         return enemiesInRange;
     }
 
-    void attack(List<Unit> enemies) {
+    void attack(Adjacent enemies) {
+        System.out.println(enemies);
 //             * Otherwise, the adjacent target with the fewest hit points is selected;
 //     * in a tie, the adjacent target with the fewest hit points which is first in reading order is selected.
 
