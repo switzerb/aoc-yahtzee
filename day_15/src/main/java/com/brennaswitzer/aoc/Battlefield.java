@@ -70,16 +70,6 @@ public class Battlefield {
         return byTeam;
     }
 
-    /**
-     * Move a unit on the field to somewhere new and replace that position with a '.' instead
-     *
-     * @param unit
-     * @return new position of unit
-     */
-    Position updatePosition(Unit unit) {
-        return new Position();
-    }
-
     int getWidth() {
         return width;
     }
@@ -134,8 +124,18 @@ public class Battlefield {
      */
     public void removeUnit(Unit target) {
         Position current = target.getCurrent();
-        battlefield[current.getCol()][current.getRow()] = '.';
+        battlefield[current.getRow()][current.getCol()] = '.';
         units.remove(target);
+    }
+
+    /**
+     * Move a unit on the field to somewhere new and replace that position with a '.' instead
+     *
+     * @param unit
+     * @return new position of unit
+     */
+    Position updatePosition(Unit unit) {
+        return new Position();
     }
 
 

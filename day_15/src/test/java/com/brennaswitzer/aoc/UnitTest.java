@@ -83,4 +83,32 @@ public class UnitTest {
         assertEquals(7, target.getHitpoints());
     }
 
+    @Test
+    public void test_attack_ex3() {
+        String s = "#######\n" +
+                "#.G.G.#\n" +
+                "#..GEG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String outcome = "#######\n" +
+                "#.G.G.#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(s);
+        Unit elf = battle.units.get(3);
+
+        Unit goblin2 = battle.units.get(2);
+        goblin2.setHitpoints(2);
+        elf.turn(battle);
+
+        assertEquals(outcome, battle.toString());
+    }
+
 }
