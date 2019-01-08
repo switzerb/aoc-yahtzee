@@ -19,7 +19,7 @@ public class UnitTest {
     @Test
     public void test_enemiesInRangeNeg() {
         Unit goblin = battle.units.get(0);
-        assertEquals(null, goblin.canAttack(battle));
+        assertEquals(null, goblin.inAttackRange(battle));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class UnitTest {
         Unit goblin = battle.units.get(2);
         near.put(goblin.getCurrent(), goblin);
         Unit elf = battle.units.get(1);
-        assertEquals(near, elf.canAttack(battle));
+        assertEquals(near, elf.inAttackRange(battle));
     }
 
     @Test
@@ -47,9 +47,40 @@ public class UnitTest {
         Unit goblin1 = battle.units.get(1);
         Unit goblin2 = battle.units.get(2);
         Unit goblin3 = battle.units.get(3);
+
         near.put(goblin3.getCurrent(), goblin3);
         near.put(goblin1.getCurrent(), goblin1);
         near.put(goblin2.getCurrent(), goblin2);
         elf.attack(near);
+        assertEquals(197, goblin1.getHitpoints());
     }
+
+    @Test
+    public void test_attack_ex2() {
+        String s = "#######\n" +
+                "#.G.G.#\n" +
+                "#..GEG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(s);
+        Unit elf = battle.units.get(3);
+
+        Adjacent near = new Adjacent();
+        Unit goblin1 = battle.units.get(1);
+        Unit goblin2 = battle.units.get(2);
+        goblin2.setHitpoints(10);
+
+        Unit goblin3 = battle.units.get(3);
+        goblin3.setHitpoints(100);
+
+        near.put(goblin3.getCurrent(), goblin3);
+        near.put(goblin1.getCurrent(), goblin1);
+        near.put(goblin2.getCurrent(), goblin2);
+        elf.attack(near);
+
+        assertEquals(7, goblin2.getHitpoints());
+    }
+
 }

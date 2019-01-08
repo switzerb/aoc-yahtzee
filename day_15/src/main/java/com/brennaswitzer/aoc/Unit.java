@@ -29,6 +29,10 @@ public class Unit {
         return hitpoints;
     }
 
+    void setHitpoints(int hp) {
+        this.hitpoints = hp;
+    }
+
     int getPower() {
         return power;
     }
@@ -59,7 +63,7 @@ public class Unit {
         List<Unit> enemies = identifyTargets(state);
         if (enemies == null) return true;
 
-        Adjacent enemiesNear = canAttack(state);
+        Adjacent enemiesNear = inAttackRange(state);
         if (enemiesNear.size() > 0) {
             attack(enemiesNear);
         } else {
@@ -107,7 +111,7 @@ public class Unit {
     /**
      * To attack, the unit first determines all of the targets that are in range of it by being immediately adjacent to it.
      */
-    Adjacent canAttack(Battlefield state) {
+    Adjacent inAttackRange(Battlefield state) {
         Adjacent enemiesInRange = new Adjacent();
 
         Unit north = state.getUnitByPosition(current.lookNorth());
@@ -130,14 +134,23 @@ public class Unit {
         return enemiesInRange;
     }
 
+    /**
+     * For all adjacent enemies, attack the one with the lowest hitpoints
+     * In a tie, the adjacent target with the fewest hit points which is first in reading order is selected.
+     *
+     * @param enemies Map of all enemies in attack range
+     */
     void attack(Adjacent enemies) {
-
-        System.out.println(enemies);
-        // get lowest hitpoints
-        // if more than one lowest, select in reading order
-//             * Otherwise, the adjacent target with the fewest hit points is selected;
-//     * in a tie, the adjacent target with the fewest hit points which is first in reading order is selected.
-
+        int min = Integer.MAX_VALUE;
+        Unit target = null;
+        for (Unit u : enemies.values()) {
+            if (u.getHitpoints() < min) {
+                min = u.getHitpoints();
+                target = u;
+            }
+        }
+        assert target != null;
+        target.setHitpoints(target.getHitpoints() - this.power);
     }
 
     /**
