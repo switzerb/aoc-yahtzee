@@ -33,21 +33,6 @@ public class Unit {
         this.hitpoints = hp;
     }
 
-    int getPower() {
-        return power;
-    }
-
-    /**
-     * Determines whether a unit is dead after having been attacked
-     *
-     * @param attack
-     * @return
-     */
-    boolean damage(int attack) {
-        hitpoints = hitpoints - attack;
-        return hitpoints > 0;
-    }
-
     /**
      * Each unit begins its turn by identifying all possible targets (enemy units)
      * if no enemy targets, combat ends
@@ -77,11 +62,6 @@ public class Unit {
         //  if unit can't move, the unit ends it's turn
         return false;
     }
-
-    boolean turnOver() {
-        return done;
-    }
-
 
     /**
      * Determines if a unit is dead
