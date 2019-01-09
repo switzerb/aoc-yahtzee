@@ -42,6 +42,11 @@ class Position implements Comparable<Position> {
         return new Position(p.y, p.x + 1);
     }
 
+    public Position go(Direction dir) {
+        return dir.move(1, this);
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

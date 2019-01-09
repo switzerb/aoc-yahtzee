@@ -1,8 +1,6 @@
 package com.brennaswitzer.aoc;
 
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Unit {
 
@@ -158,10 +156,10 @@ public class Unit {
      * #######       #######       #######       #######       #######
      */
     void pathFinder(Battlefield state) {
-        // find enemy units (targets)
+        // find targets (we know we have targets otherwise we wouldn't be here)
         List<Unit> enemies = identifyTargets(state);
 
-        // Find positions in range of those targets
+        // find open squares in range
         Set<Position> openPositions = new TreeSet<>();
         for (Unit u : enemies) {
             char north = state.getPosition(u.getCurrent().lookNorth());
@@ -186,15 +184,34 @@ public class Unit {
             // how do I know they aren't reachable?
         }
 
-
-        // find targets (we know we have targets otherwise we wouldn't be here)
-        // find open squares in range
         // find which of those are reachable (no enemy or wall in the way)
         // find which ones are nearest (smallest manhattan distance)
         // sort positions by reading order and then choose the first one
         // then move()
 
     }
+
+    void reachable(Battlefield state, Position start) {
+        LinkedList<Position> queue = new LinkedList<>();
+        Map<Position, Integer> dist = new HashMap<>();
+        dist.put(start, 0);
+        queue.add(start);
+
+        while (queue.size() != 0) {
+            start = queue.poll();
+
+            for (Direction d : Direction.values()) {
+                Position space = start.go(d);
+
+                if (state.getPosition(start.go(d)) == '.') {
+                    int distance = dist.get(start) + 1;
+                    dist.put(space, distance);
+                    queue.add(space);
+                }
+            }
+        }
+    }
+
 
     /**
      * The unit then takes a single step toward the chosen square along the shortest path to that square.
