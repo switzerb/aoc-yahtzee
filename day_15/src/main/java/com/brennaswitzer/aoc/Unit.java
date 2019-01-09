@@ -184,6 +184,7 @@ public class Unit {
             // how do I know they aren't reachable?
         }
 
+        reachable(state, openPositions, getCurrent());
         // find which of those are reachable (no enemy or wall in the way)
         // find which ones are nearest (smallest manhattan distance)
         // sort positions by reading order and then choose the first one
@@ -191,12 +192,14 @@ public class Unit {
 
     }
 
-    void reachable(Battlefield state, Position start) {
+    void reachable(Battlefield state, Set<Position> openPositions, Position start) {
         LinkedList<Position> queue = new LinkedList<>();
         Map<Position, Integer> dist = new HashMap<>();
         dist.put(start, 0);
         queue.add(start);
 
+        // TODO: Make better names. This is confusing
+        // TODO: We have a destination in mind from our set of enemies and the available points but I am not using it
         while (queue.size() != 0) {
             start = queue.poll();
 
