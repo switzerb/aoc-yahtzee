@@ -183,14 +183,15 @@ public class Unit {
             for (Direction dir : Direction.values()) {
                 Collector next = new Collector(current.getPosition().go(dir), current.getSteps() + 1);
 
-                if (field.getPosition(next.getPosition()) == '.' && !visited.containsKey(next.getPosition()) && next.getSteps() < min_steps) {
-                    min_steps = next.getSteps();
+                if (field.getPosition(next.getPosition()) == '.' && !visited.containsKey(next.getPosition())) {
+
+                    if (inRange.contains(next.getPosition()) && next.getSteps() <= min_steps) {
+                        nearest.add(next.getPosition());
+                        min_steps = next.getSteps();
+                    }
+
                     visited.put(next.getPosition(), next.getSteps());
                     queue.add(next);
-                }
-
-                if (inRange.contains(next.getPosition())) {
-                    nearest.add(next.getPosition());
                 }
 
             }
