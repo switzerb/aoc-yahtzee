@@ -45,7 +45,7 @@ public class Unit {
      */
     boolean turn(Battlefield state) {
         System.out.println("Running Unit: " + getSelf() + " , Position: " + getCurrent());
-        List<Unit> enemies = identifyTargets(state);
+        List<Unit> enemies = findEnemies(state);
         if (enemies == null) return true;
 
         Adjacent enemiesNear = inAttackRange(state);
@@ -55,7 +55,7 @@ public class Unit {
                 state.removeUnit(target);
             }
         } else {
-            Position target = targetPosition(state);
+            Position targetPosition = getTargetPosition(state, enemies);
 
             // are there are no open squares in range, then turn is over
             // else move
@@ -67,7 +67,6 @@ public class Unit {
 
     /**
      * Determines if a unit is dead
-     *
      * @return boolean true if unit is dead and false if it is not
      */
     boolean isDead() {
@@ -78,17 +77,8 @@ public class Unit {
      * Get a map of all enemy combatants, if no enemy targets, combat ends (note this might be in the middle of a round)
      * return null if there are no enemy targets
      */
-    List<Unit> identifyTargets(Battlefield state) {
+    List<Unit> findEnemies(Battlefield state) {
         return state.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
-    }
-
-    /**
-     * Then, the unit identifies all of the open squares (.) that are in range of each target;
-     * these are the squares which are adjacent (immediately up, down, left, or right)
-     * to any target and which aren't already occupied by a wall or another unit.
-     */
-    void openInRangeOfTarget() {
-
     }
 
     /**
@@ -127,44 +117,62 @@ public class Unit {
     }
 
     /**
-     * To move, the unit first considers the squares that are in range and determines
-     * which of those squares it could reach in the fewest steps. A step is a single movement to any adjacent
-     * (immediately up, down, left, or right) open (.) square. Units cannot move into walls or other units.
-     * The unit does this while considering the current positions of units and does not
-     * do any prediction about where units will be later.
+     * To move, the unit first considers the squares that are in range near enemy targets and determines
      * If the unit cannot reach (find an open path to) any of the squares that are in range, it ends its turn.
      * If multiple squares are in range and tied for being reachable in the fewest steps,
      * the square which is first in reading order is chosen. For example:
      * <p>
-     * Targets:      In range:     Reachable:    Nearest:      Chosen:
+     * Enemies:      In range:     Reachable:    Nearest:      Chosen:
      * #######       #######       #######       #######       #######
      * #E..G.#       #E.?G?#       #E.@G.#       #E.!G.#       #E.+G.#
      * #...#.#  -->  #.?.#?#  -->  #.@.#.#  -->  #.!.#.#  -->  #...#.#
      * #.G.#G#       #?G?#G#       #@G@#G#       #!G.#G#       #.G.#G#
      * #######       #######       #######       #######       #######
      */
-    Position targetPosition(Battlefield state) {
-        // find targets (we know we have targets otherwise we wouldn't be here)
-        List<Unit> enemies = identifyTargets(state);
+    Position getTargetPosition(Battlefield state, List<Unit> enemies) {
+        // Enemies on the battlefield
+        TreeSet<Position> openPositions = inRange(enemies, state);
 
-        // find open squares in range
-        Set<Position> openPositions = new TreeSet<>();
+        // In range, reachable and nearest me
+        TreeSet<Position> closest = nearest(state, openPositions, getCurrent());
+
+        // We are sorted in reading order, so take the first item in the set as our target
+        return closest.first();
+    }
+
+    /**
+     * Identify the open squares (.) that are in range of each target;
+     * these are the squares which are adjacent (immediately up, down, left, or right)
+     * to any target and which aren't already occupied by a wall or another unit.*
+     */
+    TreeSet<Position> inRange(List<Unit> enemies, Battlefield field) {
+        TreeSet<Position> openPositions = new TreeSet<>();
         for (Unit u : enemies) {
 
             for (Direction dir : Direction.values()) {
-                char c = state.getPosition(u.getCurrent().go(dir));
+                char c = field.getPosition(u.getCurrent().go(dir));
                 if (c == '.') {
                     openPositions.add(u.getCurrent().go(dir));
                 }
             }
         }
-        TreeSet<Position> closest = closestReachable(state, openPositions, getCurrent());
-        System.out.println(closest.first());
-        return closest.first();
+        return openPositions;
     }
 
-    TreeSet<Position> closestReachable(Battlefield state, Set<Position> openPositions, Position start) {
+    /**
+     * Of all the open squares, which can we reach in the fewest steps. A step is a single movement to any adjacent
+     * (immediately up, down, left, or right) open (.) square. Units cannot move into walls or other units.
+     * The unit does this while considering the current positions of units and does not do any prediction about where units will be later.
+     * <p>
+     * Set of positions that are in range, reachable and nearest
+     *
+     * @param field   the current state of the battlefield
+     * @param inRange set of positions in range and open around enemy targets
+     * @param start   our staring position
+     * @return TreeSet<Position> ordered set of positions that are nearest to our current position and reachable
+     */
 
+    TreeSet<Position> nearest(Battlefield field, Set<Position> inRange, Position start) {
         int best = Integer.MAX_VALUE;
         TreeSet<Position> closest = new TreeSet<>();
         LinkedList<Collector> queue = new LinkedList<>();
@@ -179,13 +187,13 @@ public class Unit {
             for (Direction dir : Direction.values()) {
                 Collector next = new Collector(curr.getPosition().go(dir), curr.getSteps() + 1);
 
-                if (state.getPosition(next.getPosition()) == '.' && !dist.containsKey(next.getPosition()) && next.getSteps() < best) {
+                if (field.getPosition(next.getPosition()) == '.' && !dist.containsKey(next.getPosition()) && next.getSteps() < best) {
                     best = next.getSteps();
                     dist.put(next.getPosition(), next.getSteps());
                     queue.add(next);
                 }
 
-                if (openPositions.contains(next.getPosition())) {
+                if (inRange.contains(next.getPosition())) {
                     closest.add(next.getPosition());
                 }
 
@@ -219,7 +227,4 @@ public class Unit {
 
     }
 
-    void squaresInRange() {
-
-    }
 }

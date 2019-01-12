@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 
@@ -112,7 +114,7 @@ public class UnitTest {
     }
 
     @Test
-    public void test_move_ex1() {
+    public void test_inRangePositions_ex1() {
         String s = "#######\n" +
                 "#E..G.#\n" +
                 "#...#.#\n" +
@@ -121,8 +123,15 @@ public class UnitTest {
 
         Battlefield battle = new Battlefield(s);
         Unit elf = battle.units.get(0);
-        elf.turn(battle);
-
+        List<Unit> enemies = elf.findEnemies(battle);
+        TreeSet<Position> inRange = new TreeSet<>();
+        inRange.add(new Position(1, 3));
+        inRange.add(new Position(1, 5));
+        inRange.add(new Position(2, 2));
+        inRange.add(new Position(2, 5));
+        inRange.add(new Position(3, 1));
+        inRange.add(new Position(3, 3));
+        assertEquals(inRange, elf.inRange(enemies, battle));
     }
 
 }
