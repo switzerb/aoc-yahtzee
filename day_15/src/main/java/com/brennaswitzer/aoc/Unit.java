@@ -198,6 +198,9 @@ public class Unit {
         Set<Position> self = new TreeSet<>();
 
         for (Direction dir : Direction.values()) {
+            if (getCurrent().go(dir).equals(chosen)) {
+                return chosen;
+            }
             char c = field.getPosition(getCurrent().go(dir));
             if (c == '.') {
                 self.add(getCurrent().go(dir));

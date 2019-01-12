@@ -151,6 +151,7 @@ public class Battlefield {
     void moveUnit(Unit unit, Position moveTo) {
         battlefield[unit.getCurrent().getRow()][unit.getCurrent().getCol()] = '.';
         battlefield[moveTo.getRow()][moveTo.getCol()] = unit.self;
+        System.out.println(this);
     }
 
     /**
