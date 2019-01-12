@@ -55,13 +55,16 @@ public class Unit {
                 field.removeUnit(target);
             }
         } else {
+
+            // find target position we want to move towards
             Position targetPosition = getTargetPosition(field, enemies);
 
-            // are there are no open squares in range, then turn is over
-            // else move
-            // move()
+            // if no targets, turn is over; otherwise, try moving
+            if (targetPosition != null) {
+                // move()
+                //  if unit can't move, the unit ends it's turn
+            }
         }
-        //  if unit can't move, the unit ends it's turn
         return false;
     }
 
@@ -78,7 +81,8 @@ public class Unit {
      * return null if there are no enemy targets
      */
     List<Unit> findEnemies(Battlefield field) {
-        return field.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
+        List<Unit> enemies = field.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
+        return enemies.size() > 0 ? enemies : null;
     }
 
     /**
@@ -132,6 +136,7 @@ public class Unit {
     Position getTargetPosition(Battlefield field, List<Unit> enemies) {
         // Enemies on the battlefield
         TreeSet<Position> openPositions = inRange(enemies, field);
+        if (openPositions == null) return null;
 
         // In range, reachable and nearest me
         TreeSet<Position> closest = nearest(field, openPositions, getCurrent());
@@ -144,6 +149,7 @@ public class Unit {
      * Identify the open squares (.) that are in range of each target;
      * these are the squares which are adjacent (immediately up, down, left, or right)
      * to any target and which aren't already occupied by a wall or another unit.*
+     *
      * @param enemies
      * @param field
      * @return set of open positions around enemy targets
@@ -159,7 +165,7 @@ public class Unit {
                 }
             }
         }
-        return openPositions;
+        return openPositions.size() > 0 ? openPositions : null;
     }
 
     /**

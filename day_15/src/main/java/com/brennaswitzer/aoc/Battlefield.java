@@ -67,7 +67,7 @@ public class Battlefield {
             }
         }
         byTeam.sort(UNITS_IN_READING_ORDER);
-        return byTeam;
+        return byTeam.size() > 0 ? byTeam : null;
     }
 
     int getWidth() {
