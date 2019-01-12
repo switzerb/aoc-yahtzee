@@ -38,7 +38,7 @@ public class Unit {
      * if no enemy targets, combat ends
      * else unit takes a turn,
      * If the unit is not already in range of a target, and there are no open squares which are in range of a target, the unit ends its turn.
-     * If the unit is already in range of a target, it does not move, but continues its turn with an attack. Otherwise, since it is not in range of a target, it moves.
+     * If the unit is already in range of a target, it does not moveTo, but continues its turn with an attack. Otherwise, since it is not in range of a target, it moves.
      * if in range, attack
      *
      * @return true if combat is ended, false if turn is over
@@ -56,13 +56,15 @@ public class Unit {
             }
         } else {
 
-            // find target position we want to move towards
+            // find target position we want to moveTo towards
             Position targetPosition = getTargetPosition(field, enemies);
 
             // if no targets, turn is over; otherwise, try moving
             if (targetPosition != null) {
-                // move()
-                //  if unit can't move, the unit ends it's turn
+                Position moveTo = moveTo(field, targetPosition);
+                if (moveTo != null) {
+                    current = new Position(moveTo);
+                }
             }
         }
         return false;
@@ -70,6 +72,7 @@ public class Unit {
 
     /**
      * Determines if a unit is dead
+     *
      * @return boolean true if unit is dead and false if it is not
      */
     boolean isDead() {
@@ -121,7 +124,7 @@ public class Unit {
     }
 
     /**
-     * To move, the unit first considers the squares that are in range near enemy targets and determines
+     * To moveTo, the unit first considers the squares that are in range near enemy targets and determines
      * If the unit cannot reach (find an open path to) any of the squares that are in range, it ends its turn.
      * If multiple squares are in range and tied for being reachable in the fewest steps,
      * the square which is first in reading order is chosen. For example:
@@ -134,15 +137,12 @@ public class Unit {
      * #######       #######       #######       #######       #######
      */
     Position getTargetPosition(Battlefield field, List<Unit> enemies) {
-        // Enemies on the battlefield
+
         TreeSet<Position> openPositions = inRange(enemies, field);
         if (openPositions == null) return null;
 
-        // In range, reachable and nearest me
-        TreeSet<Position> closest = nearest(field, openPositions, getCurrent());
-
-        // We are sorted in reading order, so take the first item in the set as our target
-        return closest.first();
+        // In range, reachable and nearest me, in reading order
+        return nearest(field, openPositions, getCurrent());
     }
 
     /**
@@ -169,6 +169,41 @@ public class Unit {
     }
 
     /**
+     * The unit then takes a single step toward the chosen square along the shortest path to that square.
+     * If multiple steps would put the unit equally closer to its destination,
+     * the unit chooses the step which is first in reading order.
+     * <p>
+     * The Elf sees three squares in range of a target (?), two of which are nearest (!),
+     * and so the first in reading order is chosen (+).
+     * Under "Distance", each open square is marked with its distance from the destination square;
+     * the two squares to which the Elf could moveTo on this turn (down and to the right) are both equally good moves
+     * and would leave the Elf 2 steps from being in range of the Goblin.
+     * <p>
+     * Because the step which is first in reading order is chosen, the Elf moves right one square.
+     * <p>
+     * Chosen:       Distance:     Step:
+     * #######       #######       #######
+     * #.E...#       #4E212#       #..E..#
+     * #...+.#  -->  #32101#  -->  #.....#
+     * #...G.#       #432G2#       #...G.#
+     * #######       #######       #######
+     */
+    Position moveTo(Battlefield field, Position chosen) {
+
+        Set<Position> self = new TreeSet<>();
+
+        for (Direction dir : Direction.values()) {
+            char c = field.getPosition(getCurrent().go(dir));
+            if (c == '.') {
+                self.add(getCurrent().go(dir));
+            }
+        }
+
+        return nearest(field, self, chosen);
+    }
+
+
+    /**
      * Set of positions that are in range, reachable and nearest
      *
      * @param field   Current battlefield
@@ -176,8 +211,7 @@ public class Unit {
      * @param start   Our current position
      * @return TreeSet<Position> Ordered position set nearest to our current position and reachable
      */
-
-    TreeSet<Position> nearest(Battlefield field, Set<Position> inRange, Position start) {
+    Position nearest(Battlefield field, Set<Position> inRange, Position start) {
         int min_steps = Integer.MAX_VALUE;
         TreeSet<Position> nearest = new TreeSet<>();
         LinkedList<Collector> queue = new LinkedList<>();
@@ -204,32 +238,7 @@ public class Unit {
                 }
             }
         }
-        return nearest;
-    }
-
-
-    /**
-     * The unit then takes a single step toward the chosen square along the shortest path to that square.
-     * If multiple steps would put the unit equally closer to its destination,
-     * the unit chooses the step which is first in reading order.
-     * <p>
-     * The Elf sees three squares in range of a target (?), two of which are nearest (!),
-     * and so the first in reading order is chosen (+).
-     * Under "Distance", each open square is marked with its distance from the destination square;
-     * the two squares to which the Elf could move on this turn (down and to the right) are both equally good moves
-     * and would leave the Elf 2 steps from being in range of the Goblin.
-     * <p>
-     * Because the step which is first in reading order is chosen, the Elf moves right one square.
-     * <p>
-     * In range:     Nearest:      Chosen:       Distance:     Step:
-     * #######       #######       #######       #######       #######
-     * #.E...#       #.E...#       #.E...#       #4E212#       #..E..#
-     * #...?.#  -->  #...!.#  -->  #...+.#  -->  #32101#  -->  #.....#
-     * #..?G?#       #..!G.#       #...G.#       #432G2#       #...G.#
-     * #######       #######       #######       #######       #######
-     */
-    void move() {
-
+        return nearest.first();
     }
 
 }

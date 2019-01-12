@@ -135,25 +135,6 @@ public class UnitTest {
     }
 
     @Test
-    public void test_nearest_ex1() {
-        String s = "#######\n" +
-                "#E..G.#\n" +
-                "#...#.#\n" +
-                "#.G.#G#\n" +
-                "#######";
-
-        Battlefield battle = new Battlefield(s);
-        Unit elf = battle.units.get(0);
-        List<Unit> enemies = elf.findEnemies(battle);
-        TreeSet<Position> inRange = elf.inRange(enemies, battle);
-        TreeSet<Position> nearest = new TreeSet<>();
-        nearest.add(new Position(1, 3));
-        nearest.add(new Position(2, 2));
-        nearest.add(new Position(3, 1));
-        assertEquals(nearest, elf.nearest(battle, inRange, elf.getCurrent()));
-    }
-
-    @Test
     public void test_findTargetPosition_ex1() {
         String s = "#######\n" +
                 "#E..G.#\n" +
@@ -165,6 +146,22 @@ public class UnitTest {
         Unit elf = battle.units.get(0);
         List<Unit> enemies = elf.findEnemies(battle);
         assertEquals(new Position(1, 3), elf.getTargetPosition(battle, enemies));
+    }
+
+    @Test
+    public void test_move() {
+        String s = "#######\n" +
+                "#.E...#\n" +
+                "#.....#\n" +
+                "#...G.#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(s);
+        Unit elf = battle.units.get(0);
+        List<Unit> enemies = elf.findEnemies(battle);
+        Position chosen = elf.getTargetPosition(battle, enemies);
+        elf.moveTo(battle, chosen);
+
     }
 
 }
