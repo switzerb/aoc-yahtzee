@@ -26,26 +26,9 @@ class Position implements Comparable<Position> {
         return p.x;
     }
 
-    public Position lookNorth() {
-        return new Position(p.y - 1, p.x);
-    }
-
-    public Position lookSouth() {
-        return new Position(p.y + 1, p.x);
-    }
-
-    public Position lookWest() {
-        return new Position(p.y, p.x - 1);
-    }
-
-    public Position lookEast() {
-        return new Position(p.y, p.x + 1);
-    }
-
     public Position go(Direction dir) {
-        return dir.move(1, this);
+        return dir.move(this);
     }
-
 
     @Override
     public boolean equals(Object o) {

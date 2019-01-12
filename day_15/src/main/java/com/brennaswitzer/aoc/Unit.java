@@ -49,13 +49,14 @@ public class Unit {
         if (enemies == null) return true;
 
         Adjacent enemiesNear = inAttackRange(state);
-        if (enemiesNear.size() > 0) {
+        if (enemiesNear != null) {
             Unit target = attack(enemiesNear);
             if (target.isDead()) {
                 state.removeUnit(target);
             }
         } else {
-            pathFinder(state);
+            Position target = targetPosition(state);
+
             // are there are no open squares in range, then turn is over
             // else move
             // move()
@@ -74,9 +75,7 @@ public class Unit {
     }
 
     /**
-     * Get a map of all enemy combatants
-     * if no enemy targets, combat ends (note this might be in the middle of a round)
-     * <p>
+     * Get a map of all enemy combatants, if no enemy targets, combat ends (note this might be in the middle of a round)
      * return null if there are no enemy targets
      */
     List<Unit> identifyTargets(Battlefield state) {
@@ -98,24 +97,13 @@ public class Unit {
     Adjacent inAttackRange(Battlefield state) {
         Adjacent enemiesInRange = new Adjacent();
 
-        Unit north = state.getUnitByPosition(current.lookNorth());
-        Unit south = state.getUnitByPosition(current.lookSouth());
-        Unit east = state.getUnitByPosition(current.lookEast());
-        Unit west = state.getUnitByPosition(current.lookWest());
-
-        if (north != null) {
-            enemiesInRange.put(current.lookNorth(), north);
+        for (Direction dir : Direction.values()) {
+            Unit u = state.getUnitByPosition(current.go(dir));
+            if (u != null) {
+                enemiesInRange.put(current.go(dir), u);
+            }
         }
-        if (south != null) {
-            enemiesInRange.put(current.lookSouth(), south);
-        }
-        if (east != null) {
-            enemiesInRange.put(current.lookEast(), east);
-        }
-        if (west != null) {
-            enemiesInRange.put(current.lookWest(), west);
-        }
-        return enemiesInRange;
+        return enemiesInRange.size() > 0 ? enemiesInRange : null;
     }
 
     /**
@@ -155,67 +143,55 @@ public class Unit {
      * #.G.#G#       #?G?#G#       #@G@#G#       #!G.#G#       #.G.#G#
      * #######       #######       #######       #######       #######
      */
-    void pathFinder(Battlefield state) {
+    Position targetPosition(Battlefield state) {
         // find targets (we know we have targets otherwise we wouldn't be here)
         List<Unit> enemies = identifyTargets(state);
 
         // find open squares in range
         Set<Position> openPositions = new TreeSet<>();
         for (Unit u : enemies) {
-            char north = state.getPosition(u.getCurrent().lookNorth());
-            char south = state.getPosition(u.getCurrent().lookSouth());
-            char east = state.getPosition(u.getCurrent().lookEast());
-            char west = state.getPosition(u.getCurrent().lookWest());
 
-            if (north == '.') {
-                openPositions.add(u.getCurrent().lookNorth());
-            }
-            if (south == '.') {
-                openPositions.add(u.getCurrent().lookSouth());
-            }
-            if (east == '.') {
-                openPositions.add(u.getCurrent().lookEast());
-            }
-            if (west == '.') {
-                openPositions.add(u.getCurrent().lookWest());
-            }
-
-            // if not reachable, remove from the set
-            // how do I know they aren't reachable?
-        }
-
-        // find which of those are reachable (no enemy or wall in the way)
-        // find which ones are nearest
-        Position target = reachable(state, openPositions, getCurrent());
-
-        // once we have a target, then move towards it()
-
-    }
-
-    Position reachable(Battlefield state, Set<Position> openPositions, Position start) {
-        LinkedList<Position> queue = new LinkedList<>();
-        Map<Position, Integer> dist = new HashMap<>();
-        dist.put(start, 0);
-        queue.add(start);
-
-        // TODO: Make better names. This is confusing
-        // TODO: We have a destination in mind from our set of enemies and the available points but I am not using it
-        // TODO: Maybe nearest here, too?
-
-        while (queue.size() != 0) {
-            start = queue.poll();
-
-            for (Direction d : Direction.values()) {
-                Position space = start.go(d);
-
-                if (state.getPosition(start.go(d)) == '.') {
-                    int distance = dist.get(start) + 1;
-                    dist.put(space, distance);
-                    queue.add(space);
+            for (Direction dir : Direction.values()) {
+                char c = state.getPosition(u.getCurrent().go(dir));
+                if (c == '.') {
+                    openPositions.add(u.getCurrent().go(dir));
                 }
             }
         }
-        return new Position();
+        TreeSet<Position> closest = closestReachable(state, openPositions, getCurrent());
+        System.out.println(closest.first());
+        return closest.first();
+    }
+
+    TreeSet<Position> closestReachable(Battlefield state, Set<Position> openPositions, Position start) {
+
+        int best = Integer.MAX_VALUE;
+        TreeSet<Position> closest = new TreeSet<>();
+        LinkedList<Collector> queue = new LinkedList<>();
+        Map<Position, Integer> dist = new HashMap<>();
+        Collector curr = new Collector(start, 0);
+        dist.put(start, 0);
+        queue.add(curr);
+
+        while (queue.size() != 0) {
+            curr = queue.poll();
+
+            for (Direction dir : Direction.values()) {
+                Collector next = new Collector(curr.getPosition().go(dir), curr.getSteps() + 1);
+
+                if (state.getPosition(next.getPosition()) == '.' && !dist.containsKey(next.getPosition()) && next.getSteps() < best) {
+                    best = next.getSteps();
+                    dist.put(next.getPosition(), next.getSteps());
+                    queue.add(next);
+                }
+
+                if (openPositions.contains(next.getPosition())) {
+                    closest.add(next.getPosition());
+                }
+
+            }
+        }
+        return closest;
     }
 
 

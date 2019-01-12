@@ -79,7 +79,7 @@ public class Battlefield {
     }
 
     char getPosition(Position p) {
-        return battlefield[p.getCol()][p.getRow()];
+        return battlefield[p.getRow()][p.getCol()];
     }
 
     /**

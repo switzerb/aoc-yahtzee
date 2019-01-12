@@ -10,8 +10,8 @@ public enum Direction {
         this.col_delta = c;
     }
 
-    Position move(int distance, Position p) {
-        return new Position(p.getRow() + row_delta * distance, p.getCol() + col_delta * distance);
+    Position move(Position p) {
+        return new Position(p.getRow() + row_delta, p.getCol() + col_delta);
     }
 
 }

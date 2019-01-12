@@ -111,4 +111,18 @@ public class UnitTest {
         assertEquals(outcome, battle.toString());
     }
 
+    @Test
+    public void test_move_ex1() {
+        String s = "#######\n" +
+                "#E..G.#\n" +
+                "#...#.#\n" +
+                "#.G.#G#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(s);
+        Unit elf = battle.units.get(0);
+        elf.turn(battle);
+
+    }
+
 }
