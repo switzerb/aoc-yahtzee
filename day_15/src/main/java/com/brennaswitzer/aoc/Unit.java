@@ -59,7 +59,6 @@ public class Unit {
                 field.removeUnit(target);
             }
         } else {
-
             // find target position we want to moveTo towards
             Position targetPosition = getTargetPosition(field, enemies);
 
@@ -194,9 +193,7 @@ public class Unit {
      * #######       #######       #######
      */
     Position moveTo(Battlefield field, Position chosen) {
-
         Set<Position> self = new TreeSet<>();
-
         for (Direction dir : Direction.values()) {
             if (getCurrent().go(dir).equals(chosen)) {
                 return chosen;
@@ -206,7 +203,6 @@ public class Unit {
                 self.add(getCurrent().go(dir));
             }
         }
-
         return nearest(field, self, chosen);
     }
 

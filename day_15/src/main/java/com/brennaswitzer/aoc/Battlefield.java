@@ -89,9 +89,7 @@ public class Battlefield {
      */
     void runRound() {
         System.out.println("ROUND " + rounds);
-
         units = cleanBattlefield();
-
         for (Unit unit : units) {
             if (!unit.isDead()) {
                 done = unit.turn(this);
@@ -151,7 +149,6 @@ public class Battlefield {
     void moveUnit(Unit unit, Position moveTo) {
         battlefield[unit.getCurrent().getRow()][unit.getCurrent().getCol()] = '.';
         battlefield[moveTo.getRow()][moveTo.getCol()] = unit.self;
-        System.out.println(this);
     }
 
     /**

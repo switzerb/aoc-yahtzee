@@ -47,7 +47,7 @@ public class BattlefieldTest {
     }
 
     @Test
-    public void test_runRound() {
+    public void test_runRound_step1() {
         String n = "#########\n" +
                 "#.G...G.#\n" +
                 "#...G...#\n" +
@@ -69,6 +69,62 @@ public class BattlefieldTest {
                 "#########";
         Battlefield battle = new Battlefield(s);
         for (int i = 0; i < 1; i++) {
+            battle.runRound();
+        }
+        assertEquals(n, battle.toString());
+    }
+
+    @Test
+    public void test_runRound_step2() {
+        String n = "#########\n" +
+                "#..G.G..#\n" +
+                "#...G...#\n" +
+                "#.G.E.G.#\n" +
+                "#.......#\n" +
+                "#G..G..G#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#########";
+
+        String s = "#########\n" +
+                "#G..G..G#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#G..E..G#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#G..G..G#\n" +
+                "#########";
+        Battlefield battle = new Battlefield(s);
+        for (int i = 0; i < 2; i++) {
+            battle.runRound();
+        }
+        assertEquals(n, battle.toString());
+    }
+
+    @Test
+    public void test_runRound_step3() {
+        String n = "#########\n" +
+                "#.......#\n" +
+                "#..GGG..#\n" +
+                "#..GEG..#\n" +
+                "#G..G...#\n" +
+                "#......G#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#########";
+
+        String s = "#########\n" +
+                "#G..G..G#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#G..E..G#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#G..G..G#\n" +
+                "#########";
+        Battlefield battle = new Battlefield(s);
+        for (int i = 0; i < 3; i++) {
             battle.runRound();
         }
         assertEquals(n, battle.toString());
