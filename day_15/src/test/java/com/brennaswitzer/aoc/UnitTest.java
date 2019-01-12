@@ -151,7 +151,20 @@ public class UnitTest {
         nearest.add(new Position(2, 2));
         nearest.add(new Position(3, 1));
         assertEquals(nearest, elf.nearest(battle, inRange, elf.getCurrent()));
+    }
 
+    @Test
+    public void test_findTargetPosition_ex1() {
+        String s = "#######\n" +
+                "#E..G.#\n" +
+                "#...#.#\n" +
+                "#.G.#G#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(s);
+        Unit elf = battle.units.get(0);
+        List<Unit> enemies = elf.findEnemies(battle);
+        assertEquals(new Position(1, 3), elf.getTargetPosition(battle, enemies));
     }
 
 }

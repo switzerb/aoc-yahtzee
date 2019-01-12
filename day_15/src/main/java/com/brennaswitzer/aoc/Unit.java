@@ -193,7 +193,6 @@ public class Unit {
                     visited.put(next.getPosition(), next.getSteps());
                     queue.add(next);
                 }
-
             }
         }
         return nearest;
