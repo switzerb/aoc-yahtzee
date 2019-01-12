@@ -131,6 +131,31 @@ public class BattlefieldTest {
     }
 
     @Test
+    public void test_ex1_r1() {
+        String progress = "" +
+                "#######\n" +
+                "#..G..#\n" +
+                "#...EG#\n" +
+                "#.#G#G#\n" +
+                "#...#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String s = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(s);
+        for (int i = 0; i < 1; i++) {
+            battle.runRound();
+        }
+        assertEquals(progress, battle.toString());
+    }
+
+    @Test
     public void test_outcome() {
         String s = "#######\n" +
                 "#.G...#\n" +

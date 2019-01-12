@@ -48,7 +48,7 @@ public class Unit {
      * @return true if combat is ended, false if turn is over
      */
     boolean turn(Battlefield field) {
-        System.out.println("Running Unit: " + getSelf() + " , Position: " + getCurrent());
+        System.out.println(this);
         List<Unit> enemies = findEnemies(field);
         if (enemies == null) return true;
 
@@ -254,4 +254,12 @@ public class Unit {
         return nearest.first();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(self).append(" ");
+        sb.append(current);
+        sb.append("(").append(hitpoints).append(")");
+        return sb.toString();
+    }
 }
