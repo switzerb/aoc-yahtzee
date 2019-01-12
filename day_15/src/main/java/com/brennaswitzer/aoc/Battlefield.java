@@ -89,7 +89,7 @@ public class Battlefield {
      */
     void runRound() {
         System.out.println("ROUND " + rounds);
-        // sort the units before a round to make sure they operate in reading order
+
         units = cleanBattlefield();
 
         for (Unit unit : units) {
@@ -145,14 +145,13 @@ public class Battlefield {
 
     /**
      * Move a unit on the field to somewhere new and replace that position with a '.' instead
-     *
      * @param unit
      * @return new position of unit
      */
-    Position updatePosition(Unit unit) {
-        return new Position();
+    void moveUnit(Unit unit, Position moveTo) {
+        battlefield[unit.getCurrent().getRow()][unit.getCurrent().getCol()] = '.';
+        battlefield[moveTo.getRow()][moveTo.getCol()] = unit.self;
     }
-
 
     /**
      * The outcome of the battle: the number of full rounds that were completed (not counting the round in which combat ends)

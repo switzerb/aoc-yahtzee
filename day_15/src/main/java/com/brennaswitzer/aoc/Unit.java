@@ -67,6 +67,7 @@ public class Unit {
             if (targetPosition != null) {
                 Position moveTo = moveTo(field, targetPosition);
                 if (moveTo != null) {
+                    field.moveUnit(this, moveTo);
                     current = new Position(moveTo);
                 }
             }
