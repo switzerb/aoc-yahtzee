@@ -48,7 +48,6 @@ public class Unit {
      * @return true if combat is ended, false if turn is over
      */
     boolean turn(Battlefield field) {
-        System.out.println(this);
         List<Unit> enemies = findEnemies(field);
         if (enemies == null) return true;
 
