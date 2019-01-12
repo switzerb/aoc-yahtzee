@@ -68,6 +68,15 @@ public class Unit {
                 if (moveTo != null) {
                     field.moveUnit(this, moveTo);
                     current = new Position(moveTo);
+
+                    // now that we've moved, try and attack
+                    Adjacent e = inAttackRange(field);
+                    if (e != null) {
+                        Unit target = attack(e);
+                        if (target.isDead()) {
+                            field.removeUnit(target);
+                        }
+                    }
                 }
             }
         }
@@ -89,7 +98,7 @@ public class Unit {
      */
     List<Unit> findEnemies(Battlefield field) {
         List<Unit> enemies = field.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
-        return enemies.size() > 0 ? enemies : null;
+        return enemies;
     }
 
     /**
