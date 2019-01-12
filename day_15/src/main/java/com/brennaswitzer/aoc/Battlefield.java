@@ -88,19 +88,34 @@ public class Battlefield {
      * For instance, the order in which units take their turns within a round is the reading order of their starting positions in that round
      */
     void runRound() {
+        System.out.println("ROUND " + rounds);
         // sort the units before a round to make sure they operate in reading order
+        units = cleanBattlefield();
 
-        units.get(0).turn(this);
-
-//        units.sort(UNITS_IN_READING_ORDER);
-//        for (Unit unit : units) {
-//            done = unit.turn(this);
-//            if(done) {
-//                break;
-//            }
-//            rounds++;
-//        }
+        for (Unit unit : units) {
+            if (!unit.isDead()) {
+                done = unit.turn(this);
+            }
+            if (done) break;
+        }
+        rounds++;
     }
+
+    List<Unit> cleanBattlefield() {
+        List<Unit> nextRound = new ArrayList<>();
+        for (Unit u : units) {
+            if (!u.isDead()) {
+                nextRound.add(u);
+            }
+        }
+        nextRound.sort(UNITS_IN_READING_ORDER);
+        return nextRound;
+    }
+
+    boolean isOver() {
+        return done;
+    }
+
 
     /**
      * Return a unit by current position on the battlefield. If there is no unit at that position, return null
@@ -125,7 +140,7 @@ public class Battlefield {
     public void removeUnit(Unit target) {
         Position current = target.getCurrent();
         battlefield[current.getRow()][current.getCol()] = '.';
-        units.remove(target);
+        target.kill();
     }
 
     /**

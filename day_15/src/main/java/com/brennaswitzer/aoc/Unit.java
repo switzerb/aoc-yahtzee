@@ -9,7 +9,7 @@ public class Unit {
     Position current;
     int hitpoints = 200;
     int power = 3;
-    boolean done;
+    boolean dead;
 
     Unit(char self, Position current) {
         this.self = self;
@@ -31,6 +31,10 @@ public class Unit {
 
     void setHitpoints(int hp) {
         this.hitpoints = hp;
+    }
+
+    void kill() {
+        dead = true;
     }
 
     /**
