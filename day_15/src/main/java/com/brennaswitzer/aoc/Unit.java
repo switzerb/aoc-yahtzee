@@ -43,19 +43,19 @@ public class Unit {
      *
      * @return true if combat is ended, false if turn is over
      */
-    boolean turn(Battlefield state) {
+    boolean turn(Battlefield field) {
         System.out.println("Running Unit: " + getSelf() + " , Position: " + getCurrent());
-        List<Unit> enemies = findEnemies(state);
+        List<Unit> enemies = findEnemies(field);
         if (enemies == null) return true;
 
-        Adjacent enemiesNear = inAttackRange(state);
+        Adjacent enemiesNear = inAttackRange(field);
         if (enemiesNear != null) {
             Unit target = attack(enemiesNear);
             if (target.isDead()) {
-                state.removeUnit(target);
+                field.removeUnit(target);
             }
         } else {
-            Position targetPosition = getTargetPosition(state, enemies);
+            Position targetPosition = getTargetPosition(field, enemies);
 
             // are there are no open squares in range, then turn is over
             // else move
@@ -77,18 +77,18 @@ public class Unit {
      * Get a map of all enemy combatants, if no enemy targets, combat ends (note this might be in the middle of a round)
      * return null if there are no enemy targets
      */
-    List<Unit> findEnemies(Battlefield state) {
-        return state.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
+    List<Unit> findEnemies(Battlefield field) {
+        return field.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
     }
 
     /**
      * To attack, the unit first determines all of the targets that are in range of it by being immediately adjacent to it.
      */
-    Adjacent inAttackRange(Battlefield state) {
+    Adjacent inAttackRange(Battlefield field) {
         Adjacent enemiesInRange = new Adjacent();
 
         for (Direction dir : Direction.values()) {
-            Unit u = state.getUnitByPosition(current.go(dir));
+            Unit u = field.getUnitByPosition(current.go(dir));
             if (u != null) {
                 enemiesInRange.put(current.go(dir), u);
             }
@@ -129,12 +129,12 @@ public class Unit {
      * #.G.#G#       #?G?#G#       #@G@#G#       #!G.#G#       #.G.#G#
      * #######       #######       #######       #######       #######
      */
-    Position getTargetPosition(Battlefield state, List<Unit> enemies) {
+    Position getTargetPosition(Battlefield field, List<Unit> enemies) {
         // Enemies on the battlefield
-        TreeSet<Position> openPositions = inRange(enemies, state);
+        TreeSet<Position> openPositions = inRange(enemies, field);
 
         // In range, reachable and nearest me
-        TreeSet<Position> closest = nearest(state, openPositions, getCurrent());
+        TreeSet<Position> closest = nearest(field, openPositions, getCurrent());
 
         // We are sorted in reading order, so take the first item in the set as our target
         return closest.first();
@@ -144,6 +144,9 @@ public class Unit {
      * Identify the open squares (.) that are in range of each target;
      * these are the squares which are adjacent (immediately up, down, left, or right)
      * to any target and which aren't already occupied by a wall or another unit.*
+     * @param enemies
+     * @param field
+     * @return set of open positions around enemy targets
      */
     TreeSet<Position> inRange(List<Unit> enemies, Battlefield field) {
         TreeSet<Position> openPositions = new TreeSet<>();
