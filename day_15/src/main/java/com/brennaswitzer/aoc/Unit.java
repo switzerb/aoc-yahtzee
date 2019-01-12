@@ -160,46 +160,42 @@ public class Unit {
     }
 
     /**
-     * Of all the open squares, which can we reach in the fewest steps. A step is a single movement to any adjacent
-     * (immediately up, down, left, or right) open (.) square. Units cannot move into walls or other units.
-     * The unit does this while considering the current positions of units and does not do any prediction about where units will be later.
-     * <p>
      * Set of positions that are in range, reachable and nearest
      *
-     * @param field   the current state of the battlefield
-     * @param inRange set of positions in range and open around enemy targets
-     * @param start   our staring position
-     * @return TreeSet<Position> ordered set of positions that are nearest to our current position and reachable
+     * @param field   Current battlefield
+     * @param inRange Open positions near enemies
+     * @param start   Our current position
+     * @return TreeSet<Position> Ordered position set nearest to our current position and reachable
      */
 
     TreeSet<Position> nearest(Battlefield field, Set<Position> inRange, Position start) {
-        int best = Integer.MAX_VALUE;
-        TreeSet<Position> closest = new TreeSet<>();
+        int min_steps = Integer.MAX_VALUE;
+        TreeSet<Position> nearest = new TreeSet<>();
         LinkedList<Collector> queue = new LinkedList<>();
-        Map<Position, Integer> dist = new HashMap<>();
-        Collector curr = new Collector(start, 0);
-        dist.put(start, 0);
-        queue.add(curr);
+        Map<Position, Integer> visited = new HashMap<>();
+        Collector current = new Collector(start, 0);
+        visited.put(start, 0);
+        queue.add(current);
 
         while (queue.size() != 0) {
-            curr = queue.poll();
+            current = queue.poll();
 
             for (Direction dir : Direction.values()) {
-                Collector next = new Collector(curr.getPosition().go(dir), curr.getSteps() + 1);
+                Collector next = new Collector(current.getPosition().go(dir), current.getSteps() + 1);
 
-                if (field.getPosition(next.getPosition()) == '.' && !dist.containsKey(next.getPosition()) && next.getSteps() < best) {
-                    best = next.getSteps();
-                    dist.put(next.getPosition(), next.getSteps());
+                if (field.getPosition(next.getPosition()) == '.' && !visited.containsKey(next.getPosition()) && next.getSteps() < min_steps) {
+                    min_steps = next.getSteps();
+                    visited.put(next.getPosition(), next.getSteps());
                     queue.add(next);
                 }
 
                 if (inRange.contains(next.getPosition())) {
-                    closest.add(next.getPosition());
+                    nearest.add(next.getPosition());
                 }
 
             }
         }
-        return closest;
+        return nearest;
     }
 
 
