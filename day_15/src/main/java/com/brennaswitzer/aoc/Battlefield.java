@@ -168,6 +168,8 @@ public class Battlefield {
         for (Unit u : units) {
             sum += u.getHitpoints();
         }
+        System.out.println("hp: " + sum);
+        System.out.println("r: " + rounds);
         return sum * rounds;
     }
 

@@ -359,7 +359,7 @@ public class BattlefieldTest {
     }
 
     @Test
-    public void test_outcome() {
+    public void test_outcome_ex1() {
         String s = "#######\n" +
                 "#.G...#\n" +
                 "#...EG#\n" +
@@ -374,5 +374,44 @@ public class BattlefieldTest {
         assertEquals(27730, battle.outcome());
     }
 
+    @Test
+    public void test_outcome_ex2_p1() {
+        String start = "#######\n" +
+                "#G..#E#\n" +
+                "#E#E.E#\n" +
+                "#G.##.#\n" +
+                "#...#E#\n" +
+                "#...E.#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#...#E#\n" +
+                "#E#...#\n" +
+                "#.E##.#\n" +
+                "#E..#E#\n" +
+                "#.....#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_outcome_ex2_p2() {
+        String start = "#######\n" +
+                "#G..#E#\n" +
+                "#E#E.E#\n" +
+                "#G.##.#\n" +
+                "#...#E#\n" +
+                "#...E.#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(36334, battle.outcome());
+    }
 
 }
