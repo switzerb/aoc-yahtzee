@@ -414,4 +414,44 @@ public class BattlefieldTest {
         assertEquals(36334, battle.outcome());
     }
 
+    @Test
+    public void test_outcome_ex3_p1() {
+        String start = "#######\n" +
+                "#E..EG#\n" +
+                "#.#G.E#\n" +
+                "#E.##E#\n" +
+                "#G..#.#\n" +
+                "#..E#.#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#.E.E.#\n" +
+                "#.#E..#\n" +
+                "#E.##.#\n" +
+                "#.E.#.#\n" +
+                "#...#.#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_outcome_ex3_p2() {
+        String start = "#######\n" +
+                "#E..EG#\n" +
+                "#.#G.E#\n" +
+                "#E.##E#\n" +
+                "#G..#.#\n" +
+                "#..E#.#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(39514, battle.outcome());
+    }
+
 }

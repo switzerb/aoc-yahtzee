@@ -80,7 +80,8 @@ public class Unit {
             if (target.isDead()) {
                 field.removeUnit(target);
             }
-            return false;
+            List<Unit> survivors = findEnemies(field);
+            return survivors == null;
         }
     }
 
