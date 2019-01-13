@@ -24,6 +24,8 @@ public class Main {
 
         /**
          * 239330 answer is too high
+         * 227290 - is the right answer
+         * 224616 is too low
          */
         System.out.println("Solution Part One: " + battle.outcome());
 
