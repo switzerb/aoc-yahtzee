@@ -454,4 +454,130 @@ public class BattlefieldTest {
         assertEquals(39514, battle.outcome());
     }
 
+    @Test
+    public void test_outcome_ex4_p1() {
+        String start = "#######\n" +
+                "#E.G#.#\n" +
+                "#.#G..#\n" +
+                "#G.#.G#\n" +
+                "#G..#.#\n" +
+                "#...E.#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#G.G#.#\n" +
+                "#.#G..#\n" +
+                "#..#..#\n" +
+                "#...#G#\n" +
+                "#...G.#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_outcome_ex4_p2() {
+        String start = "#######\n" +
+                "#E.G#.#\n" +
+                "#.#G..#\n" +
+                "#G.#.G#\n" +
+                "#G..#.#\n" +
+                "#...E.#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(27755, battle.outcome());
+    }
+
+    @Test
+    public void test_outcome_ex5_p1() {
+        String start = "#######\n" +
+                "#.E...#\n" +
+                "#.#..G#\n" +
+                "#.###.#\n" +
+                "#E#G#G#\n" +
+                "#...#G#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#.....#\n" +
+                "#.#G..#\n" +
+                "#.###.#\n" +
+                "#.#.#.#\n" +
+                "#G.G#G#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_outcome_ex5_p2() {
+        String start = "#######\n" +
+                "#.E...#\n" +
+                "#.#..G#\n" +
+                "#.###.#\n" +
+                "#E#G#G#\n" +
+                "#...#G#\n" +
+                "#######";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(28944, battle.outcome());
+    }
+
+    @Test
+    public void test_outcome_ex6_p1() {
+        String start = "#########\n" +
+                "#G......#\n" +
+                "#.E.#...#\n" +
+                "#..##..G#\n" +
+                "#...##..#\n" +
+                "#...#...#\n" +
+                "#.G...G.#\n" +
+                "#.....G.#\n" +
+                "#########";
+
+        String finish = "#########\n" +
+                "#.G.....#\n" +
+                "#G.G#...#\n" +
+                "#.G##...#\n" +
+                "#...##..#\n" +
+                "#.G.#...#\n" +
+                "#.......#\n" +
+                "#.......#\n" +
+                "#########";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_outcome_ex6_p2() {
+        String start = "#########\n" +
+                "#G......#\n" +
+                "#.E.#...#\n" +
+                "#..##..G#\n" +
+                "#...##..#\n" +
+                "#...#...#\n" +
+                "#.G...G.#\n" +
+                "#.....G.#\n" +
+                "#########";
+        Battlefield battle = new Battlefield(start);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+        assertEquals(18740, battle.outcome());
+    }
+
 }
