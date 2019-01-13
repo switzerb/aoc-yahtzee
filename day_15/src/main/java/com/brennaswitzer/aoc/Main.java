@@ -17,5 +17,16 @@ public class Main {
 
         List<String> input = Loader.getInput("input.txt");
 
+        Battlefield battle = new Battlefield(input);
+        while (!battle.isOver()) {
+            battle.runRound();
+        }
+
+        /**
+         * 239330 answer is too high
+         */
+        System.out.println("Solution Part One: " + battle.outcome());
+
+
     }
 }
