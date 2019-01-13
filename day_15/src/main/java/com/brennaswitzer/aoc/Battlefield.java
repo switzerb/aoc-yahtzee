@@ -88,14 +88,14 @@ public class Battlefield {
      * For instance, the order in which units take their turns within a round is the reading order of their starting positions in that round
      */
     void runRound() {
+        units = cleanBattlefield();
         for (Unit unit : units) {
             if (!unit.isDead()) {
                 done = unit.turn(this);
+                if (done) break;
             }
-            if (done) break;
         }
         if (!done) {
-            units = cleanBattlefield();
             rounds++;
 //            System.out.println("AFTER " + rounds + " ROUND");
 //            for (Unit u : units) {
