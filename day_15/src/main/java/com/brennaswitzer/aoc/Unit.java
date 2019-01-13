@@ -52,34 +52,36 @@ public class Unit {
         if (enemies == null) return true;
 
         Adjacent enemiesNear = inAttackRange(field);
-        if (enemiesNear != null) {
+        if (enemiesNear == null) {
+
+            // if there are no enemies near, then try to move
+            Position targetPosition = getTargetPosition(field, enemies);
+
+            // if no available target positions, turn is over; otherwise, try moving
+            if (targetPosition == null) return false;
+
+            Position moveTo = moveTo(field, targetPosition);
+            if (moveTo == null) return false;
+
+            field.moveUnit(this, moveTo);
+            current = new Position(moveTo);
+
+            // now that we've moved, try and attack
+            Adjacent e = inAttackRange(field);
+            if (e != null) {
+                Unit target = attack(e);
+                if (target.isDead()) {
+                    field.removeUnit(target);
+                }
+            }
+            return false;
+        } else {
             Unit target = attack(enemiesNear);
             if (target.isDead()) {
                 field.removeUnit(target);
             }
-        } else {
-            // find target position we want to moveTo towards
-            Position targetPosition = getTargetPosition(field, enemies);
-
-            // if no targets, turn is over; otherwise, try moving
-            if (targetPosition != null) {
-                Position moveTo = moveTo(field, targetPosition);
-                if (moveTo != null) {
-                    field.moveUnit(this, moveTo);
-                    current = new Position(moveTo);
-
-                    // now that we've moved, try and attack
-                    Adjacent e = inAttackRange(field);
-                    if (e != null) {
-                        Unit target = attack(e);
-                        if (target.isDead()) {
-                            field.removeUnit(target);
-                        }
-                    }
-                }
-            }
+            return false;
         }
-        return false;
     }
 
     /**
@@ -108,7 +110,7 @@ public class Unit {
 
         for (Direction dir : Direction.values()) {
             Unit u = field.getUnitByPosition(current.go(dir));
-            if (u != null) {
+            if (u != null && u.self == enemy) {
                 enemiesInRange.put(current.go(dir), u);
             }
         }
