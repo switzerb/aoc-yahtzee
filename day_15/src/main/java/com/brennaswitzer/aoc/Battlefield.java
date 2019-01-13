@@ -106,24 +106,22 @@ public class Battlefield {
     void runRound() {
         units = cleanBattlefield();
         for (Unit unit : units) {
-            if (!unit.isDead()) {
+            if (unit.isAlive()) {
                 done = unit.turn(this);
                 if (done) break;
             }
         }
-        if (!done) {
-            rounds++;
-//            System.out.println("AFTER " + rounds + " ROUND");
-//            for (Unit u : units) {
-//                System.out.println(u.toString());
-//            }
+        rounds++;
+        System.out.println("AFTER " + rounds + " ROUND");
+        for (Unit u : units) {
+            System.out.println(u.toString());
         }
     }
 
     List<Unit> cleanBattlefield() {
         List<Unit> nextRound = new ArrayList<>();
         for (Unit u : units) {
-            if (!u.isDead()) {
+            if (u.isAlive()) {
                 nextRound.add(u);
             }
         }
@@ -143,7 +141,6 @@ public class Battlefield {
     public void removeUnit(Unit target) {
         Position current = target.getCurrent();
         battlefield[current.getRow()][current.getCol()] = '.';
-        target.kill();
     }
 
     /**
@@ -167,7 +164,9 @@ public class Battlefield {
     int outcome() {
         int sum = 0;
         for (Unit u : units) {
-            sum += u.getHitpoints();
+            if (u.isAlive()) {
+                sum += u.getHitpoints();
+            }
         }
         System.out.println("hp: " + sum);
         System.out.println("r: " + rounds);

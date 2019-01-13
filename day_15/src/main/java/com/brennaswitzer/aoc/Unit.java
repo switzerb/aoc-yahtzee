@@ -9,7 +9,6 @@ public class Unit {
     Position current;
     int hitpoints = 200;
     int power = 3;
-    boolean dead;
 
     Unit(char self, Position current) {
         this.self = self;
@@ -31,10 +30,6 @@ public class Unit {
 
     void setHitpoints(int hp) {
         this.hitpoints = hp;
-    }
-
-    void kill() {
-        dead = true;
     }
 
     /**
@@ -70,28 +65,19 @@ public class Unit {
             Adjacent e = inAttackRange(field);
             if (e != null) {
                 Unit target = attack(e);
-                if (target.isDead()) {
+                if (!target.isAlive()) {
                     field.removeUnit(target);
                 }
             }
             return false;
         } else {
             Unit target = attack(enemiesNear);
-            if (target.isDead()) {
+            if (!target.isAlive()) {
                 field.removeUnit(target);
             }
             List<Unit> survivors = findEnemies(field);
             return survivors == null;
         }
-    }
-
-    /**
-     * Determines if a unit is dead
-     *
-     * @return boolean true if unit is dead and false if it is not
-     */
-    boolean isDead() {
-        return hitpoints <= 0;
     }
 
     boolean isAlive() {
@@ -103,8 +89,7 @@ public class Unit {
      * return null if there are no enemy targets
      */
     List<Unit> findEnemies(Battlefield field) {
-        List<Unit> enemies = field.getUnitsByTeam(enemy);
-        return enemies;
+        return field.getUnitsByTeam(enemy);
     }
 
     /**
