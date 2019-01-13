@@ -59,10 +59,26 @@ public class Battlefield {
         units.sort(UNITS_IN_READING_ORDER);
     }
 
+    /**
+     * Return a unit by current position on the battlefield. If there is no unit at that position, return null
+     *
+     * @param position
+     * @return Unit
+     */
+    Unit getUnitByPosition(Position position) {
+        for (Unit u : units) {
+            if (u.getCurrent().equals(position) && u.isAlive()) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+
     List<Unit> getUnitsByTeam(char team) {
         List<Unit> byTeam = new ArrayList<>();
         for (Unit u : units) {
-            if (u.getSelf() == team) {
+            if (u.getSelf() == team && u.isAlive()) {
                 byTeam.add(u);
             }
         }
@@ -117,22 +133,6 @@ public class Battlefield {
 
     boolean isOver() {
         return done;
-    }
-
-
-    /**
-     * Return a unit by current position on the battlefield. If there is no unit at that position, return null
-     *
-     * @param position
-     * @return Unit
-     */
-    Unit getUnitByPosition(Position position) {
-        for (Unit u : units) {
-            if (u.getCurrent().equals(position)) {
-                return u;
-            }
-        }
-        return null;
     }
 
     /**

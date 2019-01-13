@@ -94,12 +94,16 @@ public class Unit {
         return hitpoints <= 0;
     }
 
+    boolean isAlive() {
+        return hitpoints > 0;
+    }
+
     /**
-     * Get a map of all enemy combatants, if no enemy targets, combat ends (note this might be in the middle of a round)
+     * Get a map of all alive enemy combatants, if no enemy targets, combat ends (note this might be in the middle of a round)
      * return null if there are no enemy targets
      */
     List<Unit> findEnemies(Battlefield field) {
-        List<Unit> enemies = field.getUnitsByTeam(this.self == 'E' ? 'G' : 'E');
+        List<Unit> enemies = field.getUnitsByTeam(enemy);
         return enemies;
     }
 
