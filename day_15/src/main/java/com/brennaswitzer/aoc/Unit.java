@@ -252,7 +252,7 @@ public class Unit {
                 }
             }
         }
-        return nearest.first();
+        return nearest.size() > 0 ? nearest.first() : null;
     }
 
     @Override

@@ -209,6 +209,131 @@ public class BattlefieldTest {
     }
 
     @Test
+    public void test_ex1_r24() {
+        String start = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#..G..#\n" +
+                "#...G.#\n" +
+                "#.#G#G#\n" +
+                "#...#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(start);
+        for (int i = 0; i < 24; i++) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_ex1_r25() {
+        String start = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#.G...#\n" +
+                "#..G..#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(start);
+        for (int i = 0; i < 25; i++) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_ex1_r26() {
+        String start = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#G....#\n" +
+                "#.G...#\n" +
+                "#.#.#G#\n" +
+                "#...#E#\n" +
+                "#..G..#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(start);
+        for (int i = 0; i < 26; i++) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_ex1_r27() {
+        String start = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#G....#\n" +
+                "#.G...#\n" +
+                "#.#.#G#\n" +
+                "#...#E#\n" +
+                "#...G.#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(start);
+        for (int i = 0; i < 27; i++) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
+    public void test_ex1_r28() {
+        String start = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        String finish = "#######\n" +
+                "#G....#\n" +
+                "#.G...#\n" +
+                "#.#.#G#\n" +
+                "#...#E#\n" +
+                "#....G#\n" +
+                "#######";
+
+        Battlefield battle = new Battlefield(start);
+        for (int i = 0; i < 28; i++) {
+            battle.runRound();
+        }
+        assertEquals(finish, battle.toString());
+    }
+
+    @Test
     public void test_outcome() {
         String s = "#######\n" +
                 "#.G...#\n" +
