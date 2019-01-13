@@ -95,10 +95,12 @@ public class Battlefield {
             }
             if (done) break;
         }
-        rounds++;
-        System.out.println("AFTER " + rounds + " ROUND");
-        for (Unit u : units) {
-            System.out.println(u.toString());
+        if (!done) {
+            rounds++;
+//            System.out.println("AFTER " + rounds + " ROUND");
+//            for (Unit u : units) {
+//                System.out.println(u.toString());
+//            }
         }
     }
 
