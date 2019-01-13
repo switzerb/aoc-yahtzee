@@ -111,11 +111,14 @@ public class Battlefield {
                 if (done) break;
             }
         }
+//        if(rounds == 23 || rounds == 24 || rounds == 25 || rounds == 26 || rounds == 27) {
+//            System.out.println("AFTER " + (rounds + 1) + " ROUND");
+//            for (Unit u : units) {
+//                System.out.println(u.toString());
+//            }
+//        }
+        if (done) return;
         rounds++;
-        System.out.println("AFTER " + rounds + " ROUND");
-        for (Unit u : units) {
-            System.out.println(u.toString());
-        }
     }
 
     List<Unit> cleanBattlefield() {
