@@ -110,14 +110,6 @@ public class Battlefield {
         }
         if (done) return;
         rounds++;
-        if (rounds > 27) {
-            System.out.println("AFTER " + (rounds) + " ROUND");
-            System.out.println(this);
-            for (Unit u : units) {
-                System.out.println(u.toString());
-            }
-        }
-
     }
 
     private List<Unit> getSurvivors() {
