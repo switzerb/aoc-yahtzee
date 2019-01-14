@@ -25,6 +25,7 @@ public class Main {
         /**
          * 239330 answer is too high
          * 227290 - is the right answer
+         * (2674 Hitpoints * 85 rounds)
          * 224616 is too low
          */
         System.out.println("Solution Part One: " + battle.outcome());

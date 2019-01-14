@@ -131,7 +131,7 @@ public class UnitTest {
 
         Battlefield battle = new Battlefield(s);
         Unit elf = battle.units.get(0);
-        List<Unit> enemies = elf.findEnemies(battle);
+        List<Unit> enemies = battle.findEnemies(elf.enemy);
         TreeSet<Position> inRange = new TreeSet<>();
         inRange.add(new Position(1, 3));
         inRange.add(new Position(1, 5));
@@ -152,7 +152,7 @@ public class UnitTest {
 
         Battlefield battle = new Battlefield(s);
         Unit elf = battle.units.get(0);
-        List<Unit> enemies = elf.findEnemies(battle);
+        List<Unit> enemies = battle.findEnemies(elf.enemy);
         assertEquals(new Position(1, 3), elf.getTargetPosition(battle, enemies));
     }
 
@@ -166,10 +166,9 @@ public class UnitTest {
 
         Battlefield battle = new Battlefield(s);
         Unit elf = battle.units.get(0);
-        List<Unit> enemies = elf.findEnemies(battle);
+        List<Unit> enemies = battle.findEnemies(elf.enemy);
         Position chosen = elf.getTargetPosition(battle, enemies);
         elf.moveTo(battle, chosen);
-
     }
 
 }

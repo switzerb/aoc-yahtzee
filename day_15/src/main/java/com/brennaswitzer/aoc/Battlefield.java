@@ -74,11 +74,10 @@ public class Battlefield {
         return null;
     }
 
-
-    List<Unit> getUnitsByTeam(char team) {
+    List<Unit> findEnemies(char species) {
         List<Unit> byTeam = new ArrayList<>();
         for (Unit u : units) {
-            if (u.getSelf() == team && u.isAlive()) {
+            if (u.self == species && u.isAlive()) {
                 byTeam.add(u);
             }
         }
@@ -104,24 +103,22 @@ public class Battlefield {
      * For instance, the order in which units take their turns within a round is the reading order of their starting positions in that round
      */
     void runRound() {
-        units = cleanBattlefield();
+        units = getSurvivors();
         for (Unit unit : units) {
-            if (unit.isAlive()) {
-                done = unit.turn(this);
-                if (done) break;
-            }
+            done = unit.turn(this);
+            if (done) break;
         }
 //        if(rounds == 23 || rounds == 24 || rounds == 25 || rounds == 26 || rounds == 27) {
 //            System.out.println("AFTER " + (rounds + 1) + " ROUND");
 //            for (Unit u : units) {
 //                System.out.println(u.toString());
 //            }
-//        }
+//        }1111
         if (done) return;
         rounds++;
     }
 
-    List<Unit> cleanBattlefield() {
+    private List<Unit> getSurvivors() {
         List<Unit> nextRound = new ArrayList<>();
         for (Unit u : units) {
             if (u.isAlive()) {

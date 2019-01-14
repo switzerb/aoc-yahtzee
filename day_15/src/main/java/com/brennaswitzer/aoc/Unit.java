@@ -43,7 +43,10 @@ public class Unit {
      * @return true if combat is ended, false if turn is over
      */
     boolean turn(Battlefield field) {
-        List<Unit> enemies = findEnemies(field);
+
+        if (!isAlive()) return false;
+
+        List<Unit> enemies = field.findEnemies(enemy);
         if (enemies == null) return true;
 
         Adjacent enemiesNear = inAttackRange(field);
@@ -75,21 +78,13 @@ public class Unit {
             if (!target.isAlive()) {
                 field.removeUnit(target);
             }
-            List<Unit> survivors = findEnemies(field);
+            List<Unit> survivors = field.findEnemies(enemy);
             return survivors == null;
         }
     }
 
     boolean isAlive() {
         return hitpoints > 0;
-    }
-
-    /**
-     * Get a map of all alive enemy combatants, if no enemy targets, combat ends (note this might be in the middle of a round)
-     * return null if there are no enemy targets
-     */
-    List<Unit> findEnemies(Battlefield field) {
-        return field.getUnitsByTeam(enemy);
     }
 
     /**
