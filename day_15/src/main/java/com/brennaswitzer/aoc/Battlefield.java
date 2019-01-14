@@ -13,6 +13,7 @@ public class Battlefield {
 
     List<Unit> units;
     char[][] battlefield;
+    int elfCount;
     int width;
     int height;
     int rounds;
@@ -72,6 +73,7 @@ public class Battlefield {
             for (int c = 0; c < width; c++) {
                 if (battlefield[r][c] == 'E') {
                     Unit elf = new Unit('E', new Position(r, c), elfPower);
+                    elfCount++;
                     units.add(elf);
                 }
                 if (battlefield[r][c] == 'G') {
@@ -214,4 +216,21 @@ public class Battlefield {
         }
     };
 
+    char getWinner() {
+        return units.get(0).self;
+    }
+
+    int countElves() {
+        int count = 0;
+        for (Unit u : units) {
+            if (u.getSelf() == 'E') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean elvesWin() {
+        return getWinner() == 'E' && countElves() == elfCount;
+    }
 }

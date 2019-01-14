@@ -580,4 +580,34 @@ public class BattlefieldTest {
         assertEquals(18740, battle.outcome());
     }
 
+    @Test
+    public void test_p2_ex1_1() {
+        String s = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        Runner simulator = new Runner();
+        simulator.run(s);
+        assertEquals(15, simulator.getAttackUp());
+    }
+
+    @Test
+    public void test_p2_ex1_2() {
+        String s = "#######\n" +
+                "#.G...#\n" +
+                "#...EG#\n" +
+                "#.#.#G#\n" +
+                "#..G#E#\n" +
+                "#.....#\n" +
+                "#######";
+
+        Runner simulator = new Runner();
+        int outcome = simulator.run(s);
+        assertEquals(4988, outcome);
+    }
+
 }

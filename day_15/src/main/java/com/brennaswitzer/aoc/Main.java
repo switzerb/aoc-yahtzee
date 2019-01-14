@@ -16,10 +16,12 @@ public class Main {
          */
 
         List<String> input = Loader.getInput("input.txt");
-        Battlefield battle = new Battlefield(input, attackUp);
+        Battlefield battle = new Battlefield(input);
         while (!battle.isOver()) {
             battle.runRound();
         }
+
+        Runner simulation = new Runner();
 
         /**
          * 239330 answer is too high
@@ -28,6 +30,7 @@ public class Main {
          * 224616 is too low
          */
         System.out.println("Solution Part One: " + battle.outcome());
+        System.out.println("Solution Part Two: " + simulation.run(input));
 
 
     }
