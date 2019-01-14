@@ -26,7 +26,7 @@ public class Battlefield {
             width = b.length;
             battlefield[i] = Arrays.copyOf(b, width);
         }
-        initUnits();
+        initUnits(3);
     }
 
     Battlefield(String init) {
@@ -39,19 +39,43 @@ public class Battlefield {
             width = b.length;
             battlefield[i] = Arrays.copyOf(b, width);
         }
-        initUnits();
+        initUnits(3);
     }
 
-    private void initUnits() {
+    Battlefield(List<String> input, int attackUp) {
+        height = input.size();
+        battlefield = new char[height][];
+        for (int i = 0; i < height; i++) {
+            char[] b = input.get(i).toCharArray();
+            width = b.length;
+            battlefield[i] = Arrays.copyOf(b, width);
+        }
+        initUnits(attackUp);
+    }
+
+    Battlefield(String init, int attackUp) {
+        String[] split = init.split("\n");
+        List<String> input = Arrays.asList(split);
+        height = input.size();
+        battlefield = new char[height][];
+        for (int i = 0; i < height; i++) {
+            char[] b = input.get(i).toCharArray();
+            width = b.length;
+            battlefield[i] = Arrays.copyOf(b, width);
+        }
+        initUnits(attackUp);
+    }
+
+    private void initUnits(int elfPower) {
         units = new ArrayList<>();
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
                 if (battlefield[r][c] == 'E') {
-                    Unit elf = new Unit('E', new Position(r, c));
+                    Unit elf = new Unit('E', new Position(r, c), elfPower);
                     units.add(elf);
                 }
                 if (battlefield[r][c] == 'G') {
-                    Unit goblin = new Unit('G', new Position(r, c));
+                    Unit goblin = new Unit('G', new Position(r, c), 3);
                     units.add(goblin);
                 }
             }

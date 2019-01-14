@@ -8,9 +8,10 @@ public class Unit {
     char enemy;
     Position current;
     int hitpoints = 200;
-    int power = 3;
+    int power;
 
-    Unit(char self, Position current) {
+    Unit(char self, Position current, int power) {
+        this.power = power;
         this.self = self;
         this.enemy = this.self == 'E' ? 'G' : 'E';
         this.current = current;

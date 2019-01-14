@@ -16,8 +16,7 @@ public class Main {
          */
 
         List<String> input = Loader.getInput("input.txt");
-
-        Battlefield battle = new Battlefield(input);
+        Battlefield battle = new Battlefield(input, attackUp);
         while (!battle.isOver()) {
             battle.runRound();
         }
