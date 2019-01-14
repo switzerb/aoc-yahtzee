@@ -75,14 +75,14 @@ public class Battlefield {
     }
 
     List<Unit> findEnemies(char species) {
-        List<Unit> byTeam = new ArrayList<>();
+        List<Unit> e = new ArrayList<>();
         for (Unit u : units) {
             if (u.self == species && u.isAlive()) {
-                byTeam.add(u);
+                e.add(u);
             }
         }
-        byTeam.sort(UNITS_IN_READING_ORDER);
-        return byTeam.size() > 0 ? byTeam : null;
+        e.sort(UNITS_IN_READING_ORDER);
+        return e.size() > 0 ? e : null;
     }
 
     int getWidth() {
@@ -108,14 +108,16 @@ public class Battlefield {
             done = unit.turn(this);
             if (done) break;
         }
-//        if(rounds == 23 || rounds == 24 || rounds == 25 || rounds == 26 || rounds == 27) {
-//            System.out.println("AFTER " + (rounds + 1) + " ROUND");
-//            for (Unit u : units) {
-//                System.out.println(u.toString());
-//            }
-//        }1111
         if (done) return;
         rounds++;
+        if (rounds > 27) {
+            System.out.println("AFTER " + (rounds) + " ROUND");
+            System.out.println(this);
+            for (Unit u : units) {
+                System.out.println(u.toString());
+            }
+        }
+
     }
 
     private List<Unit> getSurvivors() {
@@ -151,7 +153,7 @@ public class Battlefield {
      */
     void moveUnit(Unit unit, Position moveTo) {
         battlefield[unit.getCurrent().getRow()][unit.getCurrent().getCol()] = '.';
-        battlefield[moveTo.getRow()][moveTo.getCol()] = unit.self;
+        battlefield[moveTo.getRow()][moveTo.getCol()] = unit.getSelf();
     }
 
     /**

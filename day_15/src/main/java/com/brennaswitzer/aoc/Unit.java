@@ -78,8 +78,7 @@ public class Unit {
             if (!target.isAlive()) {
                 field.removeUnit(target);
             }
-            List<Unit> survivors = field.findEnemies(enemy);
-            return survivors == null;
+            return false;
         }
     }
 
