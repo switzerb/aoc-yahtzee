@@ -13,7 +13,8 @@ public class ReservoirTest {
     @Before
     public void setup() throws IOException {
         List<String> input = Loader.getInput("test_input.txt");
-        reservoir = new Reservoir();
+        System.out.println(input);
+        reservoir = new Reservoir(20, 40);
     }
 
     @Test
