@@ -64,6 +64,16 @@ public class Reservoir {
         return veins.get(new Point(col, row));
     }
 
+    private boolean isClay(int row, int col) {
+        Point p = new Point(col, row);
+        return veins.containsKey(p) && veins.get(p) == CLAY;
+    }
+
+    private boolean isWater(int row, int col) {
+        Point p = new Point(col, row);
+        return veins.containsKey(p) && veins.get(p) == WATER;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -71,8 +81,10 @@ public class Reservoir {
         for (int x = 0; x < height; x++) {
             if (x > 0) sb.append('\n');
             for (int y = 0; y < width; y++) {
-                if (veins.containsKey(new Point(x, y))) {
+                if (isClay(y, x)) {
                     sb.append(get(y, x));
+                } else if (isWater(y, x)) {
+                    sb.append('|');
                 } else {
                     sb.append('.');
                 }
