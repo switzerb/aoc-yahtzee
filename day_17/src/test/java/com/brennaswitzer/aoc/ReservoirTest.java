@@ -22,5 +22,11 @@ public class ReservoirTest {
         System.out.println(reservoir);
     }
 
+    @Test
+    public void test_flow() {
+        Point spring = new Point(10, 0);
+        reservoir.flow(spring);
+    }
+
 
 }

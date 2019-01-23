@@ -55,6 +55,10 @@ public class Reservoir {
      * water can flow to either side
      */
 
+    void flow(Point start) {
+        System.out.println(start);
+    }
+
 
     private void set(int row, int col, char c) {
         veins.put(new Point(col, row), c);
