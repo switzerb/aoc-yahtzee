@@ -1,6 +1,8 @@
 package com.brennaswitzer.aoc;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Reservoir {
 
@@ -12,6 +14,8 @@ public class Reservoir {
     int width;
     int height;
     char[][] ground;
+
+    Map<Point, Character> veins = new HashMap<>();
 
     // Map data structure to hold water and clay positions
     // Key = Position and Value = WATER / CLAY
@@ -52,12 +56,12 @@ public class Reservoir {
      */
 
 
-    private void set(int x, int y, char c) {
-        ground[y][x] = c;
+    private void set(int row, int col, char c) {
+        veins.put(new Point(col, row), c);
     }
 
-    private char get(int x, int y) {
-        return ground[y][x];
+    private char get(int row, int col) {
+        return veins.get(new Point(col, row));
     }
 
     @Override
@@ -67,7 +71,11 @@ public class Reservoir {
         for (int x = 0; x < height; x++) {
             if (x > 0) sb.append('\n');
             for (int y = 0; y < width; y++) {
-                sb.append(ground[x][y]);
+                if (veins.containsKey(new Point(x, y))) {
+                    sb.append(get(y, x));
+                } else {
+                    sb.append('.');
+                }
             }
         }
         return sb.toString();

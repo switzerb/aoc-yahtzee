@@ -1,7 +1,5 @@
 package com.brennaswitzer.aoc;
 
-import java.awt.*;
-
 class Position implements Comparable<Position> {
 
     private final java.awt.Point p;
@@ -18,11 +16,11 @@ class Position implements Comparable<Position> {
         p = new java.awt.Point(col, row);
     }
 
-    public int getRow() {
+    public final int getRow() {
         return p.y;
     }
 
-    public int getCol() {
+    public final int getCol() {
         return p.x;
     }
 
