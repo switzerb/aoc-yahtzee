@@ -16,14 +16,6 @@ public class Point implements Comparable<Point> {
         return dir.move(this);
     }
 
-    public int getRow() {
-        return p.y;
-    }
-
-    public int getCol() {
-        return p.x;
-    }
-
     public int getY() {
         return p.y;
     }
@@ -55,7 +47,7 @@ public class Point implements Comparable<Point> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[" + p.y + "," + p.x + "]");
+        sb.append("[" + p.x + "," + p.y + "]");
         return sb.toString();
     }
 

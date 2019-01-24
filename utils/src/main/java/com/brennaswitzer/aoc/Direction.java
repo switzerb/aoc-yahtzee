@@ -1,17 +1,17 @@
 package com.brennaswitzer.aoc;
 
 public enum Direction {
-    North(-1, 0), South(1, 0), East(0, 1), West(0, -1);
+    North(0, 1), South(0, -1), East(1, 0), West(-1, 0);
 
-    int row_delta, col_delta;
+    int y_delta, x_delta;
 
-    Direction(int r, int c) {
-        this.row_delta = r;
-        this.col_delta = c;
+    Direction(int x, int y) {
+        this.y_delta = y;
+        this.x_delta = x;
     }
 
     Point move(Point p) {
-        return new Point(p.getRow() + row_delta, p.getCol() + col_delta);
+        return new Point(p.getX() + x_delta, p.getY() + y_delta);
     }
 
 }

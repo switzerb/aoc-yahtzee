@@ -30,19 +30,19 @@ public class Reservoir {
             visualizer[y] = new char[width];
             Arrays.fill(visualizer[y], SAND);
         }
-        set(10, 0, SPRING);
-
-        for (int i = 2; i < 7; i++) {
-            set(1, i, CLAY);
-        }
-
-        for (int i = 3; i < 7; i++) {
-            set(12, i, CLAY);
-        }
-
-        for (int i = 1; i < 13; i++) {
-            set(i, 7, CLAY);
-        }
+        set(10, 0, WATER);
+//
+//        for (int i = 2; i < 7; i++) {
+//            set(1, i, CLAY);
+//        }
+//
+//        for (int i = 3; i < 7; i++) {
+//            set(12, i, CLAY);
+//        }
+//
+//        for (int i = 1; i < 13; i++) {
+//            set(i, 7, CLAY);
+//        }
 
     }
 
@@ -54,35 +54,37 @@ public class Reservoir {
      */
 
     void flow(Point start) {
-        Character meter = ground.get(start);
-        Point current = start.go(Direction.South);
-        while (!isClay(current)) {
-            current = current.go(Direction.South);
-            System.out.println(current);
-        }
-        ground.put(current, WATER);
+//        Character meter = ground.get(start);
+//        Point current = start.go(Direction.South);
+//        int i = 0;
+//        while (i < 5) {
+//            current = current.go(Direction.South);
+//            System.out.println(current);
+//            i++;
+//        }
+//        ground.put(current, WATER);
     }
 
 
-    private void set(int row, int col, char c) {
-        ground.put(new Point(col, row), c);
+    private void set(int x, int y, char c) {
+        ground.put(new Point(x, y), c);
     }
 
-    private char get(int row, int col) {
-        return ground.get(new Point(col, row));
+    private char get(int x, int y) {
+        return ground.get(new Point(x, y));
     }
 
     private boolean isClay(Point p) {
         return ground.containsKey(p) && ground.get(p) == CLAY;
     }
 
-    private boolean isClay(int row, int col) {
-        Point p = new Point(col, row);
+    private boolean isClay(int x, int y) {
+        Point p = new Point(x, y);
         return ground.containsKey(p) && ground.get(p) == CLAY;
     }
 
-    private boolean isWater(int row, int col) {
-        Point p = new Point(col, row);
+    private boolean isWater(int x, int y) {
+        Point p = new Point(x, y);
         return ground.containsKey(p) && ground.get(p) == WATER;
     }
 
@@ -90,12 +92,12 @@ public class Reservoir {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (int x = 0; x < height; x++) {
-            if (x > 0) sb.append('\n');
-            for (int y = 0; y < width; y++) {
-                if (isClay(y, x)) {
-                    sb.append(get(y, x));
-                } else if (isWater(y, x)) {
+        for (int y = 0; y < height; y++) {
+            if (y > 0) sb.append('\n');
+            for (int x = 0; x < width; x++) {
+                if (isClay(x, y)) {
+                    sb.append(get(x, y));
+                } else if (isWater(x, y)) {
                     sb.append('|');
                 } else {
                     sb.append('.');
