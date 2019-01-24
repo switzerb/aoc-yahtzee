@@ -12,6 +12,10 @@ public class Point implements Comparable<Point> {
         p = new java.awt.Point(x, y);
     }
 
+    public Point go(Direction dir) {
+        return dir.move(this);
+    }
+
     public int getRow() {
         return p.y;
     }
@@ -20,11 +24,11 @@ public class Point implements Comparable<Point> {
         return p.x;
     }
 
-    private int getY() {
+    public int getY() {
         return p.y;
     }
 
-    private int getX() {
+    public int getX() {
         return p.x;
     }
 

@@ -26,6 +26,7 @@ public class ReservoirTest {
     public void test_flow() {
         Point spring = new Point(10, 0);
         reservoir.flow(spring);
+        System.out.println(reservoir);
     }
 
 

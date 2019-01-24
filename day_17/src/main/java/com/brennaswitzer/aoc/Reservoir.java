@@ -13,26 +13,24 @@ public class Reservoir {
 
     int width;
     int height;
-    char[][] ground;
+    char[][] visualizer;
 
-    Map<Point, Character> veins = new HashMap<>();
+    Map<Point, Character> ground = new HashMap<>();
 
     // Map data structure to hold water and clay positions
     // Key = Position and Value = WATER / CLAY
 
     Reservoir(int width, int height) {
-        ground = new char[height][];
+        visualizer = new char[height][];
         this.width = width;
         this.height = height;
 
         // Start with all sand
         for (int y = 0; y < height; y++) {
-            ground[y] = new char[width];
-            Arrays.fill(ground[y], SAND);
+            visualizer[y] = new char[width];
+            Arrays.fill(visualizer[y], SAND);
         }
         set(10, 0, SPRING);
-        set(10, 1, WATER);
-        set(10, 2, WATER);
 
         for (int i = 2; i < 7; i++) {
             set(1, i, CLAY);
@@ -56,26 +54,36 @@ public class Reservoir {
      */
 
     void flow(Point start) {
-        System.out.println(start);
+        Character meter = ground.get(start);
+        Point current = start.go(Direction.South);
+        while (!isClay(current)) {
+            current = current.go(Direction.South);
+            System.out.println(current);
+        }
+        ground.put(current, WATER);
     }
 
 
     private void set(int row, int col, char c) {
-        veins.put(new Point(col, row), c);
+        ground.put(new Point(col, row), c);
     }
 
     private char get(int row, int col) {
-        return veins.get(new Point(col, row));
+        return ground.get(new Point(col, row));
+    }
+
+    private boolean isClay(Point p) {
+        return ground.containsKey(p) && ground.get(p) == CLAY;
     }
 
     private boolean isClay(int row, int col) {
         Point p = new Point(col, row);
-        return veins.containsKey(p) && veins.get(p) == CLAY;
+        return ground.containsKey(p) && ground.get(p) == CLAY;
     }
 
     private boolean isWater(int row, int col) {
         Point p = new Point(col, row);
-        return veins.containsKey(p) && veins.get(p) == WATER;
+        return ground.containsKey(p) && ground.get(p) == WATER;
     }
 
     @Override
