@@ -5,22 +5,22 @@ public class Point implements Comparable<Point> {
     private final java.awt.Point p;
 
     public Point(Point n) {
-        p = new java.awt.Point(n.getX(), n.getY());
+        p = new java.awt.Point(n.getCol(), n.getRow());
     }
 
-    public Point(int x, int y) {
-        p = new java.awt.Point(x, y);
+    public Point(int row, int col) {
+        p = new java.awt.Point(col, row);
     }
 
     public Point go(Direction dir) {
         return dir.move(this);
     }
 
-    public int getY() {
+    public int getRow() {
         return p.y;
     }
 
-    public int getX() {
+    public int getCol() {
         return p.x;
     }
 
@@ -47,7 +47,7 @@ public class Point implements Comparable<Point> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[" + p.x + "," + p.y + "]");
+        sb.append("[" + p.y + "," + p.x + "]");
         return sb.toString();
     }
 
